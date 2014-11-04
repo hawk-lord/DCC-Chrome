@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+
+  "name": "DCC-Chrome",
+  "version": "0.0.1",
+
+  "icons": {
+      "16": "images/1402781551_currency_exchange_1.png",
+      "48": "images/1415072079_currency_exchange_1-48.png",
+      "128": "images/1415072098_currency_exchange_1-128.png"
+  },
+
+  "permissions": [
+      "tabs",
+      "storage",
+      "*://*/"
+  ],
+  "background": {
+      "scripts": ["background.js", "dcc-content.js", "dcc-regexes.js",
+                  "dcc-chrome-content-adapter.js", "jquery-2.1.1.min.js",
+                  "jquery-ui-1.10.4.min.js", "dcc-chrome-settings-adapter.js", "dcc-settings.js"],
+      "persistent": false
+  },
+  "browser_action": {
+      "default_icon": {
+          "19": "images/1415072771_currency_exchange_1-20.png",
+          "38": "images/1415072079_currency_exchange_1-48.png"
+      },
+      "default_title": "Toggle Conversion"
+  },
+  "options_page": "settings.html"
+}
