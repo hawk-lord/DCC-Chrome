@@ -16,9 +16,7 @@
       "*://*/"
   ],
   "background": {
-      "scripts": ["background.js", "dcc-content.js", "dcc-regexes.js",
-                  "dcc-chrome-content-adapter.js", "jquery-2.1.1.min.js",
-                  "jquery-ui-1.10.4.min.js", "dcc-chrome-settings-adapter.js", "dcc-settings.js"],
+      "scripts": ["grep.js", "urlProvider.js", "background.js"],
       "persistent": false
   },
   "browser_action": {

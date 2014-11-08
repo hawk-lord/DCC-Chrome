@@ -26,8 +26,9 @@ const ContentAdapter = function() {
         finish: function (hasConvertedElements) {
             // "finishedTabProcessing"
             thePort.postMessage(hasConvertedElements);
-        }
-    }
+        },
+        sendEnabledStatus: messageListener
+    };
 
 }();
 
