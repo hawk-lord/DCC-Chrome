@@ -1199,8 +1199,8 @@ const DirectCurrencyConverter = (function() {
      * @param anInformationHolder
      * @constructor
      */
+    /*
     const ContentScriptInterface = function(aUrlProvider, anInformationHolder) {
-/*
         const attachHandler = (aWorker) => {
             const finishedTabProcessingHandler = (aHasConvertedElements) => {
                 try {
@@ -1226,8 +1226,8 @@ const DirectCurrencyConverter = (function() {
             attachTo: ["existing", "top", "frame"],
             onAttach: attachHandler
         });
-        */
     };
+     */
 
 /*
     var settingsPort;
@@ -1237,33 +1237,47 @@ const DirectCurrencyConverter = (function() {
      * Runs when tab has been loaded
      * Like PageMod
      */
-    var contentPort;
-    const attachHandler = function (tabId, changeInfo, tab) {
-        const onScriptExecuted = function() {
-            // If conversion is enabled
-            contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
-            //    alert ("post Message to contentPort " + contentPort.name);
-            try {
-                contentPort.postMessage(dccStatus);
-                contentPort.postMessage(makeContentScriptParams(tab, informationHolder));
-            }
-            catch (err) {
-                alert(err);
-            }
-            contentPort.onMessage.addListener(function (msg) {
-                // alert("Content Finished " + msg);
-            });
-            //    alert ("posted Message");
-        };
-        alert(tabId + " " + changeInfo + " " + tab);
-        if (tab.url.indexOf("http") === 0 && changeInfo.status === "complete") {
-            chrome.tabs.executeScript({file: "dcc-regexes.js", allFrames : true});
-            chrome.tabs.executeScript({file: "dcc-content.js", allFrames : true});
-            chrome.tabs.executeScript({file: "dcc-chrome-content-adapter.js", allFrames : true}, onScriptExecuted);
-        }
-    };
-    chrome.tabs.onUpdated.addListener(attachHandler);
+    const ContentScriptInterface = function(aUrlProvider, anInformationHolder) {
 
+        var contentPort;
+        const attachHandler = function (tabId, changeInfo, tab) {
+            const finishedTabProcessingHandler = function (aHasConvertedElements) {
+                try {
+                    alert(aHasConvertedElements);
+                    if (tab.customTabObject == null) {
+                        tab.customTabObject = new CustomTabObject();
+                    }
+                    tab.customTabObject.isEnabled = anInformationHolder.conversionEnabled;
+                    // tab.customTabObject.workers.push(aWorker);
+                    tab.customTabObject.hasConvertedElements = aHasConvertedElements;
+                }
+                catch (err) {
+                    // console.log("ContentScriptInterface: " + err);
+                }
+            };
+            const onScriptExecuted = function () {
+                // If conversion is enabled
+                contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
+                //    alert ("post Message to contentPort " + contentPort.name);
+                try {
+                    contentPort.postMessage(dccStatus);
+                    contentPort.postMessage(makeContentScriptParams(tab, informationHolder));
+                }
+                catch (err) {
+                    alert(err);
+                }
+                contentPort.onMessage.addListener(finishedTabProcessingHandler);
+                //    alert ("posted Message");
+            };
+            // alert(tabId + " " + changeInfo + " " + tab);
+            if (tab.url.indexOf("http") === 0 && changeInfo.status === "complete") {
+                chrome.tabs.executeScript({file: "dcc-regexes.js", allFrames: true});
+                chrome.tabs.executeScript({file: "dcc-content.js", allFrames: true});
+                chrome.tabs.executeScript({file: "dcc-chrome-content-adapter.js", allFrames: true}, onScriptExecuted);
+            }
+        };
+        chrome.tabs.onUpdated.addListener(attachHandler);
+    }
     /*
     chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         const contentExecuted = function() {
