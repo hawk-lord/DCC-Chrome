@@ -160,6 +160,8 @@ const DirectCurrencyConverter = (function() {
                     }
                     controller.loadQuotes();
                 };
+                // If freegeoip won't work
+                informationHolder.setUserCountry("AX");
                 if (informationHolder.convertToCountry === null || informationHolder.convertToCountry == null) {
                     const method = "GET";
                     request.open(method, urlString);
@@ -1132,10 +1134,10 @@ const DirectCurrencyConverter = (function() {
         };
     };
 
-    const dccStatus = {};
-    dccStatus.isEnabled = true;
-    dccStatus.hasConvertedElements = false;
-    dccStatus.status = true;
+    //const dccStatus = {};
+    //dccStatus.isEnabled = true;
+    //dccStatus.hasConvertedElements = false;
+    //dccStatus.status = true;
 
     const makeContentScriptParams = function (aTab, anInformationHolder) {
         const contentScriptParams = {};
@@ -1202,45 +1204,8 @@ const DirectCurrencyConverter = (function() {
     chrome.runtime.onMessage.addListener(onMessageFromSettings);
     // Test worker
     var w = new Worker(chrome.runtime.getURL('grep.js'));
-    /**
-     *
-     * @param aUrlProvider
-     * @param anInformationHolder
-     * @constructor
-     */
-    /*
-    const ContentScriptInterface = function(aUrlProvider, anInformationHolder) {
-        const attachHandler = (aWorker) => {
-            const finishedTabProcessingHandler = (aHasConvertedElements) => {
-                try {
-                    if (aWorker.tab.customTabObject == null) {
-                        aWorker.tab.customTabObject = new CustomTabObject();
-                    }
-                    aWorker.tab.customTabObject.isEnabled = anInformationHolder.conversionEnabled;
-                    aWorker.tab.customTabObject.workers.push(aWorker);
-                    aWorker.tab.customTabObject.hasConvertedElements = aHasConvertedElements;
-                }
-                catch(err) {
-                    // console.log("ContentScriptInterface: " + err);
-                }
-            };
-            aWorker.port.emit("updateSettings", makeContentScriptParams(aWorker.tab, anInformationHolder));
-            aWorker.port.on("finishedTabProcessing", finishedTabProcessingHandler);
-        };
-        const {PageMod} = require("sdk/page-mod");
-        PageMod({
-            include: "*",
-            contentScriptFile: [aUrlProvider.getUrl("dcc-regexes.js"), aUrlProvider.getUrl("dcc-content.js"), aUrlProvider.getUrl("dcc-firefox-content-adapter.js")],
-            contentScriptWhen: "ready",
-            attachTo: ["existing", "top", "frame"],
-            onAttach: attachHandler
-        });
-    };
-     */
 
-/*
-    var settingsPort;
-*/
+    const customTabObjects = [];
 
     /**
      * Runs when tab has been loaded
@@ -1252,13 +1217,13 @@ const DirectCurrencyConverter = (function() {
         const attachHandler = function (tabId, changeInfo, tab) {
             const finishedTabProcessingHandler = function (aHasConvertedElements) {
                 try {
-                    alert(aHasConvertedElements);
-                    if (tab.customTabObject == null) {
-                        tab.customTabObject = new CustomTabObject();
+                    alert("finishedTabProcessingHandler " + aHasConvertedElements);
+                    if (customTabObjects[tabId] == null) {
+                        customTabObjects[tabId] = new CustomTabObject();
                     }
-                    tab.customTabObject.isEnabled = anInformationHolder.conversionEnabled;
+                    customTabObjects[tabId].isEnabled = anInformationHolder.conversionEnabled;
                     // tab.customTabObject.workers.push(aWorker);
-                    tab.customTabObject.hasConvertedElements = aHasConvertedElements;
+                    customTabObjects[tabId].hasConvertedElements = aHasConvertedElements;
                 }
                 catch (err) {
                     // console.log("ContentScriptInterface: " + err);
@@ -1269,7 +1234,7 @@ const DirectCurrencyConverter = (function() {
                 contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
                 //    alert ("post Message to contentPort " + contentPort.name);
                 try {
-                    contentPort.postMessage(dccStatus);
+                    //contentPort.postMessage(dccStatus);
                     contentPort.postMessage(makeContentScriptParams(tab, informationHolder));
                 }
                 catch (err) {
@@ -1286,84 +1251,12 @@ const DirectCurrencyConverter = (function() {
             }
         };
         chrome.tabs.onUpdated.addListener(attachHandler);
-    };
-    /*
-    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-        const contentExecuted = function() {
-            // If conversion is enabled
-            contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
-            //    alert ("post Message to contentPort " + contentPort.name);
-            try {
-                contentPort.postMessage(dccStatus);
-                contentPort.postMessage(makeContentScriptParams(tab, informationHolder));
+        return {
+            sendEnabledStatus: function(status) {
+                contentPort.postMessage(status);
             }
-            catch (err) {
-                alert(err);
-            }
-            contentPort.onMessage.addListener(function (msg) {
-                // alert("Content Finished " + msg);
-            });
-
-            //    alert ("posted Message");
-        };
-        if (tab.url.indexOf("http") === 0 && changeInfo.status === "complete") {
-            // alert (tabId + " " + tab.id);
-            //chrome.tabs.executeScript({file: "dcc-regexes.js", allFrames : true});
-            //chrome.tabs.executeScript({file: "dcc-content.js", allFrames : true});
-            //chrome.tabs.executeScript({file: "dcc-chrome-content-adapter.js", allFrames : true}, contentExecuted);
         }
-    });
-*/
-    //const sendResponse = function() {
-    //    alert("sendResponse");
-    //    return "The Response";
-    //};
-    /*
-    const callback = function(message, sender, sendResponse) {
-        //alert(message.greeting);
-        sendResponse(makeContentScriptParams(null, informationHolder));
     };
-    chrome.runtime.onMessage.addListener(callback);
-
-    chrome.browserAction.onClicked.addListener(function (tab) {
-        alert("browserAction.onClicked " + tab.title);
-       eventAggregator.publish("toggleConversion", false);
-    });
-    */
-/*
-    chrome.browserAction.onClicked.addListener(function () {
-        //alert ("browserAction.onClicked");
-        const callback = function (newTab) {
-          //  alert ("browserAction.onClicked callback " + newTab.id );
-            const settingsExecuted = function() {
-            //    alert ("settingsExecuted");
-                settingsPort = chrome.tabs.connect(newTab.id, {name: "dccSettingsPort"});
-                // alert ("settingsExecuted postMessage");
-                try {
-                    settingsPort.postMessage(makeContentScriptParams(newTab, informationHolder));
-                    //alert("posted message");
-                }
-                catch (err) {
-                    alert(err);
-                }
-                settingsPort.onMessage.addListener(function (msg) {
-                    alert("Settings Finished " + msg);
-                });
-            };
-            try {
-                chrome.tabs.executeScript(newTab.id, {file: "jquery-2.1.1.min.js"}, settingsExecuted);
-            }
-            catch(err) {
-                alert(err);
-            }
-            chrome.tabs.executeScript(newTab.id, {file: "jquery-ui-1.10.4.min.js"}, settingsExecuted);
-            chrome.tabs.executeScript(newTab.id, {file: "dcc-settings.js"}, settingsExecuted);
-            chrome.tabs.executeScript(newTab.id, {file: "dcc-chrome-settings-adapter.js"}, settingsExecuted);
-        };
-        chrome.tabs.create({url: "index.html"}, callback);
-
-    });
-*/
     const TabsInterface = function(aUrlProvider, anInformationHolder) {
         //const tabs = require("sdk/tabs");
         const tabs = chrome.tabs;
@@ -1379,100 +1272,42 @@ const DirectCurrencyConverter = (function() {
                     alert ("tabCallback " + tabs.length);
                     if (tabs.length > 0) {
                         const activeTab = tabs[0];
-                        if (activeTab.customTabObject != null) {
-                            activeTab.customTabObject.isEnabled = aStatus;
+                        if (customTabObjects[activeTab.id] != null) {
+                            customTabObjects[activeTab.id].isEnabled = aStatus;
                             anInformationHolder.conversionEnabled = aStatus;
-                            const sendEnabledStatus = function(aWorker) {
-                                if (aWorker.tab != null) {
+                            const sendEnabledStatus = function(customTabObject) {
+                                //if (aTab != null) {
                                     const status = {};
                                     status.isEnabled = aStatus;
-                                    status.hasConvertedElements = activeTab.customTabObject.hasConvertedElements;
+                                    status.hasConvertedElements = customTabObject.hasConvertedElements;
                                     try {
                                         //aWorker.port.emit("sendEnabledStatus", status);
-                                        ContentAdapter.sendEnabledStatus(status);
+                                        contentScriptInterface.sendEnabledStatus(status);
                                     }
                                     catch(err) {
                                         // To hide "Error: The page is currently hidden and can no longer be used until it is visible again."
                                         console.log("TabsInterface: " + err);
                                     }
-                                }
+                                //}
                             };
-                            activeTab.customTabObject.workers.map(sendEnabledStatus);
+                            // activeTab.customTabObject.workers.map(sendEnabledStatus);
+                            // sendEnabledStatus(activeTab);
+                            customTabObjects.map(sendEnabledStatus);
                             // after first click the tab will have for sure the converted elements
-                            activeTab.customTabObject.hasConvertedElements = true;
+                            customTabObjects[activeTab.id].hasConvertedElements = true;
                         }
                     }
                 };
                 tabs.query({active: true}, tabCallback);
             },
-            //showSettingsTab: () => {
-            //    const isOpen = settingsWorker != null && settingsWorker.settingsTab != null;
-            //    if (!isOpen) {
-            //        //index.html is settings page, it must be called index so that navigation buttons will be hidden
-            //        tabs.open({url: aUrlProvider.getUrl("settings.html")});
-            //    }
-            //    else {
-            //        settingsWorker.settingsTab.activate();
-            //    }
-            //},
-            //showTestTab: () => {
-            //    const isOpen = testPageWorker != null && testPageWorker.testTab != null;
-            //    if (!isOpen) {
-            //        tabs.open({url: aUrlProvider.getUrl("prices.html")});
-            //    }
-            //    else {
-            //        testPageWorker.testPageTab.activate();
-            //    }
-            //},
             registerToTabsEvents: function() {
                 const setTabs = function(aTab) {
-                    //if (aTab.url === "resource://dcc-at-joint-dot-ax/direct-currency-converter/data/settings.html") {
-                    //    settingsWorker = aTab.attach({contentScriptFile: [aUrlProvider.getUrl("jquery-2.1.1.min.js"), aUrlProvider.getUrl("jquery-ui-1.10.4.min.js"), aUrlProvider.getUrl("dcc-settings.js"), aUrlProvider.getUrl("dcc-firefox-settings-adapter.js")]});
-                    //    settingsWorker.port.emit("showSettings", makeContentScriptParams(aTab, anInformationHolder));
-                    //    settingsWorker.port.on("saveSettings", (aContentScriptParams) => {
-                    //        eventAggregator.publish("saveSettings", {
-                    //            contentScriptParams: aContentScriptParams
-                    //        });
-                    //    });
-                    //    settingsWorker.port.on("resetSettings", () => {
-                    //        eventAggregator.publish("resetSettings");
-                    //    });
-                    //    settingsWorker.settingsTab = aTab;
-                    //}
-                    //else if (aTab.url === "resource://dcc-at-joint-dot-ax/direct-currency-converter/data/prices.html") {
-                    //    testPageWorker = aTab.attach({contentScriptFile: [aUrlProvider.getUrl("dcc-regexes.js"), aUrlProvider.getUrl("dcc-content.js"), aUrlProvider.getUrl("dcc-firefox-content-adapter.js")]});
-                    //    const finishedTabProcessingHandler = (aHasConvertedElements) => {
-                    //        try {
-                    //            if (testPageWorker.tab.customTabObject == null) {
-                    //                testPageWorker.tab.customTabObject = new CustomTabObject();
-                    //            }
-                    //            testPageWorker.tab.customTabObject.isEnabled = anInformationHolder.conversionEnabled;
-                    //            testPageWorker.tab.customTabObject.workers.push(testPageWorker);
-                    //            testPageWorker.tab.customTabObject.hasConvertedElements = aHasConvertedElements;
-                    //        }
-                    //        catch(err) {
-                    //            console.log("registerToTabsEvents: " + err);
-                    //        }
-                    //    };
-                    //    testPageWorker.port.emit("updateSettings", makeContentScriptParams(testPageWorker.tab, anInformationHolder));
-                    //    testPageWorker.port.on("finishedTabProcessing", finishedTabProcessingHandler);
-                    //    testPageWorker.testPageTab = aTab;
-                    //}
-                    //else if
-                    if (aTab.customTabObject == null) {
-                        aTab.customTabObject = new CustomTabObject();
-                        aTab.customTabObject.isEnabled = anInformationHolder.conversionEnabled;
+                    alert ("setTabs");
+                    if (customTabObjects[aTab.id] == null) {
+                        customTabObjects[aTab.id] = new CustomTabObject();
+                        customTabObjects[aTab.id].isEnabled = anInformationHolder.conversionEnabled;
                         // To set toggle button
                         eventAggregator.publish("toggleConversion", anInformationHolder.conversionEnabled);
-                    }
-                    if (aTab.customTabObject != null) {
-                        var i = aTab.customTabObject.workers.length;
-                        while (i--) {
-                            const worker = aTab.customTabObject.workers[i];
-                            if (worker.tab == null) {
-                                aTab.customTabObject.workers.splice(i, 1);
-                            }
-                        }
                     }
                 };
                 const releaseTabs = function(aTab) {
@@ -1481,11 +1316,11 @@ const DirectCurrencyConverter = (function() {
                             settingsWorker.settingsTab = null;
                         }
                         else {
-                            aTab.customTabObject = null;
+                            customTabObjects[aTab.id] = null;
                         }
                     }
                     else {
-                        aTab.customTabObject = null;
+                        customTabObjects[aTab.id] = null;
                     }
                 };
                 if (!isRegisteredToTabsEvents) {
@@ -1498,7 +1333,7 @@ const DirectCurrencyConverter = (function() {
                     //    });
                     //});
                     //tabs.on("ready", setTabs);
-                    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+                    tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
                         if (tab.url.indexOf("http") === 0 && changeInfo.status === "complete") {
                             setTabs(tab);
                         }
@@ -1514,7 +1349,7 @@ const DirectCurrencyConverter = (function() {
         anEventAggregator.subscribe("quoteReceived", function(eventArgs) {
             informationHolder.setConversionQuote(eventArgs.convertFromCurrency, eventArgs.quote);
             if (informationHolder.isAllCurrenciesRead()) {
-                new ContentScriptInterface(urlProvider, informationHolder);
+                contentScriptInterface = new ContentScriptInterface(urlProvider, informationHolder);
                 // barsInterface.setIconsEnabled();
             }
         });
@@ -1533,8 +1368,9 @@ const DirectCurrencyConverter = (function() {
             storageService.init(informationHolder.getDefaultEnabled());
         });
         anEventAggregator.subscribe("tabActivated", function(eventArgs) {
-            if (eventArgs.tab.customTabObject != null) {
-                tabsInterface.toggleConversion(eventArgs.tab.customTabObject.isEnabled);
+            const customTabObject = tabsInterface.getCustomTabObjects()[eventArgs.tab.id];
+            if (customTabObject != null) {
+                tabsInterface.toggleConversion(customTabObject.isEnabled);
                 // barsInterface.setBars(eventArgs.tab.customTabObject.isEnabled);
             }
             else {
@@ -1560,6 +1396,7 @@ const DirectCurrencyConverter = (function() {
             quotesService.loadQuotes(informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
         };
     };
+    var contentScriptInterface;
     const urlProvider = UrlProvider;
     const quotesService = new YahooQuotesServiceProvider();
     const storageService = new StorageServiceProvider();
