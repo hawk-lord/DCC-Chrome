@@ -1187,8 +1187,17 @@ const DirectCurrencyConverter = (function() {
      * @param sendResponse
      */
     const onMessageFromSettings = function(message, sender, sendResponse) {
-        //alert(message.greeting);
-        sendResponse(makeContentScriptParams(null, informationHolder));
+        if (message.command === "show") {
+            sendResponse(makeContentScriptParams(null, informationHolder));
+        }
+        else if (message.command === "save") {
+            eventAggregator.publish("saveSettings", {
+                contentScriptParams: message.contentScriptParams
+            })
+        }
+        else if (message.command === "reset") {
+            eventAggregator.publish("resetSettings");
+        }
     };
     chrome.runtime.onMessage.addListener(onMessageFromSettings);
     // Test worker
@@ -1277,7 +1286,7 @@ const DirectCurrencyConverter = (function() {
             }
         };
         chrome.tabs.onUpdated.addListener(attachHandler);
-    }
+    };
     /*
     chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         const contentExecuted = function() {
@@ -1513,14 +1522,14 @@ const DirectCurrencyConverter = (function() {
             const reloadQuotes = informationHolder.convertToCurrency != eventArgs.contentScriptParams.convertToCurrency;
             informationHolder.resetReadCurrencies();
             parseContentScriptParams(eventArgs.contentScriptParams, informationHolder);
-            tabsInterface.getSettingsTab().close();
+            // tabsInterface.getSettingsTab().close();
             if (reloadQuotes) {
                 controller.loadQuotes();
             }
         });
         anEventAggregator.subscribe("resetSettings", function() {
             informationHolder.resetSettings();
-            tabsInterface.getSettingsTab().close();
+            // tabsInterface.getSettingsTab().close();
             storageService.init(informationHolder.getDefaultEnabled());
         });
         anEventAggregator.subscribe("tabActivated", function(eventArgs) {
