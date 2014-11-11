@@ -200,14 +200,15 @@ const DirectCurrencyConverter = (function() {
     //Stereotype Service provider
     const StorageServiceProvider = function() {
         // const {storage} = require("sdk/simple-storage");
-        const storage = chrome.storage.local;
+        // const storage = chrome.storage.local;
+        const storage = {};
         return {
             init: function(aDefaultEnabled) {
-                storage.get("excludedDomains", function(excludedDomains) {
-                    if (excludedDomains == null) {
-                        excludedDomains = ["images.google.com", "docs.google.com", "drive.google.com", "twitter.com"];
-                    }
-                });
+                //storage.get("excludedDomains", function(excludedDomains) {
+                //    if (excludedDomains == null) {
+                //        excludedDomains = ["images.google.com", "docs.google.com", "drive.google.com", "twitter.com"];
+                //    }
+                //});
                 if (storage.excludedDomains == null) {
                     storage.excludedDomains = ["images.google.com", "docs.google.com", "drive.google.com", "twitter.com"];
                 }
@@ -805,6 +806,8 @@ const DirectCurrencyConverter = (function() {
                         }
                     }
                 }
+                // TODO remove
+                storage.dccPrefs.enableOnStart = false;
             },
             get convertToCurrency () {
                 return storage.dccPrefs.convertToCurrency;
@@ -834,7 +837,7 @@ const DirectCurrencyConverter = (function() {
                 if (storage.dccPrefs != null) {
                     return storage.dccPrefs.enableOnStart;
                 }
-                return true;
+                return false;
             },
             set enableOnStart (anEnableOnStart) {
                 storage.dccPrefs.enableOnStart = anEnableOnStart;
@@ -903,8 +906,10 @@ const DirectCurrencyConverter = (function() {
             //    storage.dccPrefs.thousandSep = aFormat.thousandsSeparator;
             //},
             resetSettings: function() {
-                delete storage.dccPrefs;
-                delete storage.excludedDomains;
+                //delete storage.dccPrefs;
+                //delete storage.excludedDomains;
+                storage.dccPrefs = null;
+                storage.excludedDomains = null;
             }
         };
     };
@@ -913,6 +918,7 @@ const DirectCurrencyConverter = (function() {
         // const _ = require("sdk/l10n").get;
         const _ = chrome.i18n;
         var conversionEnabled = aStorageService.enableOnStart;
+        // alert("920 " + conversionEnabled);
         var fromCurrencies = ["AFN", "AED", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BOV", "BRL", "BSD", "BTN", "BWP", "BYR", "BZD", "CAD", "CDF", "CHE", "CHF", "CHW", "CLF", "CLP", "CNY", "COP", "COU", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LTL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRO", "MUR", "MVR", "MWK", "MXN", "MXV", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STD", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "USN", "UYI", "UYU", "UZS", "VEF", "VND", "VUV", "WST", "XAF", "XAG", "XAU", "XBA", "XBB", "XBC", "XBD", "XCD", "XDR", "XOF", "XPD", "XPF", "XPT", "XSU", "XTS", "XUA", "XXX", "YER", "ZAR", "ZMW", "ZWL"];
         // Conversion is made in the following priority order
         // Normal default
@@ -972,10 +978,12 @@ const DirectCurrencyConverter = (function() {
         };
         return {
             get conversionEnabled () {
+                // alert("get conversionEnabled " + conversionEnabled);
                 return conversionEnabled;
             },
             set conversionEnabled (aConversionEnabled) {
                 conversionEnabled = aConversionEnabled;
+                // alert("set conversionEnabled " + conversionEnabled);
             },
             //getConversionQuote (aConvertFromCurrency) {
             //    return conversionQuotes[aConvertFromCurrency];
@@ -1212,12 +1220,17 @@ const DirectCurrencyConverter = (function() {
      * Like PageMod
      */
     const ContentScriptInterface = function(aUrlProvider, anInformationHolder) {
-
+        // alert ("new ContentScriptInterface");
         var contentPort;
         const attachHandler = function (tabId, changeInfo, tab) {
+            // alert ("attachHandler " + tabId + " status " + changeInfo.status + " tab " + tab);
+            if (tab.url.indexOf("http") === -1 || changeInfo.status !== "complete") {
+                // alert ("tab.url.indexOf(http) " + tab.url.indexOf("http") + " status " + changeInfo.status);
+                return;
+            }
             const finishedTabProcessingHandler = function (aHasConvertedElements) {
                 try {
-                    alert("finishedTabProcessingHandler " + aHasConvertedElements);
+                    // alert("finishedTabProcessingHandler " + aHasConvertedElements);
                     if (customTabObjects[tabId] == null) {
                         customTabObjects[tabId] = new CustomTabObject();
                     }
@@ -1243,14 +1256,22 @@ const DirectCurrencyConverter = (function() {
                 contentPort.onMessage.addListener(finishedTabProcessingHandler);
                 //    alert ("posted Message");
             };
-            // alert(tabId + " " + changeInfo + " " + tab);
-            if (tab.url.indexOf("http") === 0 && changeInfo.status === "complete") {
+            // alert("executeScript" + " tabId " + tabId + " changeInfo.status " + changeInfo.status);
+            // defaults to the active tab of the current window.
                 chrome.tabs.executeScript({file: "dcc-regexes.js", allFrames: true});
                 chrome.tabs.executeScript({file: "dcc-content.js", allFrames: true});
                 chrome.tabs.executeScript({file: "dcc-chrome-content-adapter.js", allFrames: true}, onScriptExecuted);
-            }
         };
         chrome.tabs.onUpdated.addListener(attachHandler);
+        //chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+        //    alert ("onUpdated " + tabId + " status " + changeInfo.status + " tab id " + tab.id+ " tab url " + tab.url);
+        //});
+
+        const attachCreationHandler = function(tab) {
+            // alert ("created " + tab.id);
+        };
+        chrome.tabs.onCreated.addListener(attachCreationHandler);
+
         return {
             sendEnabledStatus: function(status) {
                 contentPort.postMessage(status);
@@ -1269,10 +1290,12 @@ const DirectCurrencyConverter = (function() {
             //},
             toggleConversion: function (aStatus) {
                 const tabCallback = function(tabs) {
-                    alert ("tabCallback " + tabs.length);
+                    // alert ("tabCallback " + tabs.length);
+                    // alert ("tabCallback aStatus " + aStatus);
                     if (tabs.length > 0) {
                         const activeTab = tabs[0];
                         if (customTabObjects[activeTab.id] != null) {
+                            // alert ("tabCallback aStatus " + aStatus);
                             customTabObjects[activeTab.id].isEnabled = aStatus;
                             anInformationHolder.conversionEnabled = aStatus;
                             const sendEnabledStatus = function(customTabObject) {
@@ -1294,7 +1317,10 @@ const DirectCurrencyConverter = (function() {
                             // sendEnabledStatus(activeTab);
                             customTabObjects.map(sendEnabledStatus);
                             // after first click the tab will have for sure the converted elements
-                            customTabObjects[activeTab.id].hasConvertedElements = true;
+                            if (aStatus) {
+                                customTabObjects[activeTab.id].hasConvertedElements = true;
+                            }
+                            // alert("Tab " + activeTab.id + " hasConvertedElements " + hasConvertedElements);
                         }
                     }
                 };
@@ -1302,7 +1328,7 @@ const DirectCurrencyConverter = (function() {
             },
             registerToTabsEvents: function() {
                 const setTabs = function(aTab) {
-                    alert ("setTabs");
+                    // alert ("setTabs");
                     if (customTabObjects[aTab.id] == null) {
                         customTabObjects[aTab.id] = new CustomTabObject();
                         customTabObjects[aTab.id].isEnabled = anInformationHolder.conversionEnabled;
@@ -1406,4 +1432,11 @@ const DirectCurrencyConverter = (function() {
     controller.loadStorage();
     controller.loadUserCountryAndQuotes();
     tabsInterface.registerToTabsEvents();
+    var buttonStatus = informationHolder.conversionEnabled;
+    const onBrowserAction = function() {
+        buttonStatus = !buttonStatus;
+        eventAggregator.publish("toggleConversion", buttonStatus);
+    };
+    chrome.browserAction.onClicked.addListener(onBrowserAction);
 })();
+

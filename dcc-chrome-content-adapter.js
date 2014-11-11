@@ -6,13 +6,13 @@ const ContentAdapter = function() {
     var thePort;
     var messageListener = function(msg) {
         // Check "sendEnabledStatus" or "updateSettings"
-        if (msg.status) {
-            // alert ("dcc listener " + msg.isEnabled);
-            DirectCurrencyContent.onSendEnabledStatus(msg);
+        if (msg.conversionQuotes) {
+            // alert("onUpdateSettings");
+            DirectCurrencyContent.onUpdateSettings(msg);
         }
         else {
-            // alert ("dcc listener " + msg.convertToCurrency);
-            DirectCurrencyContent.onUpdateSettings(msg);
+            // alert("onSendEnabledStatus");
+            DirectCurrencyContent.onSendEnabledStatus(msg);
         }
     };
     var portListener = function(aPort) {
