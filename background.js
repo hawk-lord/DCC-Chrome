@@ -62,7 +62,7 @@ const DirectCurrencyConverter = (function() {
         "use strict";
         this.enabled = false;
         this.hasConvertedElements = false;
-        this.workers = [];
+        this.port = null;
     };
     // Stereotype Service provider
     // Named Function Expression
@@ -1237,6 +1237,7 @@ const DirectCurrencyConverter = (function() {
                     customTabObjects[tabId].isEnabled = anInformationHolder.conversionEnabled;
                     // tab.customTabObject.workers.push(aWorker);
                     customTabObjects[tabId].hasConvertedElements = aHasConvertedElements;
+                    customTabObjects[tabId].port = contentPort;
                 }
                 catch (err) {
                     // console.log("ContentScriptInterface: " + err);
@@ -1258,9 +1259,9 @@ const DirectCurrencyConverter = (function() {
             };
             // alert("executeScript" + " tabId " + tabId + " changeInfo.status " + changeInfo.status);
             // defaults to the active tab of the current window.
-                chrome.tabs.executeScript({file: "dcc-regexes.js", allFrames: true});
-                chrome.tabs.executeScript({file: "dcc-content.js", allFrames: true});
-                chrome.tabs.executeScript({file: "dcc-chrome-content-adapter.js", allFrames: true}, onScriptExecuted);
+            chrome.tabs.executeScript({file: "dcc-regexes.js", allFrames: true});
+            chrome.tabs.executeScript({file: "dcc-content.js", allFrames: true});
+            chrome.tabs.executeScript({file: "dcc-chrome-content-adapter.js", allFrames: true}, onScriptExecuted);
         };
         chrome.tabs.onUpdated.addListener(attachHandler);
         //chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -1273,8 +1274,8 @@ const DirectCurrencyConverter = (function() {
         chrome.tabs.onCreated.addListener(attachCreationHandler);
 
         return {
-            sendEnabledStatus: function(status) {
-                contentPort.postMessage(status);
+            sendEnabledStatus: function(customTabObject, status) {
+                customTabObject.port.postMessage(status);
             }
         }
     };
@@ -1305,7 +1306,7 @@ const DirectCurrencyConverter = (function() {
                                     status.hasConvertedElements = customTabObject.hasConvertedElements;
                                     try {
                                         //aWorker.port.emit("sendEnabledStatus", status);
-                                        contentScriptInterface.sendEnabledStatus(status);
+                                        contentScriptInterface.sendEnabledStatus(customTabObject, status);
                                     }
                                     catch(err) {
                                         // To hide "Error: The page is currently hidden and can no longer be used until it is visible again."
@@ -1437,6 +1438,7 @@ const DirectCurrencyConverter = (function() {
         buttonStatus = !buttonStatus;
         eventAggregator.publish("toggleConversion", buttonStatus);
     };
+    // Toggle button clicked
     chrome.browserAction.onClicked.addListener(onBrowserAction);
 })();
 
