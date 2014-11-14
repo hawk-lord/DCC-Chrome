@@ -15,9 +15,11 @@ const SettingsAdapter = function() {
     return {
         save : function(contentScriptParams) {
             chrome.runtime.sendMessage({command: "save", contentScriptParams: contentScriptParams});
+            window.close();
         },
         reset : function() {
             chrome.runtime.sendMessage({command: "reset"});
+            window.close();
         }
     }
 }();

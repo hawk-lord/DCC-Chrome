@@ -214,8 +214,8 @@ const DirectCurrencyConverter = (function() {
                 }
                 if (storage.dccPrefs == null) {
                     storage.dccPrefs = {
-                        // convertToCurrency: "EUR",
-                        // convertToCountry: "PL",
+                        convertToCurrency: "PLN",
+                        convertToCountry: "PL",
                         customSymbols: {},
                         subUnitSeparator: ",",
                         enableOnStart: true,
@@ -1259,9 +1259,11 @@ const DirectCurrencyConverter = (function() {
             };
             // alert("executeScript" + " tabId " + tabId + " changeInfo.status " + changeInfo.status);
             // defaults to the active tab of the current window.
-            chrome.tabs.executeScript({file: "dcc-regexes.js", allFrames: true});
-            chrome.tabs.executeScript({file: "dcc-content.js", allFrames: true});
-            chrome.tabs.executeScript({file: "dcc-chrome-content-adapter.js", allFrames: true}, onScriptExecuted);
+            chrome.tabs.executeScript({file: "dcc-regexes.js", allFrames: true}, function(){
+                chrome.tabs.executeScript({file: "dcc-content.js", allFrames: true}, function(){
+                    chrome.tabs.executeScript({file: "dcc-chrome-content-adapter.js", allFrames: true}, onScriptExecuted);
+                });
+            });
         };
         chrome.tabs.onUpdated.addListener(attachHandler);
         //chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -1393,6 +1395,8 @@ const DirectCurrencyConverter = (function() {
             informationHolder.resetSettings();
             // tabsInterface.getSettingsTab().close();
             storageService.init(informationHolder.getDefaultEnabled());
+            controller.loadStorage();
+            controller.loadUserCountryAndQuotes();
         });
         anEventAggregator.subscribe("tabActivated", function(eventArgs) {
             const customTabObject = tabsInterface.getCustomTabObjects()[eventArgs.tab.id];
