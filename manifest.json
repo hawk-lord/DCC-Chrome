@@ -14,7 +14,7 @@
   "permissions": [
       "tabs",
       "storage",
-      "*://*/"
+      "<all_urls>"
   ],
   "background": {
       "scripts": ["grep.js", "urlProvider.js", "background.js"],
