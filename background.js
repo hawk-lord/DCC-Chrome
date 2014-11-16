@@ -161,7 +161,7 @@ const DirectCurrencyConverter = (function() {
                     controller.loadQuotes();
                 };
                 // If freegeoip won't work
-                informationHolder.setUserCountry("AX");
+                // informationHolder.setUserCountry("AX");
                 if (informationHolder.convertToCountry === null || informationHolder.convertToCountry == null) {
                     const method = "GET";
                     request.open(method, urlString);
@@ -807,11 +807,11 @@ const DirectCurrencyConverter = (function() {
                 });
             },
             get convertToCurrency () {
+                // console.log("storage.dccPrefs.convertToCurrency " + storage.dccPrefs.convertToCurrency);
                 return storage.dccPrefs.convertToCurrency;
             },
             set convertToCurrency (aCurrency) {
-                // alert (aCurrency);
-                console.log("To Currency: " + aCurrency);
+                // console.log("To Currency: " + aCurrency);
                 storage.dccPrefs.convertToCurrency = aCurrency;
                 chrome.storage.local.set(storage);
             },
@@ -1266,7 +1266,7 @@ const DirectCurrencyConverter = (function() {
                     contentPort.postMessage(makeContentScriptParams(tab, informationHolder));
                 }
                 catch (err) {
-                    alert(err);
+                    console.error(err);
                 }
                 contentPort.onMessage.addListener(finishedTabProcessingHandler);
                 //    alert ("posted Message");
@@ -1326,7 +1326,7 @@ const DirectCurrencyConverter = (function() {
                                     }
                                     catch(err) {
                                         // To hide "Error: The page is currently hidden and can no longer be used until it is visible again."
-                                        console.log("TabsInterface: " + err);
+                                        console.error("TabsInterface: " + err);
                                     }
                                 //}
                             };
