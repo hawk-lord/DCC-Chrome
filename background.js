@@ -149,16 +149,18 @@ const DirectCurrencyConverter = (function() {
                             if (this.status == "200") {
                                 const response = JSON.parse(this.responseText);
                                 informationHolder.setUserCountry(response.country_code);
+                                controller.loadQuotes();
                             }
                             else {
                                 informationHolder.setUserCountry("GB");
+                                controller.loadQuotes();
                             }
                         }
                     }
                     catch(err) {
                         informationHolder.setUserCountry("CH");
+                        controller.loadQuotes();
                     }
-                    controller.loadQuotes();
                 };
                 // If freegeoip won't work
                 // informationHolder.setUserCountry("AX");
