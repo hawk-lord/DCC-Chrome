@@ -40,12 +40,35 @@ https://addons.mozilla.org/sv-SE/firefox/addon/direct-currency-converter/
 https://addons.mozilla.org/sv-SE/developers/addon/direct-currency-converter-2/
 
 Some features of the Firefox version could not be ported to the Chrome/Opera version:
+- PDF document conversion
 - Enabled/disabled buttons
 - Panel with menu
 - Tab with test values
 
 Based on code from Simple Currency Converter
 https://addons.mozilla.org/en-US/firefox/addon/simple-currency-converter/
+
+Chrome API used
+chrome.browserAction.onClicked.addListener
+    Since Chrome 5.
+chrome.i18n.getMessage
+    Since Chrome 5.
+chrome.runtime.getURL
+chrome.runtime.onMessage.addListener
+    Since Chrome 22.
+chrome.runtime.onConnect.addListener
+chrome.runtime.sendMessage
+    Since Chrome 26.
+chrome.storage.local.get
+chrome.storage.local.set
+    Since Chrome 20.
+chrome.tabs.connect
+chrome.tabs.executeScript
+chrome.tabs.onCreated.addListener
+    Since Chrome 5.
+chrome.tabs.query
+    Since Chrome 5.
+
 
 External libraries used:
 jQuery 2.1.1

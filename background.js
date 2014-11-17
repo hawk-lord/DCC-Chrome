@@ -1225,8 +1225,6 @@ const DirectCurrencyConverter = (function() {
         }
     };
     chrome.runtime.onMessage.addListener(onMessageFromSettings);
-    // Test worker
-    var w = new Worker(chrome.runtime.getURL('grep.js'));
 
     const customTabObjects = [];
 
@@ -1293,7 +1291,9 @@ const DirectCurrencyConverter = (function() {
 
         return {
             sendEnabledStatus: function(customTabObject, status) {
-                customTabObject.port.postMessage(status);
+                if (customTabObject.port != null) {
+                    customTabObject.port.postMessage(status);
+                }
             }
         }
     };
