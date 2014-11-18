@@ -149,19 +149,20 @@ const DirectCurrencyConverter = (function() {
                             if (this.status == "200") {
                                 const response = JSON.parse(this.responseText);
                                 informationHolder.setUserCountry(response.country_code);
+                                controller.loadQuotes();
                             }
                             else {
                                 informationHolder.setUserCountry("GB");
+                                controller.loadQuotes();
                             }
                         }
                     }
                     catch(err) {
                         informationHolder.setUserCountry("CH");
+                        controller.loadQuotes();
                     }
-                    controller.loadQuotes();
                 };
-                // If freegeoip won't work
-                // informationHolder.setUserCountry("AX");
+                // If no country was stored, get it again
                 if (informationHolder.convertToCountry === null || informationHolder.convertToCountry == null) {
                     const method = "GET";
                     request.open(method, urlString);
@@ -804,6 +805,7 @@ const DirectCurrencyConverter = (function() {
                         }
                     }
                     chrome.storage.local.set(storage);
+                    controller.loadUserCountryAndQuotes();
                 });
             },
             get convertToCurrency () {
@@ -1223,8 +1225,6 @@ const DirectCurrencyConverter = (function() {
         }
     };
     chrome.runtime.onMessage.addListener(onMessageFromSettings);
-    // Test worker
-    var w = new Worker(chrome.runtime.getURL('grep.js'));
 
     const customTabObjects = [];
 
@@ -1291,7 +1291,9 @@ const DirectCurrencyConverter = (function() {
 
         return {
             sendEnabledStatus: function(customTabObject, status) {
-                customTabObject.port.postMessage(status);
+                if (customTabObject.port != null) {
+                    customTabObject.port.postMessage(status);
+                }
             }
         }
     };
@@ -1408,9 +1410,8 @@ const DirectCurrencyConverter = (function() {
         anEventAggregator.subscribe("resetSettings", function() {
             informationHolder.resetSettings();
             // tabsInterface.getSettingsTab().close();
-            storageService.init(informationHolder.getDefaultEnabled());
             controller.loadStorage();
-            controller.loadUserCountryAndQuotes();
+            // controller.loadUserCountryAndQuotes();
         });
         anEventAggregator.subscribe("tabActivated", function(eventArgs) {
             const customTabObject = tabsInterface.getCustomTabObjects()[eventArgs.tab.id];
@@ -1449,7 +1450,6 @@ const DirectCurrencyConverter = (function() {
     const tabsInterface = new TabsInterface(urlProvider, informationHolder);
     const controller = new Controller(eventAggregator);
     controller.loadStorage();
-    controller.loadUserCountryAndQuotes();
     tabsInterface.registerToTabsEvents();
     var buttonStatus = informationHolder.conversionEnabled;
     const onBrowserAction = function() {

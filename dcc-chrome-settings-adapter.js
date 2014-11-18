@@ -10,7 +10,7 @@
  */
 const SettingsAdapter = function() {
     const options = null;
-    chrome.runtime.sendMessage({command: "show"}, options, DirectCurrencySettings.showSettings);
+    chrome.runtime.sendMessage({command: "show"}, DirectCurrencySettings.showSettings);
     document.addEventListener('DOMContentLoaded', DirectCurrencySettings);
     return {
         save : function(contentScriptParams) {
