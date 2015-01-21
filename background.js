@@ -1263,7 +1263,7 @@ const DirectCurrencyConverter = (function() {
                 contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
                 try {
                     //contentPort.postMessage(dccStatus);
-                    contentPort.postMessage(makeContentScriptParams(tab, informationHolder));
+                    contentPort.postMessage(makeContentScriptParams(null, informationHolder));
                 }
                 catch (err) {
                     console.error(err);
@@ -1299,7 +1299,7 @@ const DirectCurrencyConverter = (function() {
     };
     const TabsInterface = function(aUrlProvider, anInformationHolder) {
         //const tabs = require("sdk/tabs");
-        const tabs = chrome.tabs;
+        //const tabs = chrome.tabs;
         var isRegisteredToTabsEvents = false;
         // var settingsWorker = null;
         var testPageWorker = null;
@@ -1308,11 +1308,11 @@ const DirectCurrencyConverter = (function() {
             //    return settingsWorker.settingsTab;
             //},
             toggleConversion: function (aStatus) {
-                const tabCallback = function(tabs) {
+                const tabCallback = function(aTabs) {
                     // alert ("tabCallback " + tabs.length);
                     // alert ("tabCallback aStatus " + aStatus);
-                    if (tabs.length > 0) {
-                        const activeTab = tabs[0];
+                    if (aTabs.length > 0) {
+                        const activeTab = aTabs[0];
                         if (customTabObjects[activeTab.id] != null) {
                             // alert ("tabCallback aStatus " + aStatus);
                             customTabObjects[activeTab.id].isEnabled = aStatus;
@@ -1343,7 +1343,7 @@ const DirectCurrencyConverter = (function() {
                         }
                     }
                 };
-                tabs.query({active: true}, tabCallback);
+                chrome.tabs.query({active: true}, tabCallback);
             },
             registerToTabsEvents: function() {
                 const setTabs = function(aTab) {
@@ -1378,7 +1378,7 @@ const DirectCurrencyConverter = (function() {
                     //    });
                     //});
                     //tabs.on("ready", setTabs);
-                    tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+                    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
                         if (tab.url.indexOf("http") === 0 && changeInfo.status === "complete") {
                             setTabs(tab);
                         }

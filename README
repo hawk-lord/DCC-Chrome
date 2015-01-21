@@ -1,9 +1,9 @@
 Direct Currency Converter
 
-Version: 2.0.0
-Date: 2014-11-16
+Version: 2.0.1.0
+Date: 2015-01-19
 
-After installation, you'll have a new button in the Chrome toolbar.
+After installation, you'll have a new button in the toolbar.
 
 Conversion is enabled or disabled by clicking the button.
 
@@ -11,7 +11,7 @@ The settings tab is opened with the "Options" menu item.
 Changed settings are saved with the "Save" button in the settings tab.
 Settings can be reset to default with the "Reset" button.
 
-Currency rates are taken from Yahoo Finance and updated when you start Chrome or when you switch currency.
+Currency rates are taken from Yahoo Finance and updated when you start the program or when you switch currency.
 
 Your location is used to set your default region and currency (for example Finland - euro). It is guessed using the freegeoip.net service.
 
@@ -72,7 +72,7 @@ chrome.tabs.query
 
 External libraries used:
 jQuery 2.1.1
-jQuery UI 1.11.0
+jQuery UI 1.10.4
 
 Icons provided by Iconfinder.
 
@@ -83,3 +83,8 @@ History
 Version: 2.0.0
 Date: 2014-11-16
 First release, ported from Firefox.
+
+Version: 2.0.1.0
+Date: 2015-01-19
+Improved support for USD and GHC.
+
