@@ -1,31 +1,34 @@
 {
   "manifest_version": 2,
-
   "name": "__MSG_name__",
-  "version": "2.0.0.0",
+  "version": "2.0.2.0",
+
   "default_locale": "en",
-
+  "description": "Converts monetary amounts from any currency ($, £, etc.) to monetary amounts in a selectable currency automatically while browsing.",
   "icons": {
-      "16": "images/1402781551_currency_exchange_1.png",
-      "48": "images/1415072079_currency_exchange_1-48.png",
-      "128": "images/1415072098_currency_exchange_1-128.png"
+    "16": "images/1402781551_currency_exchange_1.png",
+    "48": "images/1415072079_currency_exchange_1-48.png",
+    "128": "images/1415072098_currency_exchange_1-128.png"
   },
 
-  "permissions": [
-      "tabs",
-      "storage",
-      "<all_urls>"
-  ],
-  "background": {
-      "scripts": ["grep.js", "urlProvider.js", "background.js"],
-      "persistent": false
-  },
   "browser_action": {
-      "default_icon": {
-          "19": "images/1415072771_currency_exchange_1-20.png",
-          "38": "images/1415072079_currency_exchange_1-48.png"
-      },
-      "default_title": "__MSG_buttontitle__"
+    "default_icon": {
+      "19": "images/1415072771_currency_exchange_1-20.png",
+      "38": "images/1415072079_currency_exchange_1-48.png"
+    },
+    "default_title": "__MSG_buttontitle__"
   },
-  "options_page": "settings.html"
+
+  "author": "Per Johansson",
+  "background": {
+    "scripts": ["grep.js", "urlProvider.js", "background.js"],
+    "persistent": false
+  },
+  "options_page": "settings.html",
+  "permissions": [
+    "tabs",
+    "storage",
+    "<all_urls>"
+  ],
+  "short_name": "DC Converter"
 }
