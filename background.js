@@ -1452,8 +1452,16 @@ const DirectCurrencyConverter = (function() {
     controller.loadStorage();
     tabsInterface.registerToTabsEvents();
     var buttonStatus = informationHolder.conversionEnabled;
+    const setButtonAppearance = function() {
+        const colour = buttonStatus ? "#00FF00" : "#FF0000";
+        const text = buttonStatus ? "On" : "Off";
+        chrome.browserAction.setBadgeBackgroundColor({color: colour});
+        chrome.browserAction.setBadgeText({text: text});
+    };
+    setButtonAppearance();
     const onBrowserAction = function() {
         buttonStatus = !buttonStatus;
+        setButtonAppearance();
         eventAggregator.publish("toggleConversion", buttonStatus);
     };
     // Toggle button clicked
