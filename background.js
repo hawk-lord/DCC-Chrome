@@ -1273,8 +1273,8 @@ const DirectCurrencyConverter = (function() {
             };
             // alert("executeScript" + " tabId " + tabId + " changeInfo.status " + changeInfo.status);
             // defaults to the active tab of the current window.
-            chrome.tabs.executeScript({file: "dcc-regexes.js", allFrames: true}, function(){
-                chrome.tabs.executeScript({file: "dcc-content.js", allFrames: true}, function(){
+            chrome.tabs.executeScript({file: "common/dcc-regexes.js", allFrames: true}, function(){
+                chrome.tabs.executeScript({file: "common/dcc-content.js", allFrames: true}, function(){
                     chrome.tabs.executeScript({file: "dcc-chrome-content-adapter.js", allFrames: true}, onScriptExecuted);
                 });
             });
