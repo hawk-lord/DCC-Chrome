@@ -1,7 +1,7 @@
 Direct Currency Converter
 
-Version: 2.0.2.2
-Date: 2015-02-02
+Version: 2.0.2.3
+Date: 2015-02-15
 
 After installation, you'll have a new button in the toolbar.
 
@@ -99,3 +99,7 @@ Internal changes.
 Version: 2.0.2.2
 Date: 2015-02-02
 Show on button if conversion is enabled or disabled.
+
+Version: 2.0.2.3
+Date: 2015-02-15
+Internal fixes.
