@@ -1,8 +1,8 @@
 Opera: Remove .idea directory when building crx file.
 
-Button Tag showing on/off.
+Show badge correctly at start.
+Make toggle work without reload.
 
-Picture of money?
 
 Link to test page at joint.ax
 
