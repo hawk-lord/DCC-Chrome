@@ -18,4 +18,12 @@ var UrlProvider = (function() {
     };
 }());
 //
-// exports.getUrl = UrlProvider.getUrl;
+
+if (typeof exports === "function") {
+    console.log("typeof require === function");
+    exports.FreegeoipServiceProvider = FreegeoipServiceProvider;
+}
+
+if (typeof exports === "object") {
+    exports.getUrl = UrlProvider.getUrl;
+}
