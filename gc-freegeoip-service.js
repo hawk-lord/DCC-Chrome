@@ -1,5 +1,5 @@
 /**
- * Firefox browser
+ * Google Chrome browser
  */
 const GcFreegeoipServiceProvider = function() {
     "use strict";

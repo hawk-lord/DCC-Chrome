@@ -21,7 +21,18 @@
 
   "author": "Per Johansson",
   "background": {
-    "scripts": ["grep.js", "urlProvider.js", "eventAggregator.js", "freegeoip-service.js", "gc-freegeoip-service.js", "yahoo-quotes.js", "gc-main.js"],
+    "scripts": ["dcc-common-lib/grep.js",
+      "dcc-common-lib/eventAggregator.js",
+      "gc-freegeoip-service.js",
+      "dcc-common-lib/freegeoip-service.js",
+      "dcc-common-lib/yahoo-quotes.js",
+      "dcc-common-lib/currencyData.json",
+      "dcc-common-lib/currencySymbols.json",
+      "dcc-common-lib/iso4217Currencies.json",
+      "dcc-common-lib/regionFormats.json",
+      "dcc-common-lib/informationHolder.js",
+      "dcc-common-lib/parseContentScriptParams.js",
+      "gc-main.js"],
     "persistent": false
   },
   "options_page": "settings.html",
