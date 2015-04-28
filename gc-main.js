@@ -1,20 +1,12 @@
-/**
- * Google Chrome specific
- * TODO Caution: Consider using event pages instead. Learn more.
+/*
+ * © 2014-2015 Per Johansson
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
+ * TODO Caution: Consider using event pages instead.
+ *
  */
-    /*
-     "scripts": [
-     "dcc-common-lib/eventAggregator.js",
-     "gc-freegeoip-service.js",
-     "dcc-common-lib/freegeoip-service.js",
-     "dcc-common-lib/yahoo-quotes.js",
-     "gc-storage-service.js",
-     "dcc-common-lib/informationHolder.js",
-     "dcc-common-lib/parseContentScriptParams.js",
-     "gc-l10n.js",
-     "gc-main.js"],
 
-     */
 const DirectCurrencyConverter = (function() {
     "use strict";
     let currencyData;
@@ -26,7 +18,7 @@ const DirectCurrencyConverter = (function() {
         const _ = localisation._;
         const gcGeoService = new GcFreegeoipServiceProvider();
         const geoService = new FreegeoipServiceProvider();
-        //const gcYahooQuotesService = new GcYahooQuotesServiceProvider();
+        const gcYahooQuotesService = new GcYahooQuotesServiceProvider();
         const yahooQuotesService = new YahooQuotesServiceProvider(eventAggregator);
         const gcStorageServiceProvider = new GcStorageServiceProvider();
         const informationHolder = new InformationHolder(gcStorageServiceProvider, currencyData, currencySymbols, iso4217Currencies, regionFormats, _);
@@ -42,16 +34,16 @@ const DirectCurrencyConverter = (function() {
             yahooQuotesService.quotesHandlerToFrom(eventArgs);
         });
         if (!informationHolder.convertToCountry) {
-            //geoService.loadUserCountry(ffGeoService);
+            geoService.loadUserCountry(gcGeoService);
             eventAggregator.subscribe("countryReceived", function(countryCode) {
                 // console.log("subscribe countryReceived");
                 // console.log("countryCode " + countryCode);
                 informationHolder.convertToCountry = countryCode;
-                //yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+                yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
             });
         }
         else {
-            //yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+            yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
         }
         eventAggregator.subscribe("toggleConversion", function(eventArgs) {
             console.log("subscribe toggleConversion");
@@ -93,8 +85,8 @@ const DirectCurrencyConverter = (function() {
             contentInterface.closeSettingsTab();
             if (toCurrencyChanged) {
                 // controller.loadQuotes();
-                //yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getFromCurrencies(),
-                //    informationHolder.convertToCurrency);
+                yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(),
+                    informationHolder.convertToCurrency);
             }
         });
         eventAggregator.subscribe("resetSettings", function() {
@@ -105,17 +97,17 @@ const DirectCurrencyConverter = (function() {
             // TODO this is copied from above
             if (!informationHolder.convertToCountry) {
                 console.log("subscribe resetSettings if");
-                // geoService.loadUserCountry(ffGeoService);
+                geoService.loadUserCountry(gcGeoService);
                 // TODO already subscribed once
                 //eventAggregator.subscribe("countryReceived", (countryCode) => {
                 //    console.log("countryCode " + countryCode);
                 //    informationHolder.convertToCountry = countryCode;
-                //    yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+                //    yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
                 //});
             }
             else {
                 console.log("subscribe resetSettings else");
-                //yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+                yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
             }
         });
         //contentInterface.registerToTabsEvents();
