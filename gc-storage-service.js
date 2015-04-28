@@ -78,7 +78,7 @@ const GcStorageServiceProvider = function() {
                 Object.keys(aDefaultEnabled).forEach(
                     function(key, index) {
                         if (!storage.dccPrefs.enabledCurrencies[key]) {
-                            storage.dccPrefs.enabledCurrencies[key] = this[key];
+                            storage.dccPrefs.enabledCurrencies[key] = aDefaultEnabled[key];
                         }
                     }
                 )
