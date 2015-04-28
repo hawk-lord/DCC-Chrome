@@ -26,10 +26,100 @@ const DirectCurrencyConverter = (function() {
         const _ = localisation._;
         const gcGeoService = new GcFreegeoipServiceProvider();
         const geoService = new FreegeoipServiceProvider();
-        const quotesService = new YahooQuotesServiceProvider(eventAggregator);
+        //const gcYahooQuotesService = new GcYahooQuotesServiceProvider();
+        const yahooQuotesService = new YahooQuotesServiceProvider(eventAggregator);
         const gcStorageServiceProvider = new GcStorageServiceProvider();
         const informationHolder = new InformationHolder(gcStorageServiceProvider, currencyData, currencySymbols, iso4217Currencies, regionFormats, _);
         console.log(informationHolder.convertToCountry);
+        //const contentInterface = new GcContentInterface(informationHolder);
+        //const chromeInterface = new GcChromeInterface();
+        eventAggregator.subscribe("quotesFromTo", function(eventArgs) {
+            // console.log("subscribe quotesFromTo");
+            yahooQuotesService.quotesHandlerFromTo(eventArgs);
+        });
+        eventAggregator.subscribe("quotesToFrom", function(eventArgs) {
+            // console.log("subscribe quotesToFrom");
+            yahooQuotesService.quotesHandlerToFrom(eventArgs);
+        });
+        if (!informationHolder.convertToCountry) {
+            //geoService.loadUserCountry(ffGeoService);
+            eventAggregator.subscribe("countryReceived", function(countryCode) {
+                // console.log("subscribe countryReceived");
+                // console.log("countryCode " + countryCode);
+                informationHolder.convertToCountry = countryCode;
+                //yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+            });
+        }
+        else {
+            //yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+        }
+        eventAggregator.subscribe("toggleConversion", function(eventArgs) {
+            console.log("subscribe toggleConversion");
+            //var number = 123456.789;
+            //const inf = new Intl.NumberFormat('da-DK', { style: 'currency', currencyDisplay: 'symbol', currency: 'DKK' });
+            //console.log(inf.format(number));
+            //const dojo = require("./dojo.js.uncompressed");
+            //const id = dojo.getPlatformDefaultId();
+            //console.log(id);
+            /*
+             function(cldrMonetary){
+             // the ISO 4217 currency code for Euro:
+             var iso = "EUR";
+             // get monetary data:
+             var cldrMonetaryData = cldrMonetary.getData(iso);
+
+             // print out places:
+             console.log("Places: " + cldrMonetaryData.places);
+
+             // print out round:
+             //dom.byId("round").innerHTML = "Round: " + cldrMonetaryData.round;
+             });
+             */
+            contentInterface.toggleConversion(eventArgs);
+        });
+        eventAggregator.subscribe("showSettingsTab", function() {
+            console.log("subscribe showSettingsTab");
+            contentInterface.showSettingsTab();
+        });
+        eventAggregator.subscribe("showTestTab", function() {
+            console.log("subscribe showTestTab");
+            contentInterface.showTestTab();
+        });
+        eventAggregator.subscribe("saveSettings", function(eventArgs) {
+            console.log("subscribe saveSettings");
+            const toCurrencyChanged = informationHolder.convertToCurrency != eventArgs.contentScriptParams.convertToCurrency;
+            informationHolder.resetReadCurrencies();
+            new ParseContentScriptParams(eventArgs.contentScriptParams, informationHolder);
+            contentInterface.closeSettingsTab();
+            if (toCurrencyChanged) {
+                // controller.loadQuotes();
+                //yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getFromCurrencies(),
+                //    informationHolder.convertToCurrency);
+            }
+        });
+        eventAggregator.subscribe("resetSettings", function() {
+            console.log("subscribe resetSettings");
+            informationHolder.resetSettings();
+            informationHolder.resetReadCurrencies();
+            contentInterface.closeSettingsTab();
+            // TODO this is copied from above
+            if (!informationHolder.convertToCountry) {
+                console.log("subscribe resetSettings if");
+                // geoService.loadUserCountry(ffGeoService);
+                // TODO already subscribed once
+                //eventAggregator.subscribe("countryReceived", (countryCode) => {
+                //    console.log("countryCode " + countryCode);
+                //    informationHolder.convertToCountry = countryCode;
+                //    yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+                //});
+            }
+            else {
+                console.log("subscribe resetSettings else");
+                //yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+            }
+        });
+        //contentInterface.registerToTabsEvents();
+
     };
     const onCurrencyData = function(result) {
         const currencyDataJson = result;
