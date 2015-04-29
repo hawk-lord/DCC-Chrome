@@ -22,7 +22,6 @@ const DirectCurrencyConverter = (function() {
         const yahooQuotesService = new YahooQuotesServiceProvider(eventAggregator);
         const gcStorageServiceProvider = new GcStorageServiceProvider();
         const informationHolder = new InformationHolder(gcStorageServiceProvider, currencyData, currencySymbols, iso4217Currencies, regionFormats, _);
-        console.log(informationHolder.convertToCountry);
         //const contentInterface = new GcContentInterface(informationHolder);
         //const chromeInterface = new GcChromeInterface();
         eventAggregator.subscribe("quotesFromTo", function(eventArgs) {
@@ -33,18 +32,20 @@ const DirectCurrencyConverter = (function() {
             // console.log("subscribe quotesToFrom");
             yahooQuotesService.quotesHandlerToFrom(eventArgs);
         });
-        if (!informationHolder.convertToCountry) {
-            geoService.loadUserCountry(gcGeoService);
-            eventAggregator.subscribe("countryReceived", function(countryCode) {
-                // console.log("subscribe countryReceived");
-                // console.log("countryCode " + countryCode);
-                informationHolder.convertToCountry = countryCode;
+        eventAggregator.subscribe("storageInitDone", function(eventArgs) {
+            if (!informationHolder.convertToCountry) {
+                geoService.loadUserCountry(gcGeoService);
+                eventAggregator.subscribe("countryReceived", function(countryCode) {
+                    // console.log("subscribe countryReceived");
+                    // console.log("countryCode " + countryCode);
+                    informationHolder.convertToCountry = countryCode;
+                    yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+                });
+            }
+            else {
                 yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
-            });
-        }
-        else {
-            yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
-        }
+            }
+        });
         eventAggregator.subscribe("toggleConversion", function(eventArgs) {
             console.log("subscribe toggleConversion");
             //var number = 123456.789;
