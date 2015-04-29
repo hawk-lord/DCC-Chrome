@@ -6,8 +6,6 @@
  */
 const GcYahooQuotesServiceProvider = function() {
     "use strict";
-    //const {Request} = require("sdk/request");
-    //const eventAggregator = require("./dcc-common-lib/eventAggregator");
     const onCompleteFromTo = function(aResponse) {
         try {
             // console.log("onCompleteFromTo aResponse " + aResponse.status);
@@ -26,18 +24,6 @@ const GcYahooQuotesServiceProvider = function() {
             console.error("err " + err);
         }
     };
-    /*
-     const regionFormatsRequest = new XMLHttpRequest();
-     regionFormatsRequest.overrideMimeType("application/json");
-     regionFormatsRequest.open("GET", "dcc-common-lib/regionFormats.json", true);
-     regionFormatsRequest.onreadystatechange = function () {
-     if (regionFormatsRequest.readyState === 4 && regionFormatsRequest.status === 200) {
-     onRegionFormats(regionFormatsRequest.responseText);
-     }
-     };
-     regionFormatsRequest.send(null);
-
-     */
     const fetchQuotesFromTo = function(aUrlString) {
         console.log("fetchQuotesFromTo ");
         const urlString = aUrlString;
