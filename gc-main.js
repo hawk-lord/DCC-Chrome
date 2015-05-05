@@ -22,7 +22,7 @@ const DirectCurrencyConverter = (function() {
         const yahooQuotesService = new YahooQuotesServiceProvider(eventAggregator);
         const gcStorageServiceProvider = new GcStorageServiceProvider();
         const informationHolder = new InformationHolder(gcStorageServiceProvider, currencyData, currencySymbols, iso4217Currencies, regionFormats, _);
-        //const contentInterface = new GcContentInterface(informationHolder);
+        const contentInterface = new GcContentInterface(informationHolder);
         //const chromeInterface = new GcChromeInterface();
         eventAggregator.subscribe("quotesFromTo", function(eventArgs) {
             // console.log("subscribe quotesFromTo");
@@ -31,6 +31,16 @@ const DirectCurrencyConverter = (function() {
         eventAggregator.subscribe("quotesToFrom", function(eventArgs) {
             // console.log("subscribe quotesToFrom");
             yahooQuotesService.quotesHandlerToFrom(eventArgs);
+        });
+        eventAggregator.subscribe("quoteReceived", function(eventArgs) {
+            // console.log("subscribe quoteReceived " + eventArgs.quote);
+            informationHolder.setConversionQuote(eventArgs.convertFromCurrency, eventArgs.quote);
+            if (informationHolder.isAllCurrenciesRead()) {
+                // console.log("isAllCurrenciesRead");
+                contentInterface.watchForPages();
+                //chromeInterface.setConversionButtonState(informationHolder.conversionEnabled);
+                //chromeInterface.setToolsButtonText(informationHolder.getQuoteString());
+            }
         });
         eventAggregator.subscribe("storageInitDone", function(eventArgs) {
             if (!informationHolder.convertToCountry) {
@@ -48,26 +58,6 @@ const DirectCurrencyConverter = (function() {
         });
         eventAggregator.subscribe("toggleConversion", function(eventArgs) {
             console.log("subscribe toggleConversion");
-            //var number = 123456.789;
-            //const inf = new Intl.NumberFormat('da-DK', { style: 'currency', currencyDisplay: 'symbol', currency: 'DKK' });
-            //console.log(inf.format(number));
-            //const dojo = require("./dojo.js.uncompressed");
-            //const id = dojo.getPlatformDefaultId();
-            //console.log(id);
-            /*
-             function(cldrMonetary){
-             // the ISO 4217 currency code for Euro:
-             var iso = "EUR";
-             // get monetary data:
-             var cldrMonetaryData = cldrMonetary.getData(iso);
-
-             // print out places:
-             console.log("Places: " + cldrMonetaryData.places);
-
-             // print out round:
-             //dom.byId("round").innerHTML = "Round: " + cldrMonetaryData.round;
-             });
-             */
             contentInterface.toggleConversion(eventArgs);
         });
         eventAggregator.subscribe("showSettingsTab", function() {
@@ -111,7 +101,7 @@ const DirectCurrencyConverter = (function() {
                 yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
             }
         });
-        //contentInterface.registerToTabsEvents();
+        contentInterface.registerToTabsEvents();
 
     };
     const onCurrencyData = function(result) {

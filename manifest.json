@@ -29,8 +29,10 @@
       "dcc-common-lib/yahoo-quotes.js",
       "gc-storage-service.js",
       "dcc-common-lib/informationHolder.js",
+      "dcc-common-lib/contentScriptParams.js",
       "dcc-common-lib/parseContentScriptParams.js",
       "gc-l10n.js",
+      "gc-contentInterface.js",
       "gc-main.js"],
     "persistent": false
   },
