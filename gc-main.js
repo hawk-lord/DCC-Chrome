@@ -23,7 +23,7 @@ const DirectCurrencyConverter = (function() {
         const gcStorageServiceProvider = new GcStorageServiceProvider();
         const informationHolder = new InformationHolder(gcStorageServiceProvider, currencyData, currencySymbols, iso4217Currencies, regionFormats, _);
         const contentInterface = new GcContentInterface(informationHolder);
-        //const chromeInterface = new GcChromeInterface();
+        const chromeInterface = new GcChromeInterface(informationHolder.conversionEnabled);
         eventAggregator.subscribe("quotesFromTo", function(eventArgs) {
             // console.log("subscribe quotesFromTo");
             yahooQuotesService.quotesHandlerFromTo(eventArgs);

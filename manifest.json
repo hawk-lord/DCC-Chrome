@@ -33,6 +33,7 @@
       "dcc-common-lib/parseContentScriptParams.js",
       "gc-l10n.js",
       "gc-contentInterface.js",
+      "gc-chromeInterface.js",
       "gc-main.js"],
     "persistent": false
   },

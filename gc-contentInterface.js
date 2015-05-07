@@ -15,29 +15,16 @@ const GcContentInterface = function(anInformationHolder) {
         this.hasConvertedElements = false;
         this.workers = [];
     };
-    const sendEnabledStatus = function(aWorker) {
-        if (aWorker.tab) {
-            const status = {};
-            status.isEnabled = anInformationHolder.conversionEnabled;
-            if (aWorker.tab.customTabObject) {
-                status.hasConvertedElements = aWorker.tab.customTabObject.hasConvertedElements;
-            }
-            else {
-                status.hasConvertedElements = false;
-            }
-            try {
-                aWorker.port.emit("sendEnabledStatus", status);
-            }
-            catch(err) {
-                console.error("sendEnabledStatus: " + err);
-            }
+    const sendEnabledStatus = function(customTabObject, status) {
+        if (customTabObject.port) {
+            customTabObject.port.postMessage(status);
         }
     };
     const attachHandler = function(tabId, changeInfo) {
         var contentPort;
         const finishedTabProcessingHandler = function (aHasConvertedElements) {
             try {
-                // alert("finishedTabProcessingHandler " + aHasConvertedElements);
+                console.log("finishedTabProcessingHandler " + aHasConvertedElements);
                 if (!customTabObjects[tabId]) {
                     customTabObjects[tabId] = new CustomTabObject();
                 }
@@ -88,8 +75,8 @@ const GcContentInterface = function(anInformationHolder) {
         */
     };
     const toggleConversion = function(aStatus) {
-        // console.log("aStatus " + aStatus);
-        // console.log("toggleConversion");
+        console.log("toggleConversion");
+/*
         if (tabs.activeTab.customTabObject) {
             // console.log("tabs.activeTab.customTabObject");
             tabs.activeTab.customTabObject.isEnabled = aStatus;
@@ -100,6 +87,36 @@ const GcContentInterface = function(anInformationHolder) {
         else {
             console.error("customTabObject is missing");
         }
+*/
+        const updateActiveTabs = function(aTabs) {
+            console.log("tabCallback " + aTabs.length);
+            if (aTabs.length > 0) {
+                const activeTab = aTabs[0];
+                console.log("activeTab.id " + activeTab.id);
+                if (customTabObjects[activeTab.id]) {
+                    customTabObjects[activeTab.id].isEnabled = aStatus;
+                    console.log("aStatus " + aStatus);
+                    anInformationHolder.conversionEnabled = aStatus;
+                    const makeEnabledStatus = function(customTabObject) {
+                        console.log("sendEnabledStatus ");
+                        const status = {};
+                        status.isEnabled = aStatus;
+                        status.hasConvertedElements = customTabObject.hasConvertedElements;
+                        try {
+                            sendEnabledStatus(customTabObject, status);
+                        }
+                        catch(err) {
+                            console.error("ContentInterface: " + err);
+                        }
+                    };
+                    customTabObjects.map(makeEnabledStatus);
+                    if (aStatus) {
+                        customTabObjects[activeTab.id].hasConvertedElements = true;
+                    }
+                }
+            }
+        };
+        chrome.tabs.query({active: true}, updateActiveTabs);
     };
     const showSettingsTab = function() {
         const isOpen = settingsWorker && settingsWorker.settingsTab ;
