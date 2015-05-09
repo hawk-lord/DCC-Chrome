@@ -101,8 +101,6 @@ const DirectCurrencyConverter = (function() {
                 yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
             }
         });
-        contentInterface.registerToTabsEvents();
-
     };
     const onCurrencyData = function(result) {
         const currencyDataJson = result;

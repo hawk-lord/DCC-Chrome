@@ -6,22 +6,23 @@
  */
 const GcContentInterface = function(anInformationHolder) {
     "use strict";
-    let settingsWorker = null;
-    let testPageWorker = null;
-    var isRegisteredToTabsEvents = false;
+    // let settingsWorker = null;
+    // let testPageWorker = null;
     const customTabObjects = [];
     const CustomTabObject = function() {
         "use strict";
         this.enabled = false;
         this.hasConvertedElements = false;
-        this.workers = [];
+        //this.workers = [];
     };
     const sendEnabledStatus = function(customTabObject, status) {
+        console.log("sendEnabledStatus " + status);
         if (customTabObject.port) {
             customTabObject.port.postMessage(status);
         }
     };
-    const attachHandler = function(tabId, changeInfo, tab) {
+    const sendSettingsToPage = function(tabId, changeInfo, tab) {
+        console.log("sendSettingsToPage " + tabId);
         var contentPort;
         const finishedTabProcessingHandler = function (aHasConvertedElements) {
             try {
@@ -38,6 +39,7 @@ const GcContentInterface = function(anInformationHolder) {
             }
         };
         const onScriptExecuted = function () {
+            console.log("onScriptExecuted tabId " + tabId);
             contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
             try {
                 // TODO Don't send null
@@ -50,75 +52,92 @@ const GcContentInterface = function(anInformationHolder) {
         console.log("attachHandler tabId " + tabId);
         console.log("attachHandler changeInfo.status " + changeInfo.status);
         console.log("attachHandler changeInfo.url " + changeInfo.url);
+        console.log("attachHandler tab.url " + tab.url);
+        console.log(changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0);
         if (changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0) {
-            chrome.tabs.executeScript({file: "common/dcc-regexes.js", allFrames: true}, function(){
-                chrome.tabs.executeScript({file: "common/dcc-content.js", allFrames: true}, function(){
-                    chrome.tabs.executeScript({file: "dcc-chrome-content-adapter.js", allFrames: true},
+            chrome.tabs.executeScript(tabId, {file: "common/dcc-regexes.js", allFrames: true}, function(){
+                chrome.tabs.executeScript(tabId, {file: "common/dcc-content.js", allFrames: true}, function(){
+                    chrome.tabs.executeScript(tabId, {file: "dcc-chrome-content-adapter.js", allFrames: true},
                         onScriptExecuted);
                 });
             });
         }
     };
-    //let pageMod;
     const watchForPages = function() {
         console.log("watchForPages");
-        chrome.tabs.onUpdated.addListener(attachHandler);
-        /*
-                pageMod = new PageMod({
-                    include: "*",
-                    contentScriptFile: ["./common/dcc-regexes.js",
-                        "./common/dcc-content.js",
-                        "./dcc-firefox-content-adapter.js"],
-                    contentScriptWhen: "ready",
-                    attachTo: ["existing", "top", "frame"],
-                    onAttach: attachHandler
-                });
-        */
+        const addTabs = function(aTabs) {
+            console.log("addTabs");
+            aTabs.map(function(aTab) {
+                console.log("aTab.id " + aTab.id);
+                if (!customTabObjects[aTab.id]) {
+                    customTabObjects[aTab.id] = new CustomTabObject();
+                }
+                console.log(aTab);
+                sendSettingsToPage(aTab.id, {status: "complete"}, aTab)
+            });
+        };
+        // FIXME attach to existing tabs
+        const setTabs = function(aTab) {
+            if (!customTabObjects[aTab.id]) {
+                customTabObjects[aTab.id] = new CustomTabObject();
+            }
+            customTabObjects[aTab.id].isEnabled = anInformationHolder.conversionEnabled;
+            eventAggregator.publish("toggleConversion", anInformationHolder.conversionEnabled);
+        };
+        const releaseTabs = function(aTab) {
+            //if (settingsWorker && settingsWorker.settingsTab) {
+            //    if (settingsWorker.settingsTab.title == aTab.title) {
+            //        settingsWorker.settingsTab = null;
+            //    }
+            //    else {
+            //        customTabObjects[aTab.id] = null;
+            //    }
+            //}
+            //else {
+                customTabObjects[aTab.id] = null;
+            //}
+        };
+        chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+            if (tab.url.indexOf("http") === 0 && changeInfo.status === "complete") {
+                setTabs(tab);
+            }
+        });
+
+        chrome.tabs.onUpdated.addListener(sendSettingsToPage);
+        chrome.tabs.query({}, addTabs);
     };
     const toggleConversion = function(aStatus) {
         console.log("toggleConversion");
-/*
-        if (tabs.activeTab.customTabObject) {
-            // console.log("tabs.activeTab.customTabObject");
-            tabs.activeTab.customTabObject.isEnabled = aStatus;
-            anInformationHolder.conversionEnabled = aStatus;
-            tabs.activeTab.customTabObject.workers.map(sendEnabledStatus);
-            tabs.activeTab.customTabObject.hasConvertedElements = true;
-        }
-        else {
-            console.error("customTabObject is missing");
-        }
-*/
-        const updateActiveTabs = function(aTabs) {
-            console.log("tabCallback " + aTabs.length);
-            if (aTabs.length > 0) {
-                const activeTab = aTabs[0];
-                console.log("activeTab.id " + activeTab.id);
-                if (customTabObjects[activeTab.id]) {
-                    customTabObjects[activeTab.id].isEnabled = aStatus;
-                    console.log("aStatus " + aStatus);
-                    anInformationHolder.conversionEnabled = aStatus;
-                    const makeEnabledStatus = function(customTabObject) {
-                        console.log("sendEnabledStatus ");
-                        const status = {};
-                        status.isEnabled = aStatus;
-                        status.hasConvertedElements = customTabObject.hasConvertedElements;
-                        try {
-                            sendEnabledStatus(customTabObject, status);
-                        }
-                        catch(err) {
-                            console.error("ContentInterface: " + err);
-                        }
-                    };
-                    customTabObjects.map(makeEnabledStatus);
-                    if (aStatus) {
-                        customTabObjects[activeTab.id].hasConvertedElements = true;
-                    }
-                }
+        const updateTab = function(aTab) {
+            console.log("aTab.id " + aTab.id);
+            if (!customTabObjects[aTab.id]) {
+                customTabObjects[aTab.id] = new CustomTabObject();
             }
+            customTabObjects[aTab.id].isEnabled = aStatus;
+            console.log("aStatus " + aStatus);
+            anInformationHolder.conversionEnabled = aStatus;
+            const makeEnabledStatus = function(customTabObject) {
+                console.log("sendEnabledStatus ");
+                const status = {};
+                status.isEnabled = aStatus;
+                status.hasConvertedElements = customTabObject.hasConvertedElements;
+                try {
+                    sendEnabledStatus(customTabObject, status);
+                }
+                catch(err) {
+                    console.error("ContentInterface: " + err);
+                }
+            };
+            customTabObjects.map(makeEnabledStatus);
+            customTabObjects[aTab.id].hasConvertedElements = true;
         };
-        chrome.tabs.query({active: true}, updateActiveTabs);
+        const updateActiveTabs = function(aTabs) {
+            console.log("updateActiveTabs " + aTabs.length);
+            aTabs.map(updateTab);
+        };
+        chrome.tabs.query({}, updateActiveTabs);
     };
+    /*
     const showSettingsTab = function() {
         const isOpen = settingsWorker && settingsWorker.settingsTab ;
         if (!isOpen) {
@@ -137,49 +156,18 @@ const GcContentInterface = function(anInformationHolder) {
             testPageWorker.testPageTab.activate();
         }
     };
-    const registerToTabsEvents = function() {
-        const setTabs = function(aTab) {
-            if (customTabObjects[aTab.id] == null) {
-                customTabObjects[aTab.id] = new CustomTabObject();
-                customTabObjects[aTab.id].isEnabled = anInformationHolder.conversionEnabled;
-                eventAggregator.publish("toggleConversion", anInformationHolder.conversionEnabled);
-            }
-        };
-        const releaseTabs = function(aTab) {
-            if (settingsWorker != null && settingsWorker.settingsTab != null) {
-                if (settingsWorker.settingsTab.title == aTab.title) {
-                    settingsWorker.settingsTab = null;
-                }
-                else {
-                    customTabObjects[aTab.id] = null;
-                }
-            }
-            else {
-                customTabObjects[aTab.id] = null;
-            }
-        };
-        if (!isRegisteredToTabsEvents) {
-            chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-                if (tab.url.indexOf("http") === 0 && changeInfo.status === "complete") {
-                    setTabs(tab);
-                }
-            });
-            isRegisteredToTabsEvents = true;
-        }
-    };
     const closeSettingsTab = function() {
         if (settingsWorker && settingsWorker.settingsTab) {
             settingsWorker.settingsTab.close();
         }
     };
-
+     */
     return {
         watchForPages: watchForPages,
-        toggleConversion: toggleConversion,
-        showSettingsTab: showSettingsTab,
-        showTestTab: showTestTab,
-        registerToTabsEvents: registerToTabsEvents,
-        closeSettingsTab: closeSettingsTab
+        toggleConversion: toggleConversion
+        //showSettingsTab: showSettingsTab,
+        //showTestTab: showTestTab,
+        //closeSettingsTab: closeSettingsTab
     }
 };
 
