@@ -53,8 +53,10 @@ const GcContentInterface = function(anInformationHolder) {
         console.log("attachHandler changeInfo.status " + changeInfo.status);
         console.log("attachHandler changeInfo.url " + changeInfo.url);
         console.log("attachHandler tab.url " + tab.url);
+        // https://chrome.google.com/webstore
         console.log(changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0);
-        if (changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0) {
+        if (changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0
+            && tab.url.indexOf("https://chrome.google.com/webstore") === -1) {
             chrome.tabs.executeScript(tabId, {file: "common/dcc-regexes.js", allFrames: true}, function(){
                 chrome.tabs.executeScript(tabId, {file: "common/dcc-content.js", allFrames: true}, function(){
                     chrome.tabs.executeScript(tabId, {file: "dcc-chrome-content-adapter.js", allFrames: true},

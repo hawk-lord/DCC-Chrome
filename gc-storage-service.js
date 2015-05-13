@@ -6,7 +6,6 @@
  */
 const GcStorageServiceProvider = function() {
     "use strict";
-    //const {storage} = require("sdk/simple-storage");
     var storage = {};
     const init = function (aDefaultEnabled, anExcludedDomains) {
         chrome.storage.local.get(null, function(aStorage) {

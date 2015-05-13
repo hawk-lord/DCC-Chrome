@@ -73,7 +73,7 @@ const DirectCurrencyConverter = (function() {
             const toCurrencyChanged = informationHolder.convertToCurrency != eventArgs.contentScriptParams.convertToCurrency;
             informationHolder.resetReadCurrencies();
             new ParseContentScriptParams(eventArgs.contentScriptParams, informationHolder);
-            contentInterface.closeSettingsTab();
+            //contentInterface.closeSettingsTab();
             if (toCurrencyChanged) {
                 // controller.loadQuotes();
                 yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(),
@@ -84,7 +84,7 @@ const DirectCurrencyConverter = (function() {
             console.log("subscribe resetSettings");
             informationHolder.resetSettings();
             informationHolder.resetReadCurrencies();
-            contentInterface.closeSettingsTab();
+            //contentInterface.closeSettingsTab();
             // TODO this is copied from above
             if (!informationHolder.convertToCountry) {
                 console.log("subscribe resetSettings if");
@@ -101,6 +101,26 @@ const DirectCurrencyConverter = (function() {
                 yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
             }
         });
+        /**
+         * Communicate with the Settings tab
+         * @param message
+         * @param sender
+         * @param sendResponse
+         */
+        const onMessageFromSettings = function(message, sender, sendResponse) {
+            if (message.command === "show") {
+                sendResponse(new ContentScriptParams(null, informationHolder));
+            }
+            else if (message.command === "save") {
+                eventAggregator.publish("saveSettings", {
+                    contentScriptParams: message.contentScriptParams
+                })
+            }
+            else if (message.command === "reset") {
+                eventAggregator.publish("resetSettings");
+            }
+        };
+        chrome.runtime.onMessage.addListener(onMessageFromSettings);
     };
     const onCurrencyData = function(result) {
         const currencyDataJson = result;
