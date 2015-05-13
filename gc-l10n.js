@@ -8,13 +8,14 @@ const Localisation = function() {
     "use strict";
 
     /**
-     * Returns a localised String from /locale/xx.properties
-     * @type {*|get|Function|accessor|currentFlavors|{value}}
+     * Returns a localised String from /_locales/xx/messages.json
+     * @param parameter
+     * @returns {*}
      * @private
      */
-    //const _ = require("sdk/l10n").get;
-    const _ = function() {
-        return "Test";
+    const _ = function(parameter) {
+        const _ = chrome.i18n;
+        return _.getMessage(parameter);
     };
     return {
         _ : _
