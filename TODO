@@ -1,7 +1,10 @@
 Opera: Remove .idea directory when building crx file.
 
-Show badge correctly at start.
-Make toggle work without reload.
+Check correct settings in settings page.
+
+Show badge correctly and convert at start.
+
+User reported problem.
 
 
 Link to test page at joint.ax
