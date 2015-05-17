@@ -1,11 +1,21 @@
-Opera: Remove .idea directory when building crx file.
-
 Check correct settings in settings page.
-
-Show badge correctly and convert at start.
+Make changes show without reload
 
 User reported problem.
+http://tw.taobao.com/category/53984029/x.htm?cat=53596015&sort=_deal&_ksTS=1430432898161_356&spm=a213z.1224559.20150331F102.21.p9n32F&json=on&cna=ZA%2FEDaPtp0ECAdyFtMk42Nws&module=filterForm&_input_charset=utf-8&_lang=zh_CN%3ATB-GBK&s=0&navigator=all&callback=__jsonp_cb&abtest=_AB-LR492-LR501-LR517-PR492-PR501-PV517_1273
 
+Change names:
+unitAfter: true,
+separatePrice: true,        also type
+subUnitSeparator: ",",
+thousandSep: ".",
+
+beforeCurrencySymbol":true,
+currencySpacing":" ",
+monetarySeparatorSymbol":",",
+monetaryGroupingSeparatorSymbol"
+
+Remove all console.*
 
 Link to test page at joint.ax
 
