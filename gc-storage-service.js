@@ -20,15 +20,15 @@ const GcStorageServiceProvider = function() {
                     // convertToCurrency: "EUR",
                     // convertToCountry: "PL",
                     customSymbols: {},
-                    subUnitSeparator: ",",
                     enableOnStart: true,
                     quoteAdjustmentPercent: 0,
                     roundAmounts: false,
-                    separatePrice: true,
                     showOriginalPrices: true,
-                    unitAfter: true,
+                    beforeCurrencySymbol: true,
+                    currencySpacing: "\u2009",
+                    monetarySeparatorSymbol: ",",
+                    monetaryGroupingSeparatorSymbol: ".",
                     tempConvertUnits: false,
-                    thousandSep: ".",
                     enabledCurrencies: aDefaultEnabled
                 };
                 console.log("done storage.dccPrefs " + storage.dccPrefs);
@@ -43,8 +43,8 @@ const GcStorageServiceProvider = function() {
                 if (!storage.dccPrefs.customSymbols) {
                     storage.dccPrefs.customSymbols = {};
                 }
-                if (!storage.dccPrefs.subUnitSeparator) {
-                    storage.dccPrefs.subUnitSeparator = ",";
+                if (!storage.dccPrefs.monetarySeparatorSymbol) {
+                    storage.dccPrefs.monetarySeparatorSymbol = ",";
                 }
                 if (storage.dccPrefs.enableOnStart === null || storage.dccPrefs.enableOnStart == null) {
                     storage.dccPrefs.enableOnStart = true;
@@ -55,20 +55,20 @@ const GcStorageServiceProvider = function() {
                 if (storage.dccPrefs.roundAmounts === null || storage.dccPrefs.roundAmounts == null) {
                     storage.dccPrefs.roundAmounts = false;
                 }
-                if (storage.dccPrefs.separatePrice === null || storage.dccPrefs.separatePrice == null) {
-                    storage.dccPrefs.separatePrice = true;
+                if (!storage.dccPrefs.currencySpacing) {
+                    storage.dccPrefs.currencySpacing = "\u2009";
                 }
                 if (storage.dccPrefs.showOriginalPrices === null || storage.dccPrefs.showOriginalPrices == null) {
                     storage.dccPrefs.showOriginalPrices = true;
                 }
-                if (storage.dccPrefs.unitAfter === null || storage.dccPrefs.unitAfter == null) {
-                    storage.dccPrefs.unitAfter = true;
+                if (storage.dccPrefs.beforeCurrencySymbol === null || storage.dccPrefs.beforeCurrencySymbol == null) {
+                    storage.dccPrefs.beforeCurrencySymbol = true;
                 }
                 if (storage.dccPrefs.tempConvertUnits === null || storage.dccPrefs.tempConvertUnits == null) {
                     storage.dccPrefs.tempConvertUnits = false;
                 }
-                if (!storage.dccPrefs.thousandSep) {
-                    storage.dccPrefs.thousandSep = ".";
+                if (!storage.dccPrefs.monetaryGroupingSeparatorSymbol) {
+                    storage.dccPrefs.monetaryGroupingSeparatorSymbol = ".";
                 }
                 if (!storage.dccPrefs.enabledCurrencies) {
                     storage.dccPrefs.enabledCurrencies = aDefaultEnabled;
@@ -115,11 +115,11 @@ const GcStorageServiceProvider = function() {
             storage.dccPrefs.customSymbols = aCustomSymbols;
                 chrome.storage.local.set(storage);
         },
-        get decimalSep () {
-            return storage.dccPrefs.subUnitSeparator;
+        get monetarySeparatorSymbol () {
+            return storage.dccPrefs.monetarySeparatorSymbol;
         },
-        set decimalSep (aDecimalSep) {
-            storage.dccPrefs.subUnitSeparator = aDecimalSep;
+        set monetarySeparatorSymbol (aMonetarySeparatorSymbol) {
+            storage.dccPrefs.monetarySeparatorSymbol = aMonetarySeparatorSymbol;
                 chrome.storage.local.set(storage);
         },
         get enableOnStart () {
@@ -160,11 +160,11 @@ const GcStorageServiceProvider = function() {
             storage.dccPrefs.roundAmounts = aRoundPrices;
                 chrome.storage.local.set(storage);
         },
-        get separatePrice () {
-            return storage.dccPrefs.separatePrice;
+        get currencySpacing () {
+            return storage.dccPrefs.currencySpacing;
         },
-        set separatePrice (aSeparatePrice) {
-            storage.dccPrefs.separatePrice = aSeparatePrice;
+        set currencySpacing (aCurrencySpacing) {
+            storage.dccPrefs.currencySpacing = aCurrencySpacing;
                 chrome.storage.local.set(storage);
         },
         get showOriginalPrices () {
@@ -174,18 +174,18 @@ const GcStorageServiceProvider = function() {
             storage.dccPrefs.showOriginalPrices = aShowOriginalPrices;
                 chrome.storage.local.set(storage);
         },
-        get unitAfter () {
-            return storage.dccPrefs.unitAfter;
+        get beforeCurrencySymbol () {
+            return storage.dccPrefs.beforeCurrencySymbol;
         },
-        set unitAfter (aUnitAfter) {
-            storage.dccPrefs.unitAfter = aUnitAfter;
+        set beforeCurrencySymbol (aBeforeCurrencySymbol) {
+            storage.dccPrefs.beforeCurrencySymbol = aBeforeCurrencySymbol;
                 chrome.storage.local.set(storage);
         },
-        get thousandSep () {
-            return storage.dccPrefs.thousandSep;
+        get monetaryGroupingSeparatorSymbol () {
+            return storage.dccPrefs.monetaryGroupingSeparatorSymbol;
         },
-        set thousandSep (aThousandSep) {
-            storage.dccPrefs.thousandSep = aThousandSep;
+        set monetaryGroupingSeparatorSymbol (aMonetaryGroupingSeparatorSymbol) {
+            storage.dccPrefs.monetaryGroupingSeparatorSymbol = aMonetaryGroupingSeparatorSymbol;
                 chrome.storage.local.set(storage);
         },
         get tempConvertUnits () {
