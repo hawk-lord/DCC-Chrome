@@ -1,11 +1,9 @@
 Direct Currency Converter
 
-Version: 2.0.3.0
-Date: 2015-03-10
+Version: 2.1.0.0
+Date: 2015-05-18
 
-After installation, you'll have a new button in the toolbar.
-
-Conversion is enabled or disabled by clicking the button.
+After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
 The settings tab is opened with the "Options" menu item.
 Changed settings are saved with the "Save" button in the settings tab.
@@ -33,48 +31,23 @@ Also, if amount and unit are in different HTML elements (for example when they h
 
 Optionally, if selected in the settings tab, some traditional units of measurement (such as miles and calories) are converted to SI units (such as kilometres and kilojoules).
 
-Runs on Chrome 38 and Opera 25 and later versions.
+Runs on Chrome 42, Opera 29 and later versions.
 
 Originally released for Firefox:
-https://addons.mozilla.org/sv-SE/firefox/addon/direct-currency-converter/
-https://addons.mozilla.org/sv-SE/developers/addon/direct-currency-converter-2/
+https://addons.mozilla.org/addon/direct-currency-converter-2/
 
 Some features of the Firefox version could not be ported to the Chrome/Opera version:
 - PDF document conversion
-- Enabled/disabled buttons
 - Panel with menu
 - Tab with test values
-
-Based on code from Simple Currency Converter
-https://addons.mozilla.org/en-US/firefox/addon/simple-currency-converter/
-
-Chrome API used
-chrome.browserAction.onClicked.addListener
-    Since Chrome 5.
-chrome.i18n.getMessage
-    Since Chrome 5.
-chrome.runtime.getURL
-chrome.runtime.onMessage.addListener
-    Since Chrome 22.
-chrome.runtime.onConnect.addListener
-chrome.runtime.sendMessage
-    Since Chrome 26.
-chrome.storage.local.get
-chrome.storage.local.set
-    Since Chrome 20.
-chrome.tabs.connect
-chrome.tabs.executeScript
-chrome.tabs.onCreated.addListener
-    Since Chrome 5.
-chrome.tabs.query
-    Since Chrome 5.
-
 
 External libraries used:
 jQuery 2.1.3
 jQuery UI 1.11.2
 
 Icons provided by Iconfinder.
+
+Localisation data provided by Unicode Common Locale Data Repository (CLDR) Version 27.0.1.
 
 Author: Per Johansson, Johanssons Informationsteknik JOINT, Åland Islands, Finland.
 
@@ -110,3 +83,9 @@ Added support for US cents (¢, ￠).
 Improved support for non-English characters in price matches.
 Internal change: rewrote price regexes.
 Internal change: Updated jQuery and jQuery UI versions.
+
+Version: 2.1.0.0
+Date: 2015-05-18
+Improved localisation, using default currency formats from Unicode Common Locale Data Repository (CLDR) Version 27.0.1.
+Fix: no reload needed when activating conversion.
+Internal change: general code rewrite in order to ease maintenance and porting between web browsers.

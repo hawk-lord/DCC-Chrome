@@ -4,18 +4,6 @@ Make changes show without reload
 User reported problem.
 http://tw.taobao.com/category/53984029/x.htm?cat=53596015&sort=_deal&_ksTS=1430432898161_356&spm=a213z.1224559.20150331F102.21.p9n32F&json=on&cna=ZA%2FEDaPtp0ECAdyFtMk42Nws&module=filterForm&_input_charset=utf-8&_lang=zh_CN%3ATB-GBK&s=0&navigator=all&callback=__jsonp_cb&abtest=_AB-LR492-LR501-LR517-PR492-PR501-PV517_1273
 
-Change names:
-unitAfter: true,
-separatePrice: true,        also type
-subUnitSeparator: ",",
-thousandSep: ".",
-
-beforeCurrencySymbol":true,
-currencySpacing":" ",
-monetarySeparatorSymbol":",",
-monetaryGroupingSeparatorSymbol"
-
-Remove all console.*
 
 Link to test page at joint.ax
 
@@ -24,4 +12,25 @@ Small tile - 440x280: (optional)
 Large tile - 920x680: (optional)
 Marquee - 1400x560: (optional)
 
+
+Chrome API used
+chrome.browserAction.onClicked.addListener
+    Since Chrome 5.
+chrome.i18n.getMessage
+    Since Chrome 5.
+chrome.runtime.getURL
+chrome.runtime.onMessage.addListener
+    Since Chrome 22.
+chrome.runtime.onConnect.addListener
+chrome.runtime.sendMessage
+    Since Chrome 26.
+chrome.storage.local.get
+chrome.storage.local.set
+    Since Chrome 20.
+chrome.tabs.connect
+chrome.tabs.executeScript
+chrome.tabs.onCreated.addListener
+    Since Chrome 5.
+chrome.tabs.query
+    Since Chrome 5.
 
