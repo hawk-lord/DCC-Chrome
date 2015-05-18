@@ -88,4 +88,5 @@ Version: 2.1.0.0
 Date: 2015-05-18
 Improved localisation, using default currency formats from Unicode Common Locale Data Repository (CLDR) Version 27.0.1.
 Fix: no reload needed when activating conversion.
+Fix: "Excluded domains" work now.
 Internal change: general code rewrite in order to ease maintenance and porting between web browsers.
