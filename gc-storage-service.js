@@ -12,9 +12,9 @@ const GcStorageServiceProvider = function() {
             storage = aStorage;
             if (!storage.excludedDomains) {
                 storage.excludedDomains = anExcludedDomains;
-                console.log("storage.excludedDomains " + storage.excludedDomains);
+                // console.log("storage.excludedDomains " + storage.excludedDomains);
             }
-            console.log("storage.dccPrefs " + storage.dccPrefs);
+            // console.log("storage.dccPrefs " + storage.dccPrefs);
             if (!storage.dccPrefs) {
                 storage.dccPrefs = {
                     // convertToCurrency: "EUR",
@@ -31,7 +31,7 @@ const GcStorageServiceProvider = function() {
                     tempConvertUnits: false,
                     enabledCurrencies: aDefaultEnabled
                 };
-                console.log("done storage.dccPrefs " + storage.dccPrefs);
+                // console.log("done storage.dccPrefs " + storage.dccPrefs);
             }
             else {
                 //if (storage.dccPrefs.convertToCurrency == null) {
@@ -101,7 +101,7 @@ const GcStorageServiceProvider = function() {
                 chrome.storage.local.set(storage);
         },
         get convertToCountry () {
-            console.log("convertToCountry storage.dccPrefs " + storage.dccPrefs);
+            // console.log("convertToCountry storage.dccPrefs " + storage.dccPrefs);
             return storage.dccPrefs.convertToCountry;
         },
         set convertToCountry (aCountry) {

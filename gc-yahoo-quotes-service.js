@@ -25,7 +25,7 @@ const GcYahooQuotesServiceProvider = function() {
         }
     };
     const fetchQuotesFromTo = function(aUrlString) {
-        console.log("fetchQuotesFromTo ");
+        // console.log("fetchQuotesFromTo ");
         const urlString = aUrlString;
         const request = new XMLHttpRequest();
         request.open("GET", aUrlString, true);
@@ -37,7 +37,7 @@ const GcYahooQuotesServiceProvider = function() {
         request.send(null);
     };
     const fetchQuotesToFrom = function(aUrlString) {
-        console.log("fetchQuotesToFrom ");
+        // console.log("fetchQuotesToFrom ");
         const urlString = aUrlString;
         const request = new XMLHttpRequest();
         request.open("GET", aUrlString, true);

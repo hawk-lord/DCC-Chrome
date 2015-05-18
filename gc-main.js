@@ -57,19 +57,19 @@ const DirectCurrencyConverter = (function() {
             }
         });
         eventAggregator.subscribe("toggleConversion", function(eventArgs) {
-            console.log("subscribe toggleConversion");
+            // console.log("subscribe toggleConversion");
             contentInterface.toggleConversion(eventArgs);
         });
         eventAggregator.subscribe("showSettingsTab", function() {
-            console.log("subscribe showSettingsTab");
+            // console.log("subscribe showSettingsTab");
             contentInterface.showSettingsTab();
         });
         eventAggregator.subscribe("showTestTab", function() {
-            console.log("subscribe showTestTab");
+            // console.log("subscribe showTestTab");
             contentInterface.showTestTab();
         });
         eventAggregator.subscribe("saveSettings", function(eventArgs) {
-            console.log("subscribe saveSettings");
+            // console.log("subscribe saveSettings");
             const toCurrencyChanged = informationHolder.convertToCurrency != eventArgs.contentScriptParams.convertToCurrency;
             informationHolder.resetReadCurrencies();
             new ParseContentScriptParams(eventArgs.contentScriptParams, informationHolder);
@@ -81,13 +81,13 @@ const DirectCurrencyConverter = (function() {
             }
         });
         eventAggregator.subscribe("resetSettings", function() {
-            console.log("subscribe resetSettings");
+            // console.log("subscribe resetSettings");
             informationHolder.resetSettings();
             informationHolder.resetReadCurrencies();
             //contentInterface.closeSettingsTab();
             // TODO this is copied from above
             if (!informationHolder.convertToCountry) {
-                console.log("subscribe resetSettings if");
+                // console.log("subscribe resetSettings if");
                 geoService.loadUserCountry(gcGeoService);
                 // TODO already subscribed once
                 //eventAggregator.subscribe("countryReceived", (countryCode) => {
@@ -97,7 +97,7 @@ const DirectCurrencyConverter = (function() {
                 //});
             }
             else {
-                console.log("subscribe resetSettings else");
+                // console.log("subscribe resetSettings else");
                 yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
             }
         });

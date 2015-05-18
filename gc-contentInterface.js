@@ -16,17 +16,17 @@ const GcContentInterface = function(anInformationHolder) {
         //this.workers = [];
     };
     const sendEnabledStatus = function(customTabObject, status) {
-        console.log("sendEnabledStatus " + status);
+        // console.log("sendEnabledStatus " + status);
         if (customTabObject.port) {
             customTabObject.port.postMessage(status);
         }
     };
     const sendSettingsToPage = function(tabId, changeInfo, tab) {
-        console.log("sendSettingsToPage " + tabId);
+        // console.log("sendSettingsToPage " + tabId);
         var contentPort;
         const finishedTabProcessingHandler = function (aHasConvertedElements) {
             try {
-                console.log("finishedTabProcessingHandler " + aHasConvertedElements);
+                // console.log("finishedTabProcessingHandler " + aHasConvertedElements);
                 if (!customTabObjects[tabId]) {
                     customTabObjects[tabId] = new CustomTabObject();
                 }
@@ -39,7 +39,7 @@ const GcContentInterface = function(anInformationHolder) {
             }
         };
         const onScriptExecuted = function () {
-            console.log("onScriptExecuted tabId " + tabId);
+            // console.log("onScriptExecuted tabId " + tabId);
             contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
             try {
                 // TODO Don't send null
@@ -49,12 +49,12 @@ const GcContentInterface = function(anInformationHolder) {
             }
             contentPort.onMessage.addListener(finishedTabProcessingHandler);
         };
-        console.log("attachHandler tabId " + tabId);
-        console.log("attachHandler changeInfo.status " + changeInfo.status);
-        console.log("attachHandler changeInfo.url " + changeInfo.url);
-        console.log("attachHandler tab.url " + tab.url);
-        // https://chrome.google.com/webstore
-        console.log(changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0);
+        // console.log("attachHandler tabId " + tabId);
+        // console.log("attachHandler changeInfo.status " + changeInfo.status);
+        // console.log("attachHandler changeInfo.url " + changeInfo.url);
+        // console.log("attachHandler tab.url " + tab.url);
+        // Not allowed in https://chrome.google.com/webstore
+        // console.log(changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0);
         if (changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0
             && tab.url.indexOf("https://chrome.google.com/webstore") === -1) {
             chrome.tabs.executeScript(tabId, {file: "common/dcc-regexes.js", allFrames: true}, function(){
@@ -66,15 +66,15 @@ const GcContentInterface = function(anInformationHolder) {
         }
     };
     const watchForPages = function() {
-        console.log("watchForPages");
+        // console.log("watchForPages");
         const addTabs = function(aTabs) {
-            console.log("addTabs");
+            // console.log("addTabs");
             aTabs.map(function(aTab) {
-                console.log("aTab.id " + aTab.id);
+                // console.log("aTab.id " + aTab.id);
                 if (!customTabObjects[aTab.id]) {
                     customTabObjects[aTab.id] = new CustomTabObject();
                 }
-                console.log(aTab);
+                // console.log(aTab);
                 sendSettingsToPage(aTab.id, {status: "complete"}, aTab)
             });
         };
@@ -109,17 +109,17 @@ const GcContentInterface = function(anInformationHolder) {
         chrome.tabs.query({}, addTabs);
     };
     const toggleConversion = function(aStatus) {
-        console.log("toggleConversion");
+        // console.log("toggleConversion");
         const updateTab = function(aTab) {
-            console.log("aTab.id " + aTab.id);
+            // console.log("aTab.id " + aTab.id);
             if (!customTabObjects[aTab.id]) {
                 customTabObjects[aTab.id] = new CustomTabObject();
             }
             customTabObjects[aTab.id].isEnabled = aStatus;
-            console.log("aStatus " + aStatus);
+            // console.log("aStatus " + aStatus);
             anInformationHolder.conversionEnabled = aStatus;
             const makeEnabledStatus = function(customTabObject) {
-                console.log("sendEnabledStatus ");
+                // console.log("sendEnabledStatus ");
                 const status = {};
                 status.isEnabled = aStatus;
                 status.hasConvertedElements = customTabObject.hasConvertedElements;
@@ -134,7 +134,7 @@ const GcContentInterface = function(anInformationHolder) {
             customTabObjects[aTab.id].hasConvertedElements = true;
         };
         const updateActiveTabs = function(aTabs) {
-            console.log("updateActiveTabs " + aTabs.length);
+            // console.log("updateActiveTabs " + aTabs.length);
             aTabs.map(updateTab);
         };
         chrome.tabs.query({}, updateActiveTabs);
