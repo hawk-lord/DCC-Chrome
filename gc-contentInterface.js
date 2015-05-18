@@ -18,7 +18,12 @@ const GcContentInterface = function(anInformationHolder) {
     const sendEnabledStatus = function(customTabObject, status) {
         // console.log("sendEnabledStatus " + status);
         if (customTabObject.port) {
-            customTabObject.port.postMessage(status);
+            try {
+                customTabObject.port.postMessage(status);
+            }
+            catch(err) {
+                // TODO handle Error: Attempting to use a disconnected port object
+            }
         }
     };
     const sendSettingsToPage = function(tabId, changeInfo, tab) {
