@@ -9,6 +9,7 @@
  * Module pattern is used.
  */
 const ContentAdapter = function() {
+    "use strict";
     var thePort;
     const messageListener = function(msg) {
         // Check "sendEnabledStatus" or "updateSettings"

@@ -21,7 +21,20 @@
 
   "author": "Per Johansson",
   "background": {
-    "scripts": ["grep.js", "urlProvider.js", "eventAggregator.js", "freegeoip-service.js", "gc-freegeoip-service.js", "yahoo-quotes.js", "gc-main.js"],
+    "scripts": [
+      "dcc-common-lib/eventAggregator.js",
+      "gc-freegeoip-service.js",
+      "dcc-common-lib/freegeoip-service.js",
+      "gc-yahoo-quotes-service.js",
+      "dcc-common-lib/yahoo-quotes.js",
+      "gc-storage-service.js",
+      "dcc-common-lib/informationHolder.js",
+      "dcc-common-lib/contentScriptParams.js",
+      "dcc-common-lib/parseContentScriptParams.js",
+      "gc-l10n.js",
+      "gc-contentInterface.js",
+      "gc-chromeInterface.js",
+      "gc-main.js"],
     "persistent": false
   },
   "options_page": "settings.html",
