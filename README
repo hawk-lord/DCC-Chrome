@@ -90,3 +90,9 @@ Improved localisation, using default currency formats from Unicode Common Locale
 Fix: no reload needed when activating conversion.
 Fix: "Excluded domains" work now.
 Internal change: general code rewrite in order to ease maintenance and porting between web browsers.
+
+Version: 2.1.1.0
+Date: 2015-05-23
+Removed Lithuanian Litas (LTL).
+Fix: Currency Spacing setting
+
