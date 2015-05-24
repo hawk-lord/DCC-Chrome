@@ -1,7 +1,7 @@
 Direct Currency Converter
 
 Version: 2.1.1.0
-Date: 2015-05-23
+Date: 2015-05-24
 
 After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
@@ -92,7 +92,9 @@ Fix: "Excluded domains" work now.
 Internal change: general code rewrite in order to ease maintenance and porting between web browsers.
 
 Version: 2.1.1.0
-Date: 2015-05-23
+Date: 2015-05-24
 Removed Lithuanian Litas (LTL).
 Fix: Currency Spacing setting
+Fix: Exclude Opera extensions pages.
+Fix: Error while reading currency from storage
 
