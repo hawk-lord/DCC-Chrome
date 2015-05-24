@@ -61,7 +61,8 @@ const GcContentInterface = function(anInformationHolder) {
         // Not allowed in https://chrome.google.com/webstore
         // console.log(changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0);
         if (changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0
-            && tab.url.indexOf("https://chrome.google.com/webstore") === -1) {
+            && tab.url.indexOf("https://chrome.google.com/webstore") === -1
+            && tab.url.indexOf("https://addons.opera.com") === -1) {
             chrome.tabs.executeScript(tabId, {file: "common/dcc-regexes.js", allFrames: true}, function(){
                 chrome.tabs.executeScript(tabId, {file: "common/dcc-content.js", allFrames: true}, function(){
                     chrome.tabs.executeScript(tabId, {file: "dcc-chrome-content-adapter.js", allFrames: true},

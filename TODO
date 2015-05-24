@@ -1,3 +1,11 @@
+enableOnStart is not set but defaults to true, since a callback is used in Chrome
+    aStorageService.init(defaultEnabledCurrencies, _excludedDomains);
+    var conversionEnabled = aStorageService.enableOnStart;
+
+Please fix:
+Error in event handler for runtime.onMessage: TypeError: Cannot read property 'convertToCurrency' of undefined
+gc-storage-service.js:97 - return storage.dccPrefs.convertToCurrency;
+
 Check correct settings in settings page.
 Make changes show without reload
 

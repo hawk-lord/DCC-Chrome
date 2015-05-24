@@ -25,7 +25,7 @@ const GcStorageServiceProvider = function() {
                     roundAmounts: false,
                     showOriginalPrices: true,
                     beforeCurrencySymbol: true,
-                    currencySpacing: "\u2009",
+                    currencySpacing: " ",
                     monetarySeparatorSymbol: ",",
                     monetaryGroupingSeparatorSymbol: ".",
                     tempConvertUnits: false,
@@ -55,8 +55,8 @@ const GcStorageServiceProvider = function() {
                 if (storage.dccPrefs.roundAmounts === null || storage.dccPrefs.roundAmounts == null) {
                     storage.dccPrefs.roundAmounts = false;
                 }
-                if (!storage.dccPrefs.currencySpacing) {
-                    storage.dccPrefs.currencySpacing = "\u2009";
+                if ("string" !== typeof storage.dccPrefs.currencySpacing) {
+                    storage.dccPrefs.currencySpacing = " ";
                 }
                 if (storage.dccPrefs.showOriginalPrices === null || storage.dccPrefs.showOriginalPrices == null) {
                     storage.dccPrefs.showOriginalPrices = true;
@@ -94,7 +94,12 @@ const GcStorageServiceProvider = function() {
     return {
         init: init,
         get convertToCurrency () {
-            return storage.dccPrefs.convertToCurrency;
+            if (storage.dccPrefs) {
+                return storage.dccPrefs.convertToCurrency;
+            }
+            else  {
+                return "EUR";
+            }
         },
         set convertToCurrency (aCurrency) {
             storage.dccPrefs.convertToCurrency = aCurrency;
