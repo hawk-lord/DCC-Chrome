@@ -1,7 +1,7 @@
 Direct Currency Converter
 
-Version: 2.1.1.0
-Date: 2015-05-24
+Version: 2.1.1.1
+Date: 2015-05-26
 
 After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
@@ -98,3 +98,6 @@ Fix: Currency Spacing setting
 Fix: Exclude Opera extensions pages.
 Fix: Error while reading currency from storage
 
+Version: 2.1.1.1
+Date: 2015-05-26
+New build for Opera.
