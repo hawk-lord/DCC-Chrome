@@ -8,7 +8,7 @@ const GcYahooQuotesServiceProvider = function() {
     "use strict";
     const onCompleteFromTo = function(aResponse) {
         try {
-            // console.log("onCompleteFromTo aResponse " + aResponse.status);
+            // console.log("onCompleteFromTo aResponse " + aResponse);
             eventAggregator.publish("quotesFromTo", aResponse);
         }
         catch(err) {
@@ -17,7 +17,7 @@ const GcYahooQuotesServiceProvider = function() {
     };
     const onCompleteToFrom = function(aResponse) {
         try {
-            // console.log("onCompleteToFrom aResponse " + aResponse.status);
+            // console.log("onCompleteToFrom aResponse " + aResponse);
             eventAggregator.publish("quotesToFrom", aResponse);
         }
         catch(err) {

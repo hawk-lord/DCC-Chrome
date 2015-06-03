@@ -87,9 +87,24 @@ const GcStorageServiceProvider = function() {
             eventAggregator.publish("storageInitDone");
         });
     };
-    const resetSettings = function()  {
-        storage = {excludedDomains: [], dccPrefs: {}};
+    const resetSettings = function(aDefaultEnabled)  {
+        storage.dccPrefs = {
+            // convertToCurrency: "EUR",
+            // convertToCountry: "PL",
+            customSymbols: {},
+            enableOnStart: true,
+            quoteAdjustmentPercent: 0,
+            roundAmounts: false,
+            showOriginalPrices: true,
+            beforeCurrencySymbol: true,
+            currencySpacing: " ",
+            monetarySeparatorSymbol: ",",
+            monetaryGroupingSeparatorSymbol: ".",
+            tempConvertUnits: false,
+            enabledCurrencies: aDefaultEnabled
+        };
         chrome.storage.local.set(storage);
+        eventAggregator.publish("storageReInitDone");
     };
     return {
         init: init,

@@ -15,15 +15,28 @@ const DirectCurrencyConverter = (function() {
     let regionFormats;
     const defaultExcludedDomains = ["images.google.com", "docs.google.com", "drive.google.com", "twitter.com"];
     const defaultEnabledCurrencies = {"SEK":true, "CHF":true, "DKK":true, "EUR":true, "GBP":true, "ISK":true, "JPY":true, "NOK":true, "RUB":true, "USD":true};
-    const onStorageServiceDone = function(informationHolder) {
-        const gcGeoService = new GcFreegeoipServiceProvider();
-        const geoService = new FreegeoipServiceProvider();
-        const gcYahooQuotesService = new GcYahooQuotesServiceProvider();
-        const yahooQuotesService = new YahooQuotesServiceProvider(eventAggregator);
+    const localisation = new Localisation();
+    const _ = localisation._;
+    var informationHolder;
+    var gcGeoService;
+    var geoService;
+    var gcYahooQuotesService;
+    var yahooQuotesService;
+    const onStorageServiceInitDone = function(informationHolder) {
+        gcGeoService = new GcFreegeoipServiceProvider();
+        geoService = new FreegeoipServiceProvider();
+        gcYahooQuotesService = new GcYahooQuotesServiceProvider();
+        yahooQuotesService = new YahooQuotesServiceProvider(eventAggregator);
         //const gcStorageServiceProvider = new GcStorageServiceProvider();
         //const informationHolder = new InformationHolder(aStorageServiceProvider, currencyData, currencySymbols, iso4217Currencies, regionFormats, _);
         const contentInterface = new GcContentInterface(informationHolder);
         const chromeInterface = new GcChromeInterface(informationHolder.conversionEnabled);
+        eventAggregator.subscribe("countryReceived", function(countryCode) {
+            // console.log("subscribe countryReceived");
+            // console.log("countryCode " + countryCode);
+            informationHolder.convertToCountry = countryCode;
+            yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+        });
         eventAggregator.subscribe("quotesFromTo", function(eventArgs) {
             // console.log("subscribe quotesFromTo");
             yahooQuotesService.quotesHandlerFromTo(eventArgs);
@@ -42,20 +55,6 @@ const DirectCurrencyConverter = (function() {
                 //chromeInterface.setToolsButtonText(informationHolder.getQuoteString());
             }
         });
-//        eventAggregator.subscribe("storageInitDone", function(eventArgs) {
-            if (!informationHolder.convertToCountry) {
-                geoService.loadUserCountry(gcGeoService);
-                eventAggregator.subscribe("countryReceived", function(countryCode) {
-                    // console.log("subscribe countryReceived");
-                    // console.log("countryCode " + countryCode);
-                    informationHolder.convertToCountry = countryCode;
-                    yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
-                });
-            }
-            else {
-                yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
-            }
-//        });
         eventAggregator.subscribe("toggleConversion", function(eventArgs) {
             // console.log("subscribe toggleConversion");
             contentInterface.toggleConversion(eventArgs);
@@ -81,25 +80,8 @@ const DirectCurrencyConverter = (function() {
             }
         });
         eventAggregator.subscribe("resetSettings", function() {
-            // console.log("subscribe resetSettings");
             informationHolder.resetSettings();
             informationHolder.resetReadCurrencies();
-            //contentInterface.closeSettingsTab();
-            // TODO this is copied from above
-            if (!informationHolder.convertToCountry) {
-                // console.log("subscribe resetSettings if");
-                geoService.loadUserCountry(gcGeoService);
-                // TODO already subscribed once
-                //eventAggregator.subscribe("countryReceived", (countryCode) => {
-                //    console.log("countryCode " + countryCode);
-                //    informationHolder.convertToCountry = countryCode;
-                //    yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
-                //});
-            }
-            else {
-                // console.log("subscribe resetSettings else");
-                yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
-            }
         });
         /**
          * Communicate with the Settings tab
@@ -121,13 +103,23 @@ const DirectCurrencyConverter = (function() {
             }
         };
         chrome.runtime.onMessage.addListener(onMessageFromSettings);
+        if (!informationHolder.convertToCountry) {
+            geoService.loadUserCountry(gcGeoService);
+        }
+        else {
+            yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getFromCurrencies(), informationHolder.convertToCurrency);
+        }
+    };
+    const onStorageServiceReInitDone = function(informationHolder) {
+        geoService.loadUserCountry(gcGeoService);
     };
     const onJsonsDone = function() {
         eventAggregator.subscribe("storageInitDone", function() {
-            const localisation = new Localisation();
-            const _ = localisation._;
-            const informationHolder = new InformationHolder(defaultEnabledCurrencies, defaultExcludedDomains, gcStorageServiceProvider, currencyData, currencySymbols, iso4217Currencies, regionFormats, _);
-            onStorageServiceDone(informationHolder);
+            informationHolder = new InformationHolder(defaultEnabledCurrencies, defaultExcludedDomains, gcStorageServiceProvider, currencyData, currencySymbols, iso4217Currencies, regionFormats, _);
+            onStorageServiceInitDone(informationHolder);
+        });
+        eventAggregator.subscribe("storageReInitDone", function() {
+            onStorageServiceReInitDone(informationHolder);
         });
         const gcStorageServiceProvider = new GcStorageServiceProvider();
         gcStorageServiceProvider.init(defaultEnabledCurrencies, defaultExcludedDomains);
