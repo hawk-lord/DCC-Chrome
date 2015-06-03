@@ -5,9 +5,9 @@ const GcFreegeoipServiceProvider = function() {
     "use strict";
     const onComplete = function() {
         try {
-            if (this.readyState == this.DONE) {
+            if (this.readyState === this.DONE) {
                 var countryCode;
-                if (this.status == "200") {
+                if (this.status === 200) {
                     const response = JSON.parse(this.responseText);
                     countryCode = response.country_code;
                 }
