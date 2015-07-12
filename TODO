@@ -1,3 +1,6 @@
+Ordering of currencies does not work in Chrome after restart.
+
+
 enableOnStart is not set but defaults to true, since a callback is used in Chrome
     aStorageService.init(defaultEnabledCurrencies, _excludedDomains);
     var conversionEnabled = aStorageService.enableOnStart;
