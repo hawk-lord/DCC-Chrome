@@ -118,7 +118,7 @@ const GcStorageServiceProvider = function() {
         },
         set convertToCurrency (aCurrency) {
             storage.dccPrefs.convertToCurrency = aCurrency;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get convertToCountry () {
             // console.log("convertToCountry storage.dccPrefs " + storage.dccPrefs);
@@ -126,21 +126,21 @@ const GcStorageServiceProvider = function() {
         },
         set convertToCountry (aCountry) {
             storage.dccPrefs.convertToCountry = aCountry;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get customSymbols () {
             return storage.dccPrefs.customSymbols;
         },
         set customSymbols (aCustomSymbols) {
             storage.dccPrefs.customSymbols = aCustomSymbols;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get monetarySeparatorSymbol () {
             return storage.dccPrefs.monetarySeparatorSymbol;
         },
         set monetarySeparatorSymbol (aMonetarySeparatorSymbol) {
             storage.dccPrefs.monetarySeparatorSymbol = aMonetarySeparatorSymbol;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get enableOnStart () {
             if (storage.dccPrefs) {
@@ -150,70 +150,74 @@ const GcStorageServiceProvider = function() {
         },
         set enableOnStart (anEnableOnStart) {
             storage.dccPrefs.enableOnStart = anEnableOnStart;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get excludedDomains () {
             return storage.excludedDomains;
         },
         set excludedDomains (anExcludedDomains) {
             storage.excludedDomains = anExcludedDomains;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get enabledCurrencies () {
             return storage.dccPrefs.enabledCurrencies;
         },
         set enabledCurrencies (anEnabledCurrencies) {
             storage.dccPrefs.enabledCurrencies = anEnabledCurrencies;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get quoteAdjustmentPercent () {
             return storage.dccPrefs.quoteAdjustmentPercent;
         },
         set quoteAdjustmentPercent (aQuoteAdjustmentPercent) {
             storage.dccPrefs.quoteAdjustmentPercent = aQuoteAdjustmentPercent;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get roundPrices () {
             return storage.dccPrefs.roundAmounts;
         },
         set roundPrices (aRoundPrices) {
             storage.dccPrefs.roundAmounts = aRoundPrices;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get currencySpacing () {
             return storage.dccPrefs.currencySpacing;
         },
         set currencySpacing (aCurrencySpacing) {
             storage.dccPrefs.currencySpacing = aCurrencySpacing;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get showOriginalPrices () {
             return storage.dccPrefs.showOriginalPrices;
         },
         set showOriginalPrices (aShowOriginalPrices) {
             storage.dccPrefs.showOriginalPrices = aShowOriginalPrices;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get beforeCurrencySymbol () {
             return storage.dccPrefs.beforeCurrencySymbol;
         },
         set beforeCurrencySymbol (aBeforeCurrencySymbol) {
             storage.dccPrefs.beforeCurrencySymbol = aBeforeCurrencySymbol;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get monetaryGroupingSeparatorSymbol () {
             return storage.dccPrefs.monetaryGroupingSeparatorSymbol;
         },
         set monetaryGroupingSeparatorSymbol (aMonetaryGroupingSeparatorSymbol) {
             storage.dccPrefs.monetaryGroupingSeparatorSymbol = aMonetaryGroupingSeparatorSymbol;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
         },
         get tempConvertUnits () {
             return storage.dccPrefs.tempConvertUnits;
         },
         set tempConvertUnits (aTempConvertUnits) {
             storage.dccPrefs.tempConvertUnits = aTempConvertUnits;
-                chrome.storage.local.set(storage);
+            chrome.storage.local.set(storage);
+        },
+        setEnabledCurrency(aCurrency, anEnabled) {
+            storage.dccPrefs.enabledCurrencies[aCurrency] = anEnabled;
+            chrome.storage.local.set(storage);
         },
         resetSettings: resetSettings
     };
