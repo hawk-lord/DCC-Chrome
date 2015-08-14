@@ -114,4 +114,4 @@ Fix: save selected currencies.
 Version: 2.2.0.0
 Date: 2015-08-14
 Currency and country name changes from ISO 4217 Amendment Number 160
-Settings screen currency selection improved.
+Settings screen currency selection improved. Also support for small screens and touch screens.
