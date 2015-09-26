@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
   "name": "__MSG_name__",
-  "version": "2.2.0.0",
+  "version": "2.3.0.0",
 
   "default_locale": "en",
-  "description": "Converts prices from any currency ($, £, etc.) to prices in a selectable currency automatically while browsing.",
+  "description": "Converts prices from any currency (€, $, £, ¥, ؋, ৳, ฿, ៛, ₡, etc.) to prices in a selectable currency automatically while browsing.",
   "icons": {
     "16": "images/1402781551_currency_exchange_1.png",
     "48": "images/1415072079_currency_exchange_1-48.png",

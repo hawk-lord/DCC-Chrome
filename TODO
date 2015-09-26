@@ -1,4 +1,35 @@
-Ordering of currencies does not work in Chrome after restart.
+reset from iso4217currencies.json
+        aStorageService.resetSettings(aConvertFrom);
+
+
+check that storage order works.
+
+EUR more formats, euroa...
+
+
+*/
+
+
+    /*
+    const defaultEnabledCurrencies = [new EnabledCurrency("SEK", true), new EnabledCurrency("CHF", true), new EnabledCurrency("DKK", true), new EnabledCurrency("EUR", true), new EnabledCurrency("GBP", true), new EnabledCurrency("ISK", true), new EnabledCurrency("JPY", true), new EnabledCurrency("NOK", true), new EnabledCurrency("RUB", true), new EnabledCurrency("USD", true)];
+    defaultEnabledCurrencies2.map(function(a, b, c) {
+        // object
+        console.log(a.isoName + " " + a.enabled);
+        // index
+        console.log(b);
+        // array
+        console.log(c);
+    });
+    for (var d of defaultEnabledCurrencies2) {
+        // object
+        console.log(d.isoName + " " + d.enabled);
+    }
+    for (var e in defaultEnabledCurrencies2) {
+        // index
+        console.log(e);
+    }
+*/
+
 
 
 enableOnStart is not set but defaults to true, since a callback is used in Chrome
