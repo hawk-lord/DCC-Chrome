@@ -7,18 +7,14 @@
 const GcStorageServiceProvider = function() {
     "use strict";
     var storage = {};
-    const init = function (aDefaultEnabled, anExcludedDomains) {
+    const init = function (aConvertFroms, anExcludedDomains) {
         chrome.storage.local.get(null, function(aStorage) {
             storage = aStorage;
             if (!storage.excludedDomains) {
                 storage.excludedDomains = anExcludedDomains;
-                // console.log("storage.excludedDomains " + storage.excludedDomains);
             }
-            // console.log("storage.dccPrefs " + storage.dccPrefs);
             if (!storage.dccPrefs) {
                 storage.dccPrefs = {
-                    // convertToCurrency: "EUR",
-                    // convertToCountry: "PL",
                     customSymbols: {},
                     enableOnStart: true,
                     quoteAdjustmentPercent: 0,
@@ -29,17 +25,10 @@ const GcStorageServiceProvider = function() {
                     monetarySeparatorSymbol: ",",
                     monetaryGroupingSeparatorSymbol: ".",
                     tempConvertUnits: false,
-                    enabledCurrencies: aDefaultEnabled
+                    convertFroms: aConvertFroms
                 };
-                // console.log("done storage.dccPrefs " + storage.dccPrefs);
             }
             else {
-                //if (storage.dccPrefs.convertToCurrency == null) {
-                //    storage.dccPrefs.convertToCurrency = "EUR";
-                //}
-                //if (storage.dccPrefs.convertToCountry == null) {
-                //    storage.dccPrefs.convertToCountry = "CZ";
-                //}
                 if (!storage.dccPrefs.customSymbols) {
                     storage.dccPrefs.customSymbols = {};
                 }
@@ -70,18 +59,24 @@ const GcStorageServiceProvider = function() {
                 if (!storage.dccPrefs.monetaryGroupingSeparatorSymbol) {
                     storage.dccPrefs.monetaryGroupingSeparatorSymbol = ".";
                 }
-                if (!storage.dccPrefs.enabledCurrencies) {
-                    storage.dccPrefs.enabledCurrencies = aDefaultEnabled;
+                if (!storage.dccPrefs.convertFroms) {
+                    storage.dccPrefs.convertFroms = aConvertFroms;
                 }
                 else {
-                    Object.keys(aDefaultEnabled).forEach(
-                        function (key, index) {
-                            if (!storage.dccPrefs.enabledCurrencies[key]) {
-                                storage.dccPrefs.enabledCurrencies[key] = aDefaultEnabled[key];
+                    for (var currency of aConvertFroms) {
+                        var found = false;
+                        for (var storedCurrency of storage.dccPrefs.convertFroms) {
+                            if (currency.isoName === storedCurrency.isoName) {
+                                found = true;
+                                break;
                             }
                         }
-                    )
+                        if (!found){
+                            storage.dccPrefs.convertFroms.push(currency);
+                        }
+                    }
                 }
+                storage.dccPrefs.enabledCurrencies = null;
             }
             chrome.storage.local.set(storage);
             eventAggregator.publish("storageInitDone");
@@ -89,8 +84,6 @@ const GcStorageServiceProvider = function() {
     };
     const resetSettings = function(aDefaultEnabled)  {
         storage.dccPrefs = {
-            // convertToCurrency: "EUR",
-            // convertToCountry: "PL",
             customSymbols: {},
             enableOnStart: true,
             quoteAdjustmentPercent: 0,
@@ -101,7 +94,7 @@ const GcStorageServiceProvider = function() {
             monetarySeparatorSymbol: ",",
             monetaryGroupingSeparatorSymbol: ".",
             tempConvertUnits: false,
-            enabledCurrencies: aDefaultEnabled
+            convertFroms: aDefaultEnabled
         };
         chrome.storage.local.set(storage);
         eventAggregator.publish("storageReInitDone");
@@ -121,7 +114,6 @@ const GcStorageServiceProvider = function() {
             chrome.storage.local.set(storage);
         },
         get convertToCountry () {
-            // console.log("convertToCountry storage.dccPrefs " + storage.dccPrefs);
             return storage.dccPrefs.convertToCountry;
         },
         set convertToCountry (aCountry) {
@@ -159,11 +151,11 @@ const GcStorageServiceProvider = function() {
             storage.excludedDomains = anExcludedDomains;
             chrome.storage.local.set(storage);
         },
-        get enabledCurrencies () {
-            return storage.dccPrefs.enabledCurrencies;
+        get convertFroms () {
+            return storage.dccPrefs.convertFroms;
         },
-        set enabledCurrencies (anEnabledCurrencies) {
-            storage.dccPrefs.enabledCurrencies = anEnabledCurrencies;
+        set convertFroms (aConvertFroms) {
+            storage.dccPrefs.convertFroms = aConvertFroms;
             chrome.storage.local.set(storage);
         },
         get quoteAdjustmentPercent () {
@@ -216,7 +208,17 @@ const GcStorageServiceProvider = function() {
             chrome.storage.local.set(storage);
         },
         setEnabledCurrency(aCurrency, anEnabled) {
-            storage.dccPrefs.enabledCurrencies[aCurrency] = anEnabled;
+            var found = false;
+            for (var storedCurrency of storage.dccPrefs.convertFroms) {
+                if (aCurrency.isoName === storedCurrency.isoName) {
+                    found = true;
+                    aCurrency.enabled = anEnabled;
+                    break;
+                }
+            }
+            if (!found){
+                storage.dccPrefs.convertFroms.push({isoName: currency, enabled: anEnabled});
+            }
             chrome.storage.local.set(storage);
         },
         resetSettings: resetSettings
