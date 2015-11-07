@@ -19,7 +19,9 @@ const GcStorageServiceProvider = function() {
                     enableOnStart: true,
                     quoteAdjustmentPercent: 0,
                     roundAmounts: false,
-                    showOriginalPrices: true,
+                    showOriginalPrices: false,
+                    showOriginalCurrencies: false,
+                    showTooltip: true,
                     beforeCurrencySymbol: true,
                     currencySpacing: " ",
                     monetarySeparatorSymbol: ",",
@@ -48,7 +50,13 @@ const GcStorageServiceProvider = function() {
                     storage.dccPrefs.currencySpacing = " ";
                 }
                 if (storage.dccPrefs.showOriginalPrices === null || storage.dccPrefs.showOriginalPrices == null) {
-                    storage.dccPrefs.showOriginalPrices = true;
+                    storage.dccPrefs.showOriginalPrices = false;
+                }
+                if (storage.dccPrefs.showOriginalCurrencies === null || storage.dccPrefs.showOriginalCurrencies == null) {
+                    storage.dccPrefs.showOriginalCurrencies = false;
+                }
+                if (storage.dccPrefs.showTooltip === null || storage.dccPrefs.showTooltip == null) {
+                    storage.dccPrefs.showTooltip = true;
                 }
                 if (storage.dccPrefs.beforeCurrencySymbol === null || storage.dccPrefs.beforeCurrencySymbol == null) {
                     storage.dccPrefs.beforeCurrencySymbol = true;
@@ -88,7 +96,9 @@ const GcStorageServiceProvider = function() {
             enableOnStart: true,
             quoteAdjustmentPercent: 0,
             roundAmounts: false,
-            showOriginalPrices: true,
+            showOriginalPrices: false,
+            showOriginalCurrencies: false,
+            showTooltip: true,
             beforeCurrencySymbol: true,
             currencySpacing: " ",
             monetarySeparatorSymbol: ",",
@@ -184,6 +194,20 @@ const GcStorageServiceProvider = function() {
         },
         set showOriginalPrices (aShowOriginalPrices) {
             storage.dccPrefs.showOriginalPrices = aShowOriginalPrices;
+            chrome.storage.local.set(storage);
+        },
+        get showOriginalCurrencies () {
+            return storage.dccPrefs.showOriginalCurrencies;
+        },
+        set showOriginalCurrencies (aShowOriginalCurrencies) {
+            storage.dccPrefs.showOriginalCurrencies = aShowOriginalCurrencies;
+            chrome.storage.local.set(storage);
+        },
+        get showTooltip () {
+            return storage.dccPrefs.showTooltip;
+        },
+        set showTooltip (aShowTooltip) {
+            storage.dccPrefs.showTooltip = aShowTooltip;
             chrome.storage.local.set(storage);
         },
         get beforeCurrencySymbol () {

@@ -1,7 +1,7 @@
 Direct Currency Converter
 
-Version: 2.3.0.0
-Date: 2015-09-27
+Version: 2.4.1.0
+Date: 2015-11-07
 
 After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
@@ -24,14 +24,13 @@ The conversion is made according to a best guess, checking for ISO currency code
 Also, currency names in several languages are checked, for example Arabic, Thai and Mongol.
 Ambiguous currencies are converted in the priority order you want. For instance, "kr" can mean SEK, DKK, NOK or ISK, and is converted to the first possible currency
 in the currency list in the settings tab.
-The "from currency" code is shown in brackets after the original value like this: 6,67 € (60 kr [SEK]).
+A tooltip containing original price, converted price and conversion quote is optionally shown in the upper left corner of the browser area.
+The "from currency" code is optionally shown in brackets after the original value like this: 6,67 € (60 kr [SEK]).
 
 Amounts without units are not converted.
 Also, if amount and unit are in different HTML elements (for example when they have different colours or sizes) conversion cannot be done.
 
 Optionally, if selected in the settings tab, some traditional units of measurement (such as miles and calories) are converted to SI units (such as kilometres and kilojoules).
-
-Runs on Chrome 42, Opera 29 and later versions.
 
 Originally released for Firefox:
 https://addons.mozilla.org/addon/direct-currency-converter-2/
@@ -122,3 +121,10 @@ Fix: the priority order of currencies to convert from. Users will have to save t
 Fix: touch screen drag and drop for the currencies.
 Better support for euro currency recognition in various languages.
 
+Version: 2.4.1.0
+Date: 2015-11-07
+Added an improved tooltip in the upper left corner that shows the conversion used for each element. It won't hide the original tooltip any more. It can be turned off and on in the settings.
+Original price and original currency in brackets can now be hidden and shown separately in the settings.
+Fix: some settings had been disabled.
+Fix: an error with CHF and SEK conversion.
+Fix: don't suppress original tooltips
