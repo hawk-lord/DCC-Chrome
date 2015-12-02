@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "__MSG_name__",
-  "version": "2.4.1.0",
+  "version": "2.4.2.0",
 
   "default_locale": "en",
   "description": "Converts prices from any currency (€, $, £, ¥, ؋, ৳, ฿, ៛, ₡, etc.) to prices in a selectable currency automatically while browsing.",
