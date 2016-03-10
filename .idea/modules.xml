@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../DCC-Chrome/.idea/DCC-Chrome.iml" filepath="$PROJECT_DIR$/../DCC-Chrome/.idea/DCC-Chrome.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/DCC-Chrome.iml" filepath="$PROJECT_DIR$/.idea/DCC-Chrome.iml" />
     </modules>
   </component>
 </project>
