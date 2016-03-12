@@ -1,7 +1,7 @@
 Direct Currency Converter
 
-Version: 2.4.2.0
-Date: 2015-12-02
+Version: 2.4.3.0
+Date: 2016-11-12
 
 After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
@@ -133,3 +133,7 @@ Version: 2.4.2.0
 Date: 2015-12-02
 Improved support for subunits (cents etc.).
 Fix: works with dynamically changed data (again).
+
+Version: 2.4.3.0
+Date: 2016-11-12
+Updated to ISO 4217 Amendment Number 162

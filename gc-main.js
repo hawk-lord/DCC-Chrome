@@ -105,7 +105,7 @@ const DirectCurrencyConverter = (function() {
     const onJsonsDone = function() {
         eventAggregator.subscribe("storageInitDone", function() {
             convertFroms = gcStorageServiceProvider.convertFroms;
-            informationHolder = new InformationHolder(defaultExcludedDomains, gcStorageServiceProvider, currencyData,
+            informationHolder = new InformationHolder(gcStorageServiceProvider, currencyData,
                 currencySymbols, convertFroms, regionFormats, _);
             onStorageServiceInitDone(informationHolder);
         });
