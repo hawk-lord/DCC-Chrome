@@ -24,7 +24,9 @@
     "scripts": [
       "dcc-common-lib/eventAggregator.js",
       "gc-freegeoip-service.js",
+      "gc-nekudo-service.js",
       "dcc-common-lib/freegeoip-service.js",
+      "dcc-common-lib/nekudo-service.js",
       "gc-yahoo-quotes-service.js",
       "dcc-common-lib/yahoo-quotes.js",
       "gc-storage-service.js",

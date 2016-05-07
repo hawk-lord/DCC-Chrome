@@ -4,7 +4,7 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
  */
-const GcFreegeoipServiceProvider = function() {
+const GcNekudoServiceProvider = function() {
     "use strict";
     const onComplete = function() {
         try {
@@ -12,17 +12,17 @@ const GcFreegeoipServiceProvider = function() {
                 var countryCode;
                 if (this.status === 200) {
                     const response = JSON.parse(this.responseText);
-                    countryCode = response.country_code;
+                    countryCode = response.country.code;
                 }
                 else {
                     countryCode = "";
                 }
-                eventAggregator.publish("countryReceivedFreegeoip", countryCode);
+                eventAggregator.publish("countryReceivedNekudo", countryCode);
             }
         }
         catch(err) {
             console.error("err " + err);
-            eventAggregator.publish("countryReceivedFreegeoip", "");
+            eventAggregator.publish("countryReceivedNekudo", "");
         }
     };
     const findCountry = function (aUrlString, aConvertToCountry) {

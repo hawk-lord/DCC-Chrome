@@ -23,20 +23,38 @@ const DirectCurrencyConverter = (function() {
     const localisation = new Localisation();
     const _ = localisation._;
     var informationHolder;
-    var gcGeoService;
-    var geoService;
+    var gcGeoServiceFreegeoip;
+    var geoServiceFreegeoip;
+    var gcGeoServiceNekudo;
+    var geoServiceNekudo;
     var gcYahooQuotesService;
     var yahooQuotesService;
     const onStorageServiceInitDone = function(informationHolder) {
-        gcGeoService = new GcFreegeoipServiceProvider();
-        geoService = new FreegeoipServiceProvider();
+        gcGeoServiceFreegeoip = new GcFreegeoipServiceProvider();
+        geoServiceFreegeoip = new FreegeoipServiceProvider();
+        gcGeoServiceNekudo = new GcNekudoServiceProvider();
+        geoServiceNekudo = new NekudoServiceProvider();
         gcYahooQuotesService = new GcYahooQuotesServiceProvider();
         yahooQuotesService = new YahooQuotesServiceProvider(eventAggregator);
         const contentInterface = new GcContentInterface(informationHolder);
         const chromeInterface = new GcChromeInterface(informationHolder.conversionEnabled);
-        eventAggregator.subscribe("countryReceived", function(countryCode) {
-            informationHolder.convertToCountry = countryCode;
-            yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
+        eventAggregator.subscribe("countryReceivedFreegeoip", function(countryCode) {
+            if (countryCode !== "") {
+                informationHolder.convertToCountry = countryCode;
+                yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
+            }
+            else {
+                geoServiceNekudo.loadUserCountry(ffGeoServiceNekudo);
+            }
+        });
+        eventAggregator.subscribe("countryReceivedNekudo", function(countryCode) {
+            if (countryCode !== "") {
+                informationHolder.convertToCountry = countryCode;
+            }
+            else {
+                informationHolder.convertToCountry = "CH";
+            }
+            yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
         });
         eventAggregator.subscribe("quotesFromTo", function(eventArgs) {
             yahooQuotesService.quotesHandlerFromTo(eventArgs);
@@ -93,14 +111,14 @@ const DirectCurrencyConverter = (function() {
         };
         chrome.runtime.onMessage.addListener(onMessageFromSettings);
         if (!informationHolder.convertToCountry) {
-            geoService.loadUserCountry(gcGeoService);
+            geoServiceFreegeoip.loadUserCountry(gcGeoServiceFreegeoip);
         }
         else {
             yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
         }
     };
     const onStorageServiceReInitDone = function(informationHolder) {
-        geoService.loadUserCountry(gcGeoService);
+        geoServiceFreegeoip.loadUserCountry(gcGeoServiceFreegeoip);
     };
     const onJsonsDone = function() {
         eventAggregator.subscribe("storageInitDone", function() {
