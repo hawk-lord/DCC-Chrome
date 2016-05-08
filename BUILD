@@ -1,4 +1,4 @@
-cd /Users/per/Google\ Chrome\ Projects/
+cd /Users/per/IdeaProjects/dcc-chrome
 rm -i DCC-Chrome.crx
 rm -i DCC-Chrome.zip
 zip -r DCC-Chrome DCC-Chrome -x *.idea* *.git* *.DS_Store*
