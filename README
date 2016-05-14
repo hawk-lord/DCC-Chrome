@@ -1,7 +1,9 @@
 Direct Currency Converter
 
-Version: 2.4.4.0
-Date: 2016-05-07
+No ads or spyware.
+
+Version: 2.4.4.1
+Date: 2016-05-14
 
 After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
@@ -143,3 +145,6 @@ Date: 2016-05-07
 Added geoip.nekudo.com to find user's location an default currency.
 Internal change: Using HTML 5 data instead of hidden input nodes to store original and converted data.
 
+Version: 2.4.4.1
+Date: 2016-05-14
+Bugfix: repeated values were shown.
