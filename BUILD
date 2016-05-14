@@ -15,6 +15,6 @@ Paketera tillägg...
 unzip -l DCC-Chrome.crx
 // Won't work with crx: zip -d DCC-Chrome.crx *.idea*
 Move back .idea folder
-file:///Users/per/Google%20Chrome%20Projects/
+file:///Users/per/IdeaProjects/
 https://addons.opera.com/developer/upload/
 Submitted add-ons
