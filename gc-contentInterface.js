@@ -6,38 +6,29 @@
  */
 const GcContentInterface = function(anInformationHolder) {
     "use strict";
-    const customTabObjects = [];
-    const CustomTabObject = function() {
-        "use strict";
-        this.enabled = false;
-        this.hasConvertedElements = false;
-    };
-    const sendEnabledStatus = function(customTabObject, status) {
-        if (customTabObject.port) {
-            try {
-                customTabObject.port.postMessage(status);
-            }
-            catch(err) {
-                // TODO handle Error: Attempting to use a disconnected port object
-            }
+    const sendEnabledStatus = function(tabId, status) {
+        var contentPort;
+        contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
+        try {
+            contentPort.postMessage(status);            }
+        catch (err) {
+            console.error(err);
         }
     };
     const sendSettingsToPage = function(tabId, changeInfo, tab) {
+        // console.log("sendSettingsToPage " + tabId + " status " + changeInfo.status + " url " + changeInfo.url);
         var contentPort;
         const finishedTabProcessingHandler = function (aHasConvertedElements) {
             try {
-                if (!customTabObjects[tabId]) {
-                    customTabObjects[tabId] = new CustomTabObject();
-                }
-                customTabObjects[tabId].isEnabled = anInformationHolder.conversionEnabled;
-                customTabObjects[tabId].hasConvertedElements = aHasConvertedElements;
-                customTabObjects[tabId].port = contentPort;
+                //console.log("finishedTabProcessingHandler");
+                eventAggregator.publish("toggleConversion", anInformationHolder.conversionEnabled);
             }
             catch (err) {
                 console.error("finishedTabProcessingHandler " + err);
             }
         };
         const onScriptExecuted = function () {
+            // console.log("onScriptExecuted tabId " + tabId);
             contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
             try {
                 // TODO Don't send null
@@ -50,6 +41,8 @@ const GcContentInterface = function(anInformationHolder) {
         if (changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0
             && tab.url.indexOf("https://chrome.google.com/webstore") === -1
             && tab.url.indexOf("https://addons.opera.com") === -1) {
+            // console.log("executeScript tabId " + tabId);
+            // console.log("customTabObjects[tabId] " + customTabObjects[tabId]);
             chrome.tabs.executeScript(tabId, {file: "common/dcc-regexes.js", allFrames: true}, function(){
                 chrome.tabs.executeScript(tabId, {file: "common/dcc-content.js", allFrames: true}, function(){
                     chrome.tabs.executeScript(tabId, {file: "dcc-chrome-content-adapter.js", allFrames: true},
@@ -59,54 +52,26 @@ const GcContentInterface = function(anInformationHolder) {
         }
     };
     const watchForPages = function() {
-        const addTabs = function(aTabs) {
-            aTabs.map(function(aTab) {
-                if (!customTabObjects[aTab.id]) {
-                    customTabObjects[aTab.id] = new CustomTabObject();
-                }
-                sendSettingsToPage(aTab.id, {status: "complete"}, aTab)
-            });
-        };
-        // FIXME attach to existing tabs
-        const setTabs = function(aTab) {
-            if (!customTabObjects[aTab.id]) {
-                customTabObjects[aTab.id] = new CustomTabObject();
-            }
-            customTabObjects[aTab.id].isEnabled = anInformationHolder.conversionEnabled;
-            eventAggregator.publish("toggleConversion", anInformationHolder.conversionEnabled);
-        };
-        const releaseTabs = function(aTab) {
-            customTabObjects[aTab.id] = null;
-        };
-        chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-            if (tab.url.indexOf("http") === 0 && changeInfo.status === "complete") {
-                setTabs(tab);
-            }
-        });
-
+        chrome.tabs.onUpdated.removeListener(sendSettingsToPage);
         chrome.tabs.onUpdated.addListener(sendSettingsToPage);
-        chrome.tabs.query({}, addTabs);
     };
     const toggleConversion = function(aStatus) {
+        // console.log("toggleConversion " + aStatus);
         const updateTab = function(aTab) {
-            if (!customTabObjects[aTab.id]) {
-                customTabObjects[aTab.id] = new CustomTabObject();
-            }
-            customTabObjects[aTab.id].isEnabled = aStatus;
+            // console.log("updateTab " + aTab.id + " " + aStatus);
             anInformationHolder.conversionEnabled = aStatus;
-            const makeEnabledStatus = function(customTabObject) {
+            const makeEnabledStatus = function(tabId) {
                 const status = {};
                 status.isEnabled = aStatus;
-                status.hasConvertedElements = customTabObject.hasConvertedElements;
+                status.hasConvertedElements = false;
                 try {
-                    sendEnabledStatus(customTabObject, status);
+                    sendEnabledStatus(tabId, status);
                 }
                 catch(err) {
                     console.error("ContentInterface: " + err);
                 }
             };
-            customTabObjects.map(makeEnabledStatus);
-            customTabObjects[aTab.id].hasConvertedElements = true;
+            makeEnabledStatus(aTab.id);
         };
         const updateActiveTabs = function(aTabs) {
             aTabs.map(updateTab);

@@ -5,6 +5,20 @@ Popup won't work on CC with
 http://localhost/prices.html
 
 
+Uncaught TypeError: Identifier 'PriceRegexes' has already been declared
+Uncaught TypeError: Identifier 'DccFunctions' has already been declared
+Uncaught TypeError: Identifier 'ContentAdapter' has already been declared
+
+Identifier has already been declared
+
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*"],
+      "js": ["common/dcc-regexes.js", "common/dcc-content.js", "dcc-chrome-content-adapter.js"]
+    }
+  ],
+
 
 */
 
