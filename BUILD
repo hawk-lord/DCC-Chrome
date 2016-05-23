@@ -18,3 +18,9 @@ Move back .idea folder
 file:///Users/per/IdeaProjects/
 https://addons.opera.com/developer/upload/
 Submitted add-ons
+
+cd /Users/per/IdeaProjects
+./chrome.sh
+https://chrome.google.com/webstore/developer/dashboard
+
+
