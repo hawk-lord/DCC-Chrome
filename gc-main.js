@@ -41,10 +41,10 @@ const DirectCurrencyConverter = (function() {
         eventAggregator.subscribe("countryReceivedFreegeoip", function(countryCode) {
             if (countryCode !== "") {
                 informationHolder.convertToCountry = countryCode;
-                yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
+                yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
             }
             else {
-                geoServiceNekudo.loadUserCountry(ffGeoServiceNekudo);
+                geoServiceNekudo.loadUserCountry(gcGeoServiceNekudo);
             }
         });
         eventAggregator.subscribe("countryReceivedNekudo", function(countryCode) {
@@ -54,7 +54,7 @@ const DirectCurrencyConverter = (function() {
             else {
                 informationHolder.convertToCountry = "CH";
             }
-            yahooQuotesService.loadQuotes(ffYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
+            yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
         });
         eventAggregator.subscribe("quotesFromTo", function(eventArgs) {
             yahooQuotesService.quotesHandlerFromTo(eventArgs);

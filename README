@@ -2,8 +2,8 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.4.4.2
-Date: 2016-05-22
+Version: 2.4.4.3
+Date: 2016-05-23
 
 After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
@@ -153,3 +153,8 @@ Version: 2.4.4.2
 Date: 2016-05-22
 Internal change: Simplified GcContentInterface code.
 Internal change: Optimisation for Chrome with var originalChildNodes.
+
+Version: 2.4.4.3
+Date: 2016-05-23
+Fix: invalid declarations in the first initialisation code.
+
