@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Direct Currency Converter",
-  "version": "2.4.4.3",
+  "version": "2.4.5.0",
 
   "default_locale": "en",
   "description": "Converts prices from any currency (€, $, £, ¥, ؋, ৳, ฿, ៛, ₡, etc.) to prices in a selectable currency automatically while browsing.",
@@ -13,8 +13,8 @@
 
   "browser_action": {
     "default_icon": {
-      "19": "images/1415072771_currency_exchange_1-20.png",
-      "38": "images/1415072079_currency_exchange_1-48.png"
+      "19": "images/1415072771_currency_exchange_1-19.png",
+      "38": "images/1415072079_currency_exchange_1-38.png"
     },
     "default_title": "__MSG_buttontitle__"
   },

@@ -2,8 +2,8 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.4.4.3
-Date: 2016-05-23
+Version: 2.4.5.0
+Date: 2016-05-25
 
 After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
@@ -157,4 +157,9 @@ Internal change: Optimisation for Chrome with var originalChildNodes.
 Version: 2.4.4.3
 Date: 2016-05-23
 Fix: invalid declarations in the first initialisation code.
+
+Version: 2.4.5.0
+Date: 2016-05-25
+The browser action icons are now grey to contrast with dark themes. Also scaled to correct sizes.
+Internal change: content scripts will not throw the error "Uncaught TypeError: Identifier has already been declared"
 

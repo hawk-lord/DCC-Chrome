@@ -8,28 +8,31 @@
  *
  * Module pattern is used.
  */
-const ContentAdapter = function() {
-    "use strict";
-    var thePort;
-    const messageListener = function(msg) {
-        if (msg.conversionQuotes) {
-            DirectCurrencyContent.onUpdateSettings(msg);
-        }
-        else {
-            DirectCurrencyContent.onSendEnabledStatus(msg);
-        }
-    };
-    const portListener = function(aPort) {
-        console.assert(aPort.name == "dccContentPort");
-        thePort = aPort;
-        aPort.onMessage.addListener(messageListener);
-    };
-    chrome.runtime.onConnect.addListener(portListener);
-    return {
-        finish: function (hasConvertedElements) {
-            thePort.postMessage(hasConvertedElements);
-        }
-    };
 
-}();
+if (!this.ContentAdapter) {
+    const ContentAdapter = function() {
+        "use strict";
+        var thePort;
+        const messageListener = function(msg) {
+            if (msg.conversionQuotes) {
+                DirectCurrencyContent.onUpdateSettings(msg);
+            }
+            else {
+                DirectCurrencyContent.onSendEnabledStatus(msg);
+            }
+        };
+        const portListener = function(aPort) {
+            console.assert(aPort.name == "dccContentPort");
+            thePort = aPort;
+            aPort.onMessage.addListener(messageListener);
+        };
+        chrome.runtime.onConnect.addListener(portListener);
+        return {
+            finish: function (hasConvertedElements) {
+                thePort.postMessage(hasConvertedElements);
+            }
+        };
 
+    }();
+    this.ContentAdapter = ContentAdapter;
+}

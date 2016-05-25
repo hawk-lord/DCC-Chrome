@@ -9,7 +9,15 @@ Uncaught TypeError: Identifier 'PriceRegexes' has already been declared
 Uncaught TypeError: Identifier 'DccFunctions' has already been declared
 Uncaught TypeError: Identifier 'ContentAdapter' has already been declared
 
-Identifier has already been declared
+Uncaught TypeError: Identifier has already been declared
+
+// PC
+https://mods.bethesda.net/#en/workshop/fallout4/view-all?platform=WINDOWS&sortBy=published
+// XBOX ONE
+https://mods.bethesda.net/#en/workshop/fallout4/view-all?platform=XB1&sortBy=published
+
+Same error as above
+
 
 
   "content_scripts": [
