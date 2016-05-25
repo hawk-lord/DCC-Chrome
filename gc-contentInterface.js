@@ -6,8 +6,8 @@
  */
 const GcContentInterface = function(anInformationHolder) {
     "use strict";
+    let contentPort;
     const sendEnabledStatus = function(tabId, status) {
-        var contentPort;
         contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
         try {
             contentPort.postMessage(status);            }
@@ -17,7 +17,6 @@ const GcContentInterface = function(anInformationHolder) {
     };
     const sendSettingsToPage = function(tabId, changeInfo, tab) {
         // console.log("sendSettingsToPage " + tabId + " status " + changeInfo.status + " url " + changeInfo.url);
-        var contentPort;
         const finishedTabProcessingHandler = function (aHasConvertedElements) {
             try {
                 //console.log("finishedTabProcessingHandler");

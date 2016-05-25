@@ -9,7 +9,7 @@ const GcNekudoServiceProvider = function() {
     const onComplete = function() {
         try {
             if (this.readyState === this.DONE) {
-                var countryCode;
+                let countryCode;
                 if (this.status === 200) {
                     const response = JSON.parse(this.responseText);
                     countryCode = response.country.code;
@@ -27,7 +27,7 @@ const GcNekudoServiceProvider = function() {
     };
     const findCountry = function (aUrlString, aConvertToCountry) {
         const urlString = aUrlString;
-        var userCountry = aConvertToCountry;
+        const userCountry = aConvertToCountry;
         const request = new XMLHttpRequest();
         const method = "GET";
         request.open(method, urlString);

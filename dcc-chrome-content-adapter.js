@@ -12,7 +12,7 @@
 if (!this.ContentAdapter) {
     const ContentAdapter = function() {
         "use strict";
-        var thePort;
+        let thePort;
         const messageListener = function(msg) {
             if (msg.conversionQuotes) {
                 DirectCurrencyContent.onUpdateSettings(msg);

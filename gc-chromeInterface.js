@@ -6,7 +6,7 @@
  */
 const GcChromeInterface = function(conversionEnabled) {
     "use strict";
-    var buttonStatus = conversionEnabled;
+    let buttonStatus = conversionEnabled;
     const setButtonAppearance = function() {
         const colour = buttonStatus ? "#00FF00" : "#FF0000";
         const text = buttonStatus ? "On" : "Off";

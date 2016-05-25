@@ -6,7 +6,7 @@
  */
 const GcStorageServiceProvider = function() {
     "use strict";
-    var storage = {};
+    let storage = {};
     const init = function (aConvertFroms, anExcludedDomains) {
         chrome.storage.local.get(null, function(aStorage) {
             storage = aStorage;
@@ -71,9 +71,9 @@ const GcStorageServiceProvider = function() {
                     storage.dccPrefs.convertFroms = aConvertFroms;
                 }
                 else {
-                    for (var currency of aConvertFroms) {
-                        var found = false;
-                        for (var storedCurrency of storage.dccPrefs.convertFroms) {
+                    for (let currency of aConvertFroms) {
+                        let found = false;
+                        for (let storedCurrency of storage.dccPrefs.convertFroms) {
                             if (currency.isoName === storedCurrency.isoName) {
                                 found = true;
                                 break;
@@ -232,8 +232,8 @@ const GcStorageServiceProvider = function() {
             chrome.storage.local.set(storage);
         },
         setEnabledCurrency(aCurrency, anEnabled) {
-            var found = false;
-            for (var storedCurrency of storage.dccPrefs.convertFroms) {
+            let found = false;
+            for (let storedCurrency of storage.dccPrefs.convertFroms) {
                 if (aCurrency.isoName === storedCurrency.isoName) {
                     found = true;
                     aCurrency.enabled = anEnabled;

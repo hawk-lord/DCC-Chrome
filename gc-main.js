@@ -22,13 +22,13 @@ const DirectCurrencyConverter = (function() {
     const defaultExcludedDomains = ["images.google.com", "docs.google.com", "drive.google.com", "twitter.com"];
     const localisation = new Localisation();
     const _ = localisation._;
-    var informationHolder;
-    var gcGeoServiceFreegeoip;
-    var geoServiceFreegeoip;
-    var gcGeoServiceNekudo;
-    var geoServiceNekudo;
-    var gcYahooQuotesService;
-    var yahooQuotesService;
+    let informationHolder;
+    let gcGeoServiceFreegeoip;
+    let geoServiceFreegeoip;
+    let gcGeoServiceNekudo;
+    let geoServiceNekudo;
+    let gcYahooQuotesService;
+    let yahooQuotesService;
     const onStorageServiceInitDone = function(informationHolder) {
         gcGeoServiceFreegeoip = new GcFreegeoipServiceProvider();
         geoServiceFreegeoip = new FreegeoipServiceProvider();
