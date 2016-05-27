@@ -1,3 +1,9 @@
+Disappearing test in paragraph.
+<strong> element disappears in textnode and in data attributes.
+http://www.svd.se/microsoft-uppges-slopa-mobilerna/om/naringsliv:digitalt
+<p><strong>Totalt påverkas 1&nbsp;850 anställda</strong> av neddragningen, som enligt Microsoft beräknas leda till engångskostnader på motsvarande nästan åtta miljarder kronor. Den summan omfattar både avgångsvederlag och ytterligare nedskrivningar av värdet på verksamheten, som Microsoft betalade motsvarande 47 miljarder kronor för när affären slutfördes för nästan precis två år sedan.</p>
+
+
 Works with SF and FF, not with CC, OP
 http://www.theregister.co.uk/2015/11/05/talktalk_offers_customer_30gbp_final_settlement_after_crims_nick_3500gbp/
 

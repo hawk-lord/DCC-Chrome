@@ -24,3 +24,7 @@ cd /Users/per/IdeaProjects
 https://chrome.google.com/webstore/developer/dashboard
 
 
+cd /Users/per/IdeaProjects
+./opera.sh
+https://addons.opera.com/developer/upload/
+
