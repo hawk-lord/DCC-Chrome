@@ -2,8 +2,8 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.4.5.0
-Date: 2016-05-25
+Version: 2.4.7.0
+Date: 2016-07-09
 
 After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
@@ -163,3 +163,15 @@ Date: 2016-05-25
 The browser action icons are now grey to contrast with dark themes. Also scaled to correct sizes.
 Internal change: content scripts will not throw the error "Uncaught TypeError: Identifier has already been declared"
 
+Version: 2.4.6+0
+Date: 2016-06-06
+Improved title of conversion so all conversions in an element are shown.
+Fix: some text was disappearing in converted elements.
+Fix: reset settings did not load the location.
+Internal change: refactored and cleaned the main content script.
+
+Version: 2.4.7+0
+Date: 2016-07-09
+Replaced old Belarusian rouble BYR with BYN (ISO 4217 amendment number 160).
+Fix: some converted text was written to the wrong element.
+Fix: conversion of amount with an immediately preceding parenthesis, such as "(500 USD)"

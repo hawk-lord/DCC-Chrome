@@ -89,6 +89,7 @@ const DirectCurrencyConverter = (function() {
         eventAggregator.subscribe("resetSettings", function() {
             informationHolder.resetSettings(iso4217Currencies);
             informationHolder.resetReadCurrencies();
+            geoServiceFreegeoip.loadUserCountry(gcGeoServiceFreegeoip);
         });
         /**
          * Communicate with the Settings tab
