@@ -2,8 +2,8 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.4.10.0
-Date: 2016-09-07
+Version: 2.4.11.0
+Date: 2016-10-11
 
 After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
@@ -183,9 +183,12 @@ Fix: some text was disappearing in converted elements.
 Version: 2.4.9.0
 Date: 2016-09-05
 Selection of all currencies or no currencies.
-Upgraded versions of jQuery to 2.2.4 and jQuery UI to 1.12.0
+Internal change: upgraded versions of jQuery to 2.2.4 and jQuery UI to 1.12.0
 
 Version: 2.4.10.0
 Date: 2016-09-07
 Uses the new settings window in Chrome and Opera (Options Version 2: options_ui instead of options_page).
 
+Version: 2.4.11.0
+Date: 2016-10-11
+Internal change: does not use Yahoo YQL any more, because of reliability issues.
