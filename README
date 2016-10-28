@@ -2,8 +2,8 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.4.11.0
-Date: 2016-10-11
+Version: 2.4.12.0
+Date: 2016-10-28
 
 After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
 
@@ -11,14 +11,14 @@ The settings tab is opened with the "Options" menu item.
 Changed settings are saved with the "Save" button in the settings tab.
 Settings can be reset to default with the "Reset" button.
 
-Currency rates are taken from Yahoo Finance and updated when you start the program or when you switch currency.
+Currency quotes are taken from Yahoo Finance and updated when you start the program, reset the quotes. or when you switch currency.
 
 Your location is used to set your default region and currency (for example Finland - euro). It is guessed using the freegeoip.net or geoip.nekudo.com service.
 
 If conversion does not work, it probably means that there was no reply from Yahoo. Try to reload the browser (F5 button) and check the internet connection. Also, force a reload by switching "to currency" from settings tab, save, and reload the web pages.
 
-You can convert to and from any existing currency code as defined by ISO 4217, including precious metals, if Yahoo provides a conversion rate for the currency.
-There are currently 16 codes with no conversion rates: BOV, CHE, CHW, COU, CUC, SSP, USN, UYI, XBA, XBB, XBC, XBD, XSU, XTS, XUA, XXX.
+You can convert to and from any existing currency code as defined by ISO 4217, including precious metals, if Yahoo provides a conversion quote for the currency.
+There are currently 16 codes with no conversion quotes: BOV, CHE, CHW, COU, CUC, SSP, USN, UYI, XBA, XBB, XBC, XBD, XSU, XTS, XUA, XXX.
 
 A few currencies (CHF, DKK, EUR, GBP, ISK, JPY, NOK, RUB, SEK and USD) are pre-selected for conversion. You can select all currencies, but having too many currencies selected may clutter the pages and result in slow performance.
 
@@ -192,3 +192,7 @@ Uses the new settings window in Chrome and Opera (Options Version 2: options_ui 
 Version: 2.4.11.0
 Date: 2016-10-11
 Internal change: does not use Yahoo YQL any more, because of reliability issues.
+
+Version: 2.4.12.0
+Date: 2016-10-28
+Added a button to update currency quotes in the settings form.

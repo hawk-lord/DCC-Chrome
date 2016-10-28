@@ -23,6 +23,10 @@ if (!this.SettingsAdapter) {
             reset : function() {
                 chrome.runtime.sendMessage({command: "reset"});
                 window.close();
+            },
+            resetQuotes : function() {
+                chrome.runtime.sendMessage({command: "resetQuotes"});
+                window.close();
             }
         }
     }();

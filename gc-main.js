@@ -85,6 +85,11 @@ const DirectCurrencyConverter = (function() {
                     informationHolder.convertToCurrency);
             }
         });
+        eventAggregator.subscribe("resetQuotes", function(eventArgs) {
+            informationHolder.resetReadCurrencies();
+            yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getConvertFroms(),
+                    informationHolder.convertToCurrency);
+        });
         eventAggregator.subscribe("resetSettings", function() {
             informationHolder.resetSettings(iso4217Currencies);
             informationHolder.resetReadCurrencies();
@@ -107,6 +112,9 @@ const DirectCurrencyConverter = (function() {
             }
             else if (message.command === "reset") {
                 eventAggregator.publish("resetSettings");
+            }
+            else if (message.command === "resetQuotes") {
+                eventAggregator.publish("resetQuotes");
             }
         };
         chrome.runtime.onMessage.addListener(onMessageFromSettings);
