@@ -26,7 +26,6 @@ if (!this.SettingsAdapter) {
             },
             resetQuotes : function() {
                 chrome.runtime.sendMessage({command: "resetQuotes"});
-                window.close();
             }
         }
     }();
