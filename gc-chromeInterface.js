@@ -19,7 +19,15 @@ const GcChromeInterface = function(conversionEnabled) {
         setButtonAppearance();
         eventAggregator.publish("toggleConversion", buttonStatus);
     };
-    // Toggle button clicked
     chrome.browserAction.onClicked.addListener(onBrowserAction);
 
+    const onMessageFromPanel = function(message, sender, sendResponse) {
+        if (message.command === "toggleConversion") {
+            onBrowserAction();
+        }
+        else if (message.command === "showQuotesTab") {
+            eventAggregator.publish("showQuotesTab");
+        }
+    };
+    chrome.runtime.onMessage.addListener(onMessageFromPanel);
 };

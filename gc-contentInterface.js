@@ -77,9 +77,21 @@ const GcContentInterface = function(anInformationHolder) {
         };
         chrome.tabs.query({}, updateActiveTabs);
     };
+
+    const showQuotesTab = function() {
+        const quotesListener = function(request, sender, sendResponse) {
+            sendResponse(new ContentScriptParams(null, anInformationHolder));
+        };
+        const quotesCallback = (aTab) => {
+            chrome.runtime.onMessage.addListener(quotesListener);
+        };
+        chrome.tabs.create({"url": chrome.extension.getURL("common/quotes.html")}, quotesCallback);
+    };
+
     return {
         watchForPages: watchForPages,
-        toggleConversion: toggleConversion
+        toggleConversion: toggleConversion,
+        showQuotesTab: showQuotesTab
     }
 };
 

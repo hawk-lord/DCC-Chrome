@@ -28,6 +28,7 @@ const DirectCurrencyConverter = (function() {
     let geoServiceNekudo;
     let gcYahooQuotesService;
     let yahooQuotesService;
+
     const onStorageServiceInitDone = function(informationHolder) {
         gcGeoServiceFreegeoip = new GcFreegeoipServiceProvider();
         geoServiceFreegeoip = new FreegeoipServiceProvider();
@@ -75,6 +76,9 @@ const DirectCurrencyConverter = (function() {
         });
         eventAggregator.subscribe("showTestTab", function() {
             contentInterface.showTestTab();
+        });
+        eventAggregator.subscribe("showQuotesTab", () => {
+            contentInterface.showQuotesTab();
         });
         eventAggregator.subscribe("saveSettings", function(eventArgs) {
             const toCurrencyChanged = informationHolder.convertToCurrency != eventArgs.contentScriptParams.convertToCurrency;
@@ -220,15 +224,16 @@ const DirectCurrencyConverter = (function() {
     };
     regionFormatsRequest.send(null);
 
-/*
-    var convertToCountry = "SE";
-    var convertToCountry = null;
-    if (convertToCountry === null || convertToCountry == null) {
-        geoService.loadUserCountry(gcGeoService, convertToCountry);
-        eventAggregator.subscribe("countryReceived", function(countryCode) {
-            console.log("countryCode " + countryCode);
-        });
-    }
-    quotesService.loadQuotes();
-    */
+
+    /*
+        var convertToCountry = "SE";
+        var convertToCountry = null;
+        if (convertToCountry === null || convertToCountry == null) {
+            geoService.loadUserCountry(gcGeoService, convertToCountry);
+            eventAggregator.subscribe("countryReceived", function(countryCode) {
+                console.log("countryCode " + countryCode);
+            });
+        }
+        quotesService.loadQuotes();
+        */
 })();

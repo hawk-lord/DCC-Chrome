@@ -2,10 +2,12 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.4.12.0
-Date: 2016-10-28
+Version: 2.5.0+0
+Date: 2017-03-17
 
-After installation, you'll have a new button in the toolbar. Conversion is enabled or disabled by clicking the button.
+After installation, you'll have a new button in the toolbar. The button will open a popup with the following items:
+Toogle conversion on and off.
+Open a quotes page that can be sorted by value and currency.
 
 The settings tab is opened with the "Options" menu item.
 Changed settings are saved with the "Save" button in the settings tab.
@@ -39,7 +41,6 @@ https://addons.mozilla.org/addon/direct-currency-converter-2/
 
 Some features of the Firefox version could not be ported to the Chrome/Opera version:
 - PDF document conversion
-- Panel with menu
 - Tab with test values
 
 External libraries used:
@@ -196,3 +197,11 @@ Internal change: does not use Yahoo YQL any more, because of reliability issues.
 Version: 2.4.12.0
 Date: 2016-10-28
 Added a button to update currency quotes in the settings form.
+
+Version: 2.5.0+0
+Date: 2017-03-17
+Added a popup with links to toggle and to quotes page (ported from Firefox).
+Added a quotes page, sortable on currency names and values.
+Improved handling of unit multiples ($ million, etc.). More will be found.
+Improved handling of minor units (cents, etc.). Most existing minor units should be found.
+Internal change: improved regular expressions.
