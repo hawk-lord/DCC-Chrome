@@ -6,7 +6,7 @@
  */
 const GcYahooQuotesServiceProvider = function() {
     "use strict";
-    const onCompleteFromTo = function(aResponse) {
+    const onCompleteFromTo = (aResponse) => {
         try {
             // console.log("onCompleteFromTo aResponse " + aResponse);
             eventAggregator.publish("quotesFromTo", aResponse);
@@ -15,7 +15,7 @@ const GcYahooQuotesServiceProvider = function() {
             console.error("err " + err);
         }
     };
-    const onCompleteToFrom = function(aResponse) {
+    const onCompleteToFrom = (aResponse) => {
         try {
             // console.log("onCompleteToFrom aResponse " + aResponse);
             eventAggregator.publish("quotesToFrom", aResponse);
@@ -24,24 +24,24 @@ const GcYahooQuotesServiceProvider = function() {
             console.error("err " + err);
         }
     };
-    const fetchQuotesFromTo = function(aUrlString) {
+    const fetchQuotesFromTo = (aUrlString) => {
         // console.log("fetchQuotesFromTo ");
         const urlString = aUrlString;
         const request = new XMLHttpRequest();
         request.open("GET", aUrlString, true);
-        request.onreadystatechange = function () {
+        request.onreadystatechange = () => {
             if (request.readyState === 4 && request.status === 200) {
                 onCompleteFromTo(request.responseText);
             }
         };
         request.send(null);
     };
-    const fetchQuotesToFrom = function(aUrlString) {
+    const fetchQuotesToFrom = (aUrlString) => {
         // console.log("fetchQuotesToFrom ");
         const urlString = aUrlString;
         const request = new XMLHttpRequest();
         request.open("GET", aUrlString, true);
-        request.onreadystatechange = function () {
+        request.onreadystatechange = () => {
             if (request.readyState === 4 && request.status === 200) {
                 onCompleteToFrom(request.responseText);
             }

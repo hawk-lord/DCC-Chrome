@@ -13,7 +13,7 @@ const Localisation = function() {
      * @returns {*}
      * @private
      */
-    const _ = function(parameter) {
+    const _ = (parameter) => {
         const _ = chrome.i18n;
         return _.getMessage(parameter);
     };

@@ -13,7 +13,7 @@ if (!this.ContentAdapter) {
     const ContentAdapter = function() {
         "use strict";
         let thePort;
-        const messageListener = function(msg) {
+        const messageListener = (msg) => {
             if (msg.conversionQuotes) {
                 DirectCurrencyContent.onUpdateSettings(msg);
             }
@@ -21,14 +21,14 @@ if (!this.ContentAdapter) {
                 DirectCurrencyContent.onSendEnabledStatus(msg);
             }
         };
-        const portListener = function(aPort) {
+        const portListener = (aPort) => {
             console.assert(aPort.name == "dccContentPort");
             thePort = aPort;
             aPort.onMessage.addListener(messageListener);
         };
         chrome.runtime.onConnect.addListener(portListener);
         return {
-            finish: function (hasConvertedElements) {
+            finish: (hasConvertedElements) => {
                 thePort.postMessage(hasConvertedElements);
             }
         };

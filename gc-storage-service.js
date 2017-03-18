@@ -7,8 +7,8 @@
 const GcStorageServiceProvider = function() {
     "use strict";
     let storage = {};
-    const init = function (aConvertFroms, anExcludedDomains) {
-        chrome.storage.local.get(null, function(aStorage) {
+    const init = (aConvertFroms, anExcludedDomains) => {
+        chrome.storage.local.get(null, (aStorage) => {
             storage = aStorage;
             if (!storage.excludedDomains) {
                 storage.excludedDomains = anExcludedDomains;
@@ -90,7 +90,7 @@ const GcStorageServiceProvider = function() {
             eventAggregator.publish("storageInitDone");
         });
     };
-    const resetSettings = function(aDefaultEnabled)  {
+    const resetSettings = (aDefaultEnabled) => {
         storage.dccPrefs = {
             customSymbols: {},
             enableOnStart: true,

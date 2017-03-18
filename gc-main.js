@@ -29,7 +29,7 @@ const DirectCurrencyConverter = (function() {
     let gcYahooQuotesService;
     let yahooQuotesService;
 
-    const onStorageServiceInitDone = function(informationHolder) {
+    const onStorageServiceInitDone = (informationHolder) => {
         gcGeoServiceFreegeoip = new GcFreegeoipServiceProvider();
         geoServiceFreegeoip = new FreegeoipServiceProvider();
         gcGeoServiceNekudo = new GcNekudoServiceProvider();
@@ -38,7 +38,7 @@ const DirectCurrencyConverter = (function() {
         yahooQuotesService = new YahooQuotesServiceProvider(eventAggregator);
         const contentInterface = new GcContentInterface(informationHolder);
         const chromeInterface = new GcChromeInterface(informationHolder.conversionEnabled);
-        eventAggregator.subscribe("countryReceivedFreegeoip", function(countryCode) {
+        eventAggregator.subscribe("countryReceivedFreegeoip", (countryCode) => {
             if (countryCode !== "") {
                 informationHolder.convertToCountry = countryCode;
                 yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
@@ -47,7 +47,7 @@ const DirectCurrencyConverter = (function() {
                 geoServiceNekudo.loadUserCountry(gcGeoServiceNekudo);
             }
         });
-        eventAggregator.subscribe("countryReceivedNekudo", function(countryCode) {
+        eventAggregator.subscribe("countryReceivedNekudo", (countryCode) => {
             if (countryCode !== "") {
                 informationHolder.convertToCountry = countryCode;
             }
@@ -56,31 +56,31 @@ const DirectCurrencyConverter = (function() {
             }
             yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
         });
-        eventAggregator.subscribe("quotesFromTo", function(eventArgs) {
+        eventAggregator.subscribe("quotesFromTo", (eventArgs) => {
             yahooQuotesService.quotesHandlerFromTo(eventArgs);
         });
-        eventAggregator.subscribe("quotesToFrom", function(eventArgs) {
+        eventAggregator.subscribe("quotesToFrom", (eventArgs) => {
             yahooQuotesService.quotesHandlerToFrom(eventArgs);
         });
-        eventAggregator.subscribe("quoteReceived", function(eventArgs) {
+        eventAggregator.subscribe("quoteReceived", (eventArgs) => {
             informationHolder.setConversionQuote(eventArgs.convertFromCurrencyName, eventArgs.quote);
             if (informationHolder.isAllCurrenciesRead()) {
                 contentInterface.watchForPages();
             }
         });
-        eventAggregator.subscribe("toggleConversion", function(eventArgs) {
+        eventAggregator.subscribe("toggleConversion", (eventArgs) => {
             contentInterface.toggleConversion(eventArgs);
         });
-        eventAggregator.subscribe("showSettingsTab", function() {
+        eventAggregator.subscribe("showSettingsTab", () => {
             contentInterface.showSettingsTab();
         });
-        eventAggregator.subscribe("showTestTab", function() {
+        eventAggregator.subscribe("showTestTab", () => {
             contentInterface.showTestTab();
         });
         eventAggregator.subscribe("showQuotesTab", () => {
             contentInterface.showQuotesTab();
         });
-        eventAggregator.subscribe("saveSettings", function(eventArgs) {
+        eventAggregator.subscribe("saveSettings", (eventArgs) => {
             const toCurrencyChanged = informationHolder.convertToCurrency != eventArgs.contentScriptParams.convertToCurrency;
             informationHolder.resetReadCurrencies();
             new ParseContentScriptParams(eventArgs.contentScriptParams, informationHolder);
@@ -89,12 +89,12 @@ const DirectCurrencyConverter = (function() {
                     informationHolder.convertToCurrency);
             }
         });
-        eventAggregator.subscribe("resetQuotes", function(eventArgs) {
+        eventAggregator.subscribe("resetQuotes", (eventArgs) => {
             informationHolder.resetReadCurrencies();
             yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getConvertFroms(),
                     informationHolder.convertToCurrency);
         });
-        eventAggregator.subscribe("resetSettings", function() {
+        eventAggregator.subscribe("resetSettings", () => {
             informationHolder.resetSettings(iso4217Currencies);
             informationHolder.resetReadCurrencies();
             geoServiceFreegeoip.loadUserCountry(gcGeoServiceFreegeoip);
@@ -105,7 +105,7 @@ const DirectCurrencyConverter = (function() {
          * @param sender
          * @param sendResponse
          */
-        const onMessageFromSettings = function(message, sender, sendResponse) {
+        const onMessageFromSettings = (message, sender, sendResponse) => {
             if (message.command === "show") {
                 sendResponse(new ContentScriptParams(null, informationHolder));
             }
@@ -129,17 +129,17 @@ const DirectCurrencyConverter = (function() {
             yahooQuotesService.loadQuotes(gcYahooQuotesService, informationHolder.getConvertFroms(), informationHolder.convertToCurrency);
         }
     };
-    const onStorageServiceReInitDone = function(informationHolder) {
+    const onStorageServiceReInitDone = (informationHolder) => {
         geoServiceFreegeoip.loadUserCountry(gcGeoServiceFreegeoip);
     };
-    const onJsonsDone = function() {
-        eventAggregator.subscribe("storageInitDone", function() {
+    const onJsonsDone = () => {
+        eventAggregator.subscribe("storageInitDone", () => {
             convertFroms = gcStorageServiceProvider.convertFroms;
             informationHolder = new InformationHolder(gcStorageServiceProvider, currencyData,
                 currencySymbols, convertFroms, regionFormats, _);
             onStorageServiceInitDone(informationHolder);
         });
-        eventAggregator.subscribe("storageReInitDone", function() {
+        eventAggregator.subscribe("storageReInitDone", () => {
             onStorageServiceReInitDone(informationHolder);
         });
         const gcStorageServiceProvider = new GcStorageServiceProvider();
@@ -159,7 +159,7 @@ const DirectCurrencyConverter = (function() {
         }
 */
     };
-    const onCurrencyData = function(result) {
+    const onCurrencyData = (result) => {
         const currencyDataJson = result;
         currencyData = JSON.parse(currencyDataJson);
         if (currencyData && currencySymbols && iso4217Currencies && regionFormats) {
@@ -169,13 +169,13 @@ const DirectCurrencyConverter = (function() {
     const currencyDataRequest = new XMLHttpRequest();
     currencyDataRequest.overrideMimeType("application/json");
     currencyDataRequest.open("GET", "dcc-common-lib/currencyData.json", true);
-    currencyDataRequest.onreadystatechange = function () {
+    currencyDataRequest.onreadystatechange = () => {
         if (currencyDataRequest.readyState === 4 && currencyDataRequest.status === 200) {
             onCurrencyData(currencyDataRequest.responseText);
         }
     };
     currencyDataRequest.send(null);
-    const onCurrencySymbols = function(result) {
+    const onCurrencySymbols = (result) => {
         const currencySymbolsJson = result;
         currencySymbols = JSON.parse(currencySymbolsJson);
         if (currencyData && currencySymbols && iso4217Currencies && regionFormats) {
@@ -185,13 +185,13 @@ const DirectCurrencyConverter = (function() {
     const currencySymbolsRequest = new XMLHttpRequest();
     currencySymbolsRequest.overrideMimeType("application/json");
     currencySymbolsRequest.open("GET", "dcc-common-lib/currencySymbols.json", true);
-    currencySymbolsRequest.onreadystatechange = function () {
+    currencySymbolsRequest.onreadystatechange = () => {
         if (currencySymbolsRequest.readyState === 4 && currencySymbolsRequest.status === 200) {
             onCurrencySymbols(currencySymbolsRequest.responseText);
         }
     };
     currencySymbolsRequest.send(null);
-    const onIso4217Currencies = function(result) {
+    const onIso4217Currencies = (result) => {
         const iso4217CurrenciesJson = result;
         iso4217Currencies = JSON.parse(iso4217CurrenciesJson);
         if (currencyData && currencySymbols && iso4217Currencies && regionFormats) {
@@ -201,13 +201,13 @@ const DirectCurrencyConverter = (function() {
     const iso4217CurrenciesRequest = new XMLHttpRequest();
     iso4217CurrenciesRequest.overrideMimeType("application/json");
     iso4217CurrenciesRequest.open("GET", "dcc-common-lib/iso4217Currencies.json", true);
-    iso4217CurrenciesRequest.onreadystatechange = function () {
+    iso4217CurrenciesRequest.onreadystatechange = () => {
         if (iso4217CurrenciesRequest.readyState === 4 && iso4217CurrenciesRequest.status === 200) {
             onIso4217Currencies(iso4217CurrenciesRequest.responseText);
         }
     };
     iso4217CurrenciesRequest.send(null);
-    const onRegionFormats = function(result) {
+    const onRegionFormats = (result) => {
         const regionFormatsJson = result;
         regionFormats = JSON.parse(regionFormatsJson);
         if (currencyData && currencySymbols && regionFormats && regionFormats) {
@@ -217,7 +217,7 @@ const DirectCurrencyConverter = (function() {
     const regionFormatsRequest = new XMLHttpRequest();
     regionFormatsRequest.overrideMimeType("application/json");
     regionFormatsRequest.open("GET", "dcc-common-lib/regionFormats.json", true);
-    regionFormatsRequest.onreadystatechange = function () {
+    regionFormatsRequest.onreadystatechange = () => {
         if (regionFormatsRequest.readyState === 4 && regionFormatsRequest.status === 200) {
             onRegionFormats(regionFormatsRequest.responseText);
         }

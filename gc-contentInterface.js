@@ -7,7 +7,7 @@
 const GcContentInterface = function(anInformationHolder) {
     "use strict";
     let contentPort;
-    const sendEnabledStatus = function(tabId, status) {
+    const sendEnabledStatus = (tabId, status) => {
         contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
         try {
             contentPort.postMessage(status);            }
@@ -15,9 +15,9 @@ const GcContentInterface = function(anInformationHolder) {
             console.error(err);
         }
     };
-    const sendSettingsToPage = function(tabId, changeInfo, tab) {
+    const sendSettingsToPage = (tabId, changeInfo, tab) => {
         // console.log("sendSettingsToPage " + tabId + " status " + changeInfo.status + " url " + changeInfo.url);
-        const finishedTabProcessingHandler = function (aHasConvertedElements) {
+        const finishedTabProcessingHandler = (aHasConvertedElements) => {
             try {
                 //console.log("finishedTabProcessingHandler");
                 eventAggregator.publish("toggleConversion", anInformationHolder.conversionEnabled);
@@ -26,7 +26,7 @@ const GcContentInterface = function(anInformationHolder) {
                 console.error("finishedTabProcessingHandler " + err);
             }
         };
-        const onScriptExecuted = function () {
+        const onScriptExecuted = () => {
             // console.log("onScriptExecuted tabId " + tabId);
             contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
             try {
@@ -42,24 +42,24 @@ const GcContentInterface = function(anInformationHolder) {
             && tab.url.indexOf("https://addons.opera.com") === -1) {
             // console.log("executeScript tabId " + tabId);
             // console.log("customTabObjects[tabId] " + customTabObjects[tabId]);
-            chrome.tabs.executeScript(tabId, {file: "common/dcc-regexes.js", allFrames: true}, function(){
-                chrome.tabs.executeScript(tabId, {file: "common/dcc-content.js", allFrames: true}, function(){
+            chrome.tabs.executeScript(tabId, {file: "common/dcc-regexes.js", allFrames: true}, () => {
+                chrome.tabs.executeScript(tabId, {file: "common/dcc-content.js", allFrames: true}, () => {
                     chrome.tabs.executeScript(tabId, {file: "dcc-chrome-content-adapter.js", allFrames: true},
                         onScriptExecuted);
                 });
             });
         }
     };
-    const watchForPages = function() {
+    const watchForPages = () => {
         chrome.tabs.onUpdated.removeListener(sendSettingsToPage);
         chrome.tabs.onUpdated.addListener(sendSettingsToPage);
     };
-    const toggleConversion = function(aStatus) {
+    const toggleConversion = (aStatus) => {
         // console.log("toggleConversion " + aStatus);
-        const updateTab = function(aTab) {
+        const updateTab = (aTab) => {
             // console.log("updateTab " + aTab.id + " " + aStatus);
             anInformationHolder.conversionEnabled = aStatus;
-            const makeEnabledStatus = function(tabId) {
+            const makeEnabledStatus = (tabId) => {
                 const status = {};
                 status.isEnabled = aStatus;
                 status.hasConvertedElements = false;
@@ -72,14 +72,14 @@ const GcContentInterface = function(anInformationHolder) {
             };
             makeEnabledStatus(aTab.id);
         };
-        const updateActiveTabs = function(aTabs) {
+        const updateActiveTabs = (aTabs) => {
             aTabs.map(updateTab);
         };
         chrome.tabs.query({}, updateActiveTabs);
     };
 
-    const showQuotesTab = function() {
-        const quotesListener = function(request, sender, sendResponse) {
+    const showQuotesTab = () => {
+        const quotesListener = (request, sender, sendResponse) => {
             sendResponse(new ContentScriptParams(null, anInformationHolder));
         };
         const quotesCallback = (aTab) => {

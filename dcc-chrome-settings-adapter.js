@@ -16,15 +16,15 @@ if (!this.SettingsAdapter) {
         chrome.runtime.sendMessage({command: "show"}, DirectCurrencySettings.showSettings);
         document.addEventListener("DOMContentLoaded", DirectCurrencySettings);
         return {
-            save : function(contentScriptParams) {
+            save : (contentScriptParams) => {
                 chrome.runtime.sendMessage({command: "save", contentScriptParams: contentScriptParams});
                 window.close();
             },
-            reset : function() {
+            reset : () => {
                 chrome.runtime.sendMessage({command: "reset"});
                 window.close();
             },
-            resetQuotes : function() {
+            resetQuotes : () => {
                 chrome.runtime.sendMessage({command: "resetQuotes"});
             }
         }
