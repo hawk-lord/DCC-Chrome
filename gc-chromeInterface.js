@@ -7,21 +7,21 @@
 const GcChromeInterface = function(conversionEnabled) {
     "use strict";
     let buttonStatus = conversionEnabled;
-    const setButtonAppearance = function() {
+    const setButtonAppearance = () => {
         const colour = buttonStatus ? "#00FF00" : "#FF0000";
         const text = buttonStatus ? "On" : "Off";
         chrome.browserAction.setBadgeBackgroundColor({color: colour});
         chrome.browserAction.setBadgeText({text: text});
     };
     setButtonAppearance();
-    const onBrowserAction = function() {
+    const onBrowserAction = () => {
         buttonStatus = !buttonStatus;
         setButtonAppearance();
         eventAggregator.publish("toggleConversion", buttonStatus);
     };
     chrome.browserAction.onClicked.addListener(onBrowserAction);
 
-    const onMessageFromPanel = function(message, sender, sendResponse) {
+    const onMessageFromPanel = (message, sender, sendResponse) => {
         if (message.command === "toggleConversion") {
             onBrowserAction();
         }
