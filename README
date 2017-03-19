@@ -2,8 +2,8 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.5.0+0
-Date: 2017-03-17
+Version: 2.5.0.0
+Date: 2017-03-19
 
 After installation, you'll have a new button in the toolbar. The button will open a popup with the following items:
 Toogle conversion on and off.
@@ -44,8 +44,8 @@ Some features of the Firefox version could not be ported to the Chrome/Opera ver
 - Tab with test values
 
 External libraries used:
-jQuery 2.1.3
-jQuery UI 1.11.2
+jQuery 2.2.4
+jQuery UI 1.12
 jQuery UI Touch Punch 0.2.3
 
 Icons provided by Iconfinder.
@@ -198,8 +198,8 @@ Version: 2.4.12.0
 Date: 2016-10-28
 Added a button to update currency quotes in the settings form.
 
-Version: 2.5.0+0
-Date: 2017-03-17
+Version: 2.5.0.0
+Date: 2017-03-19
 Added a popup with links to toggle and to quotes page (ported from Firefox).
 Added a quotes page, sortable on currency names and values.
 Improved handling of unit multiples ($ million, etc.). More will be found.
