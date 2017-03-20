@@ -2,7 +2,7 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.5.0.0
+Version: 2.5.0.1
 Date: 2017-03-19
 
 After installation, you'll have a new button in the toolbar. The button will open a popup with the following items:
@@ -205,3 +205,7 @@ Added a quotes page, sortable on currency names and values.
 Improved handling of unit multiples ($ million, etc.). More will be found.
 Improved handling of minor units (cents, etc.). Most existing minor units should be found.
 Internal change: improved regular expressions.
+
+Version: 2.5.0.1
+Date: 2017-03-19
+Bugfixes: settings and region initialisation did not work correctly.

@@ -6,7 +6,7 @@
  */
 const GcNekudoServiceProvider = function() {
     "use strict";
-    const onComplete = () => {
+    const onComplete = function() {
         try {
             if (this.readyState === this.DONE) {
                 let countryCode;
@@ -25,7 +25,7 @@ const GcNekudoServiceProvider = function() {
             eventAggregator.publish("countryReceivedNekudo", "");
         }
     };
-    const findCountry = (aUrlString, aConvertToCountry) => {
+    const findCountry = function (aUrlString, aConvertToCountry) {
         const urlString = aUrlString;
         const userCountry = aConvertToCountry;
         const request = new XMLHttpRequest();
