@@ -15,28 +15,17 @@ const GcStorageServiceProvider = function() {
             }
             if (!storage.dccPrefs) {
                 storage.dccPrefs = {
-                    customSymbols: {},
                     enableOnStart: true,
                     quoteAdjustmentPercent: 0,
                     roundAmounts: false,
                     showOriginalPrices: false,
                     showOriginalCurrencies: false,
                     showTooltip: true,
-                    beforeCurrencySymbol: true,
-                    currencySpacing: " ",
-                    monetarySeparatorSymbol: ",",
-                    monetaryGroupingSeparatorSymbol: ".",
                     tempConvertUnits: false,
                     convertFroms: aConvertFroms
                 };
             }
             else {
-                if (!storage.dccPrefs.customSymbols) {
-                    storage.dccPrefs.customSymbols = {};
-                }
-                if (!storage.dccPrefs.monetarySeparatorSymbol) {
-                    storage.dccPrefs.monetarySeparatorSymbol = ",";
-                }
                 if (storage.dccPrefs.enableOnStart === null || storage.dccPrefs.enableOnStart == null) {
                     storage.dccPrefs.enableOnStart = true;
                 }
@@ -45,9 +34,6 @@ const GcStorageServiceProvider = function() {
                 }
                 if (storage.dccPrefs.roundAmounts === null || storage.dccPrefs.roundAmounts == null) {
                     storage.dccPrefs.roundAmounts = false;
-                }
-                if ("string" !== typeof storage.dccPrefs.currencySpacing) {
-                    storage.dccPrefs.currencySpacing = " ";
                 }
                 if (storage.dccPrefs.showOriginalPrices === null || storage.dccPrefs.showOriginalPrices == null) {
                     storage.dccPrefs.showOriginalPrices = false;
@@ -58,14 +44,8 @@ const GcStorageServiceProvider = function() {
                 if (storage.dccPrefs.showTooltip === null || storage.dccPrefs.showTooltip == null) {
                     storage.dccPrefs.showTooltip = true;
                 }
-                if (storage.dccPrefs.beforeCurrencySymbol === null || storage.dccPrefs.beforeCurrencySymbol == null) {
-                    storage.dccPrefs.beforeCurrencySymbol = true;
-                }
                 if (storage.dccPrefs.tempConvertUnits === null || storage.dccPrefs.tempConvertUnits == null) {
                     storage.dccPrefs.tempConvertUnits = false;
-                }
-                if (!storage.dccPrefs.monetaryGroupingSeparatorSymbol) {
-                    storage.dccPrefs.monetaryGroupingSeparatorSymbol = ".";
                 }
                 if (!storage.dccPrefs.convertFroms) {
                     storage.dccPrefs.convertFroms = aConvertFroms;
@@ -92,17 +72,12 @@ const GcStorageServiceProvider = function() {
     };
     const resetSettings = (aDefaultEnabled) => {
         storage.dccPrefs = {
-            customSymbols: {},
             enableOnStart: true,
             quoteAdjustmentPercent: 0,
             roundAmounts: false,
             showOriginalPrices: false,
             showOriginalCurrencies: false,
             showTooltip: true,
-            beforeCurrencySymbol: true,
-            currencySpacing: " ",
-            monetarySeparatorSymbol: ",",
-            monetaryGroupingSeparatorSymbol: ".",
             tempConvertUnits: false,
             convertFroms: aDefaultEnabled
         };
@@ -128,20 +103,6 @@ const GcStorageServiceProvider = function() {
         },
         set convertToCountry (aCountry) {
             storage.dccPrefs.convertToCountry = aCountry;
-            chrome.storage.local.set(storage);
-        },
-        get customSymbols () {
-            return storage.dccPrefs.customSymbols;
-        },
-        set customSymbols (aCustomSymbols) {
-            storage.dccPrefs.customSymbols = aCustomSymbols;
-            chrome.storage.local.set(storage);
-        },
-        get monetarySeparatorSymbol () {
-            return storage.dccPrefs.monetarySeparatorSymbol;
-        },
-        set monetarySeparatorSymbol (aMonetarySeparatorSymbol) {
-            storage.dccPrefs.monetarySeparatorSymbol = aMonetarySeparatorSymbol;
             chrome.storage.local.set(storage);
         },
         get enableOnStart () {
@@ -182,13 +143,6 @@ const GcStorageServiceProvider = function() {
             storage.dccPrefs.roundAmounts = aRoundPrices;
             chrome.storage.local.set(storage);
         },
-        get currencySpacing () {
-            return storage.dccPrefs.currencySpacing;
-        },
-        set currencySpacing (aCurrencySpacing) {
-            storage.dccPrefs.currencySpacing = aCurrencySpacing;
-            chrome.storage.local.set(storage);
-        },
         get showOriginalPrices () {
             return storage.dccPrefs.showOriginalPrices;
         },
@@ -208,20 +162,6 @@ const GcStorageServiceProvider = function() {
         },
         set showTooltip (aShowTooltip) {
             storage.dccPrefs.showTooltip = aShowTooltip;
-            chrome.storage.local.set(storage);
-        },
-        get beforeCurrencySymbol () {
-            return storage.dccPrefs.beforeCurrencySymbol;
-        },
-        set beforeCurrencySymbol (aBeforeCurrencySymbol) {
-            storage.dccPrefs.beforeCurrencySymbol = aBeforeCurrencySymbol;
-            chrome.storage.local.set(storage);
-        },
-        get monetaryGroupingSeparatorSymbol () {
-            return storage.dccPrefs.monetaryGroupingSeparatorSymbol;
-        },
-        set monetaryGroupingSeparatorSymbol (aMonetaryGroupingSeparatorSymbol) {
-            storage.dccPrefs.monetaryGroupingSeparatorSymbol = aMonetaryGroupingSeparatorSymbol;
             chrome.storage.local.set(storage);
         },
         get tempConvertUnits () {

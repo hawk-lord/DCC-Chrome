@@ -13,8 +13,6 @@ if (!this.DirectCurrencyQuotes) {
         "use strict";
         let conversionQuotes = [];
         let currencyCode = "";
-        let currencySymbol = "¤";
-        const customFormat = {"beforeCurrencySymbol" : true, "monetaryGroupingSeparatorSymbol" : " ", "monetarySeparatorSymbol" : ",", "currencySpacing" : "\u2009"};
         let excludedDomains = [];
         let isEnabled = true;
         let quoteAdjustmentPercent = 0;
@@ -37,17 +35,6 @@ if (!this.DirectCurrencyQuotes) {
             conversionQuotes = contentScriptParams.conversionQuotes;
             excludedDomains = contentScriptParams.excludedDomains;
             currencyCode = contentScriptParams.convertToCurrency;
-            const allCurrencySymbols = Object.assign({}, contentScriptParams.currencySymbols, contentScriptParams.customSymbols);
-            if (currencyCode in allCurrencySymbols) {
-                currencySymbol = allCurrencySymbols[currencyCode];
-            }
-            else {
-                currencySymbol = currencyCode;
-            }
-            customFormat.beforeCurrencySymbol = contentScriptParams.beforeCurrencySymbol;
-            customFormat.monetaryGroupingSeparatorSymbol = contentScriptParams.monetaryGroupingSeparatorSymbol;
-            customFormat.monetarySeparatorSymbol = contentScriptParams.monetarySeparatorSymbol;
-            customFormat.currencySpacing = contentScriptParams.currencySpacing;
             roundAmounts = contentScriptParams.roundAmounts;
             showOriginalPrices = contentScriptParams.showOriginalPrices;
             showOriginalCurrencies = contentScriptParams.showOriginalCurrencies;

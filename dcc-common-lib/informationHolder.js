@@ -5,20 +5,19 @@
  *
  */
 
+"use strict";
+
 /**
  * Stereotype Information holder
  *
  * @param aStorageService
  * @param aCurrencyData
- * @param aCurrencySymbols
  * @param aConvertFroms
- * @param aRegionFormats
  * @param _
- * @returns {{conversionEnabled, conversionEnabled, convertToCountry, convertToCountry, convertToCurrency, convertToCurrency, getConversionQuotes: Function, setConversionQuote: Function, getCurrencySymbols: Function, customSymbols, customSymbols, monetarySeparatorSymbol, monetarySeparatorSymbol, excludedDomains, excludedDomains, enabledCurrencies, enabledCurrencies, enableOnStart, enableOnStart, quoteAdjustmentPercent, quoteAdjustmentPercent, roundPrices, roundPrices, currencySpacing, currencySpacing, showOriginalPrices, showOriginalPrices, beforeCurrencySymbol, beforeCurrencySymbol, tempConvertUnits, tempConvertUnits, monetaryGroupingSeparatorSymbol, monetaryGroupingSeparatorSymbol, getCurrencyNames: Function, getConvertFroms: Function, isAllCurrenciesRead: Function, getQuoteString: Function, resetReadCurrencies: Function, resetSettings: Function}}
+ * @returns {{conversionEnabled, conversionEnabled, convertToCountry, convertToCountry, convertToCurrency, convertToCurrency, getConversionQuotes: (function()), setConversionQuote: (function(*, *)), excludedDomains, excludedDomains, convertFroms, convertFroms, enableOnStart, enableOnStart, quoteAdjustmentPercent, quoteAdjustmentPercent, roundPrices, roundPrices, showOriginalPrices, showOriginalPrices, showOriginalCurrencies, showOriginalCurrencies, showTooltip, showTooltip, tempConvertUnits, tempConvertUnits, showDccToolsButton, showDccToolsButton, showDccConversionButton, showDccConversionButton, getCurrencyNames: (function()), getConvertFroms: (function()), isAllCurrenciesRead: (function()), getQuoteString: (function()), resetReadCurrencies: (function()), resetSettings: (function(*=))}}
  * @constructor
  */
-const InformationHolder = function(aStorageService, aCurrencyData, aCurrencySymbols, aConvertFroms, aRegionFormats, _) {
-    "use strict";
+const InformationHolder = function(aStorageService, aCurrencyData, aConvertFroms,  _) {
     const conversionQuotes = {
         "inch": 25.4,
         "kcal": 4.184,
@@ -69,9 +68,6 @@ const InformationHolder = function(aStorageService, aCurrencyData, aCurrencySymb
         conversionQuotes[aConvertFromCurrencyName] = aQuote;
         numberOfReadCurrencies++;
     };
-    const getCurrencySymbols = () => {
-        return aCurrencySymbols;
-    };
     const getCurrencyNames = () => {
         return _currencyNames;
     };
@@ -90,7 +86,7 @@ const InformationHolder = function(aStorageService, aCurrencyData, aCurrencySymb
             }
             else {
                 const conversionQuote = quote.toFixed(4);
-                const quoteString = "1 " + aConvertFromCurrency.isoName + " = " + conversionQuote.replace(".", aStorageService.monetarySeparatorSymbol) + " " + aStorageService.convertToCurrency;
+                const quoteString = "1 " + aConvertFromCurrency.isoName + " = " + conversionQuote + " " + aStorageService.convertToCurrency;
                 quoteStrings.push(quoteString);
             }
         }
@@ -119,24 +115,9 @@ const InformationHolder = function(aStorageService, aCurrencyData, aCurrencySymb
         },
         set convertToCountry (aCountry) {
             aStorageService.convertToCountry = aCountry;
-            const regionFormat = aRegionFormats[aCountry.toLowerCase()];
-            if (regionFormat) {
-                if (!aStorageService.monetarySeparatorSymbol) {
-                    aStorageService.monetarySeparatorSymbol = regionFormat.monetarySeparatorSymbol;
-                }
-                if ("string" !== typeof aStorageService.currencySpacing) {
-                    aStorageService.currencySpacing = regionFormat.currencySpacing;
-                }
-                if (!aStorageService.monetaryGroupingSeparatorSymbol) {
-                    aStorageService.monetaryGroupingSeparatorSymbol = regionFormat.monetaryGroupingSeparatorSymbol;
-                }
-                if (aStorageService.beforeCurrencySymbol === null || aStorageService.beforeCurrencySymbol == null) {
-                    aStorageService.beforeCurrencySymbol = regionFormat.beforeCurrencySymbol;
-                }
                 if (!aStorageService.convertToCurrency) {
                     aStorageService.convertToCurrency = findCurrency(aCountry);
                 }
-            }
         },
         get convertToCurrency () {
             return aStorageService.convertToCurrency;
@@ -146,19 +127,6 @@ const InformationHolder = function(aStorageService, aCurrencyData, aCurrencySymb
         },
         getConversionQuotes: getConversionQuotes,
         setConversionQuote: setConversionQuote,
-        getCurrencySymbols: getCurrencySymbols,
-        get customSymbols () {
-            return aStorageService.customSymbols;
-        },
-        set customSymbols (aCustomSymbols) {
-            aStorageService.customSymbols = aCustomSymbols;
-        },
-        get monetarySeparatorSymbol () {
-            return aStorageService.monetarySeparatorSymbol;
-        },
-        set monetarySeparatorSymbol (aMonetarySeparatorSymbol) {
-            aStorageService.monetarySeparatorSymbol = aMonetarySeparatorSymbol;
-        },
         get excludedDomains () {
             return aStorageService.excludedDomains;
         },
@@ -189,12 +157,6 @@ const InformationHolder = function(aStorageService, aCurrencyData, aCurrencySymb
         set roundPrices (aRoundPrices) {
             aStorageService.roundPrices = aRoundPrices;
         },
-        get currencySpacing () {
-            return aStorageService.currencySpacing;
-        },
-        set currencySpacing (aCurrencySpacing) {
-            aStorageService.currencySpacing = aCurrencySpacing;
-        },
         get showOriginalPrices () {
             return aStorageService.showOriginalPrices;
         },
@@ -213,23 +175,11 @@ const InformationHolder = function(aStorageService, aCurrencyData, aCurrencySymb
         set showTooltip (aShowTooltip) {
             aStorageService.showTooltip = aShowTooltip;
         },
-        get beforeCurrencySymbol () {
-            return aStorageService.beforeCurrencySymbol;
-        },
-        set beforeCurrencySymbol (aBeforeCurrencySymbol) {
-            aStorageService.beforeCurrencySymbol = aBeforeCurrencySymbol;
-        },
         get tempConvertUnits () {
             return aStorageService.tempConvertUnits;
         },
         set tempConvertUnits (aTempConvertUnits) {
             aStorageService.tempConvertUnits = aTempConvertUnits;
-        },
-        get monetaryGroupingSeparatorSymbol () {
-            return aStorageService.monetaryGroupingSeparatorSymbol;
-        },
-        set monetaryGroupingSeparatorSymbol (aMonetaryGroupingSeparatorSymbol) {
-            aStorageService.monetaryGroupingSeparatorSymbol = aMonetaryGroupingSeparatorSymbol;
         },
         get showDccToolsButton () {
             return aStorageService.showDccToolsButton;

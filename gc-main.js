@@ -6,17 +6,16 @@
  *
  */
 
+"use strict";
+
 const EnabledCurrency = function(isoName, enabled) {
     this.isoName = isoName;
     this.enabled = enabled;
 };
 
 const DirectCurrencyConverter = (function() {
-    "use strict";
     let currencyData;
-    let currencySymbols;
     let convertFroms;
-    let regionFormats;
     let iso4217Currencies;
     const defaultExcludedDomains = ["images.google.com", "docs.google.com", "drive.google.com", "twitter.com"];
     const localisation = new Localisation();
@@ -136,7 +135,7 @@ const DirectCurrencyConverter = (function() {
         eventAggregator.subscribe("storageInitDone", () => {
             convertFroms = gcStorageServiceProvider.convertFroms;
             informationHolder = new InformationHolder(gcStorageServiceProvider, currencyData,
-                currencySymbols, convertFroms, regionFormats, _);
+                convertFroms, _);
             onStorageServiceInitDone(informationHolder);
         });
         eventAggregator.subscribe("storageReInitDone", () => {
@@ -162,7 +161,7 @@ const DirectCurrencyConverter = (function() {
     const onCurrencyData = (result) => {
         const currencyDataJson = result;
         currencyData = JSON.parse(currencyDataJson);
-        if (currencyData && currencySymbols && iso4217Currencies && regionFormats) {
+        if (currencyData && iso4217Currencies) {
             onJsonsDone();
         }
     };
@@ -175,26 +174,10 @@ const DirectCurrencyConverter = (function() {
         }
     };
     currencyDataRequest.send(null);
-    const onCurrencySymbols = (result) => {
-        const currencySymbolsJson = result;
-        currencySymbols = JSON.parse(currencySymbolsJson);
-        if (currencyData && currencySymbols && iso4217Currencies && regionFormats) {
-            onJsonsDone();
-        }
-    };
-    const currencySymbolsRequest = new XMLHttpRequest();
-    currencySymbolsRequest.overrideMimeType("application/json");
-    currencySymbolsRequest.open("GET", "dcc-common-lib/currencySymbols.json", true);
-    currencySymbolsRequest.onreadystatechange = () => {
-        if (currencySymbolsRequest.readyState === 4 && currencySymbolsRequest.status === 200) {
-            onCurrencySymbols(currencySymbolsRequest.responseText);
-        }
-    };
-    currencySymbolsRequest.send(null);
     const onIso4217Currencies = (result) => {
         const iso4217CurrenciesJson = result;
         iso4217Currencies = JSON.parse(iso4217CurrenciesJson);
-        if (currencyData && currencySymbols && iso4217Currencies && regionFormats) {
+        if (currencyData && iso4217Currencies) {
             onJsonsDone();
         }
     };
@@ -207,22 +190,6 @@ const DirectCurrencyConverter = (function() {
         }
     };
     iso4217CurrenciesRequest.send(null);
-    const onRegionFormats = (result) => {
-        const regionFormatsJson = result;
-        regionFormats = JSON.parse(regionFormatsJson);
-        if (currencyData && currencySymbols && regionFormats && regionFormats) {
-            onJsonsDone();
-        }
-    };
-    const regionFormatsRequest = new XMLHttpRequest();
-    regionFormatsRequest.overrideMimeType("application/json");
-    regionFormatsRequest.open("GET", "dcc-common-lib/regionFormats.json", true);
-    regionFormatsRequest.onreadystatechange = () => {
-        if (regionFormatsRequest.readyState === 4 && regionFormatsRequest.status === 200) {
-            onRegionFormats(regionFormatsRequest.responseText);
-        }
-    };
-    regionFormatsRequest.send(null);
 
 
     /*
