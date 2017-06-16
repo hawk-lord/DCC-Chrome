@@ -22,7 +22,9 @@ const GcStorageServiceProvider = function() {
                     showOriginalCurrencies: false,
                     showTooltip: true,
                     tempConvertUnits: false,
-                    convertFroms: aConvertFroms
+                    convertFroms: aConvertFroms,
+                    convertFromCurrency: "GBP",
+                    alwaysConvertFromCurrency: false
                 };
             }
             else {
@@ -65,6 +67,12 @@ const GcStorageServiceProvider = function() {
                     }
                 }
                 storage.dccPrefs.enabledCurrencies = null;
+                if (!storage.dccPrefs.convertFromCurrency) {
+                    storage.dccPrefs.convertFromCurrency = "GBP";
+                }
+                if (storage.dccPrefs.alwaysConvertFromCurrency === null || storage.dccPrefs.alwaysConvertFromCurrency == null) {
+                    storage.dccPrefs.alwaysConvertFromCurrency = false;
+                }
             }
             chrome.storage.local.set(storage);
             eventAggregator.publish("storageInitDone");
@@ -169,6 +177,20 @@ const GcStorageServiceProvider = function() {
         },
         set tempConvertUnits (aTempConvertUnits) {
             storage.dccPrefs.tempConvertUnits = aTempConvertUnits;
+            chrome.storage.local.set(storage);
+        },
+        get convertFromCurrency () {
+            return storage.dccPrefs.convertFromCurrency;
+        },
+        set convertFromCurrency (aConvertFromCurrency) {
+            storage.dccPrefs.convertFromCurrency = aConvertFromCurrency;
+            chrome.storage.local.set(storage);
+        },
+        get alwaysConvertFromCurrency () {
+            return storage.dccPrefs.alwaysConvertFromCurrency;
+        },
+        set alwaysConvertFromCurrency (anAlwaysConvertFromCurrency) {
+            storage.dccPrefs.alwaysConvertFromCurrency = anAlwaysConvertFromCurrency;
             chrome.storage.local.set(storage);
         },
         setEnabledCurrency(aCurrency, anEnabled) {

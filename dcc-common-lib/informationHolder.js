@@ -193,6 +193,18 @@ const InformationHolder = function(aStorageService, aCurrencyData, aConvertFroms
         set showDccConversionButton (aShowDccConversionButton) {
             aStorageService.showDccConversionButton = aShowDccConversionButton;
         },
+        get convertFromCurrency () {
+            return aStorageService.convertFromCurrency;
+        },
+        set convertFromCurrency (aConvertFromCurrency) {
+            aStorageService.convertFromCurrency = aConvertFromCurrency;
+        },
+        get alwaysConvertFromCurrency () {
+            return aStorageService.quoteAdjustmentPercent;
+        },
+        set alwaysConvertFromCurrency (anAlwaysConvertFromCurrency) {
+            aStorageService.alwaysConvertFromCurrency = anAlwaysConvertFromCurrency;
+        },
         getCurrencyNames: getCurrencyNames,
         getConvertFroms: getConvertFroms,
         isAllCurrenciesRead: isAllCurrenciesRead,

@@ -52,6 +52,12 @@ if (!this.DirectCurrencySettings) {
             jQuery("#temp_convert_units").change(function() {
                 tempConvertUnits = jQuery(this).is(":checked");
             });
+            jQuery("#convertFromCurrency").change(function() {
+                convertFromCurrency = jQuery(this).val();
+            });
+            jQuery("#alwaysConvertFromCurrency").change(function() {
+                alwaysConvertFromCurrency = jQuery(this).is(":checked");
+            });
             jQuery("#save-button").click(function() {
                 const excludedTextAreaString = escapeHtml(jQuery("#excluded_domains").val());
                 let excludedLines = excludedTextAreaString.replace(/\r\n/g, "\n").split("\n");
@@ -87,6 +93,8 @@ if (!this.DirectCurrencySettings) {
                 contentScriptParams.showOriginalCurrencies = showOriginalCurrencies;
                 contentScriptParams.showTooltip = showTooltip;
                 contentScriptParams.tempConvertUnits = tempConvertUnits;
+                contentScriptParams.convertFromCurrency = convertFromCurrency;
+                contentScriptParams.alwaysConvertFromCurrency = alwaysConvertFromCurrency;
                 SettingsAdapter.save(contentScriptParams);
             });
             jQuery("#reset-button").click(function() {
@@ -128,6 +136,8 @@ if (!this.DirectCurrencySettings) {
         let showTooltip = null;
         let tempConvertUnits = null;
         let currencyNames = {};
+        let convertFromCurrency = null;
+        let alwaysConvertFromCurrency = null;
         const setUIFromPreferences = function() {
             jQuery("#convert_to_currency").val(convertToCurrency + "_" + convertToCountry);
             onCurrencyChange(convertToCurrency);
@@ -179,6 +189,8 @@ if (!this.DirectCurrencySettings) {
             });
             jQuery("#convert_to_currency").html(selectList);
             jQuery('#convert_to_currency').val(selectedOption);
+            jQuery("#convertFromCurrency").val(convertFromCurrency);
+            jQuery("#alwaysConvertFromCurrency").prop("checked", alwaysConvertFromCurrency);
         };
         const onCurrencyChange = function(val) {
             let currencyVal = escapeHtml(val);
@@ -200,6 +212,8 @@ if (!this.DirectCurrencySettings) {
             showTooltip = contentScriptParams.showTooltip;
             tempConvertUnits = contentScriptParams.tempConvertUnits;
             currencyNames = contentScriptParams.currencyNames;
+            convertFromCurrency = contentScriptParams.convertFromCurrency;
+            alwaysConvertFromCurrency = contentScriptParams.alwaysConvertFromCurrency;
             setUIFromPreferences();
         };
         return {
