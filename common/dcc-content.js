@@ -486,8 +486,7 @@ if (!this.DccFunctions) {
                     convertedPrice = convertedPrice + " (##__##)";
                 }
             }
-            convertedContent = convertedContent.substring(0, aPrice.positionInString) +
-                convertedContent.substring(aPrice.positionInString, convertedContent.length).replace(aPrice.full, convertedPrice);
+            convertedContent = convertedContent.split(aPrice.full).join(convertedPrice);
             if (aShowOriginalPrices) {
                 convertedContent = convertedContent.replace("##__##", aPrice.full);
                 convertedContent = convertedContent.replace("¤¤¤", aReplacedUnit);

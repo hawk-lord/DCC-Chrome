@@ -224,7 +224,7 @@ if (!this.PriceRegexes) {
                 aRegex1.MDL = makeRegex1("(MDL)");
                 aRegex2.MDL = makeRegex2("(MDL|leu|lei|лей|леев|bani?)");
                 aRegex1.MGA = makeRegex1("(MGA|Ar)");
-                aRegex2.MGA = makeRegex2("(MGA|mga|Mga|[aA]riary|[aA]r|millions? [aA]riary|millions? [aA]r)");
+                aRegex2.MGA = makeRegex2("(MGA|mga|Mga|[aA]riary|[aA][rR]|millions? [aA]riary|millions? [aA]r)");
                 aRegex1.MKD = makeRegex1("(MKD)");
                 aRegex2.MKD = makeRegex2("(MKD|денари?|ден|den(ari?)?|deni|дени)");
                 aRegex1.MMK = makeRegex1("(MMK|[kK][sS]|[kK]yat)");
@@ -296,7 +296,7 @@ if (!this.PriceRegexes) {
                 aRegex1.SDG = makeRegex1("(SDG|جنيه)");
                 aRegex2.SDG = makeRegex2("(SDG|جنيه|Sudanese [pP]ounds?|[pP]ounds?|qirsh|piastre)");
                 aRegex1.SEK = makeRegex1("(SEK|kr|skr)");
-                aRegex2.SEK = makeRegex2("(SEK|öre|(svenska\\s)?kr(onor)?|mnkr|mdkr|mkr|s?[kK]r|kSEK|MSEK|GSEK|:-|,-)", "(miljon(er)?|miljard(er)?)?");
+                aRegex2.SEK = makeRegex2("(SEK|öre|(svenska\\s)?kr(onor)?|mnkr|mdkr|mkr|s?[kK][rR]|kSEK|MSEK|GSEK|:-|,-)", "(miljon(er)?|miljard(er)?)?");
                 aRegex1.SGD = makeRegex1("(SGD|SGD\\s?\\$?|S?\\$)");
                 aRegex2.SGD = makeRegex2("(SGD|(Singapore)?\\s?[dD]ollars?|[cC]ents?)");
                 aRegex1.SHP = makeRegex1("(SHP|£)");
