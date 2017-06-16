@@ -35,7 +35,10 @@ if (!this.DirectCurrencySettings) {
                 enableOnStart = jQuery(this).is(":checked");
             });
             jQuery("#adjustment_percentage").change(function() {
-                quoteAdjustmentPercent = jQuery(this).val();
+                const tmp = jQuery(this).val();
+                if (!isNaN(tmp)) {
+                    quoteAdjustmentPercent = tmp;
+                }
             });
             jQuery("#always_round").change(function() {
                 roundAmounts = jQuery(this).is(":checked");

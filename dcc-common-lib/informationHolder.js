@@ -200,7 +200,7 @@ const InformationHolder = function(aStorageService, aCurrencyData, aConvertFroms
             aStorageService.convertFromCurrency = aConvertFromCurrency;
         },
         get alwaysConvertFromCurrency () {
-            return aStorageService.quoteAdjustmentPercent;
+            return aStorageService.alwaysConvertFromCurrency;
         },
         set alwaysConvertFromCurrency (anAlwaysConvertFromCurrency) {
             aStorageService.alwaysConvertFromCurrency = anAlwaysConvertFromCurrency;

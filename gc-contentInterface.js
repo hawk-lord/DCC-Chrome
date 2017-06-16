@@ -42,6 +42,7 @@ const GcContentInterface = function(anInformationHolder) {
             && tab.url.indexOf("https://addons.opera.com") === -1) {
             // console.log("executeScript tabId " + tabId);
             // console.log("customTabObjects[tabId] " + customTabObjects[tabId]);
+            chrome.tabs.insertCSS(tabId, {file: "title.css", allFrames: true});
             chrome.tabs.executeScript(tabId, {file: "common/dcc-regexes.js", allFrames: true}, () => {
                 chrome.tabs.executeScript(tabId, {file: "common/dcc-content.js", allFrames: true}, () => {
                     chrome.tabs.executeScript(tabId, {file: "dcc-chrome-content-adapter.js", allFrames: true},
