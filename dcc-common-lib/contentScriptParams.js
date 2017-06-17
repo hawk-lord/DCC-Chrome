@@ -4,8 +4,10 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
  */
+
+"use strict";
+
 const ContentScriptParams = function(aTab, anInformationHolder) {
-    "use strict";
     this.conversionQuotes = anInformationHolder.getConversionQuotes();
     this.convertToCurrency = anInformationHolder.convertToCurrency;
     this.convertToCountry = anInformationHolder.convertToCountry;

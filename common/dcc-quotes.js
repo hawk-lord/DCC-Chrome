@@ -8,9 +8,10 @@
  *
  * Module pattern is used.
  */
+"use strict";
+
 if (!this.DirectCurrencyQuotes) {
     const DirectCurrencyQuotes = (function() {
-        "use strict";
         let conversionQuotes = [];
         let currencyCode = "";
         let excludedDomains = [];

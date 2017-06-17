@@ -1,13 +1,18 @@
-/**
- * Created by per on 2017-03-17.
+/*
+ * © Per Johansson
+ * This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+ * If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ *
  */
 
+"use strict";
+
 const toggleConversion = () => {
-    chrome.extension.sendMessage({command: "toggleConversion"});
+    chrome.runtime.sendMessage({command: "toggleConversion"});
 };
 
 const openQuotesPage = () => {
-    chrome.extension.sendMessage({command: "showQuotesTab"});
+    chrome.runtime.sendMessage({command: "showQuotesTab"});
 };
 
 const openTest = document.getElementById("toggleConversion");

@@ -9,9 +9,10 @@
  * Module pattern is used.
  */
 
+"use strict";
+
 if (!this.ContentAdapter) {
     const ContentAdapter = function() {
-        "use strict";
         let thePort;
         const messageListener = (msg) => {
             if (msg.conversionQuotes) {

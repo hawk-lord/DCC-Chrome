@@ -4,8 +4,10 @@
  * If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
  *
  */
+
+"use strict";
+
 const GcContentInterface = function(anInformationHolder) {
-    "use strict";
     let contentPort;
     const sendEnabledStatus = (tabId, status) => {
         contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});

@@ -5,6 +5,8 @@
  *
  */
 
+"use strict";
+
 /**
  *
  * @param aContentScriptParams
@@ -12,7 +14,6 @@
  * @constructor
  */
 const ParseContentScriptParams = function(aContentScriptParams, anInformationHolder) {
-    "use strict";
     anInformationHolder.convertToCurrency = aContentScriptParams.convertToCurrency;
     anInformationHolder.convertToCountry = aContentScriptParams.convertToCountry;
     anInformationHolder.enableOnStart = aContentScriptParams.enableOnStart;

@@ -8,7 +8,9 @@
  *
  * Module pattern is used.
  */
+
 "use strict";
+
 if (!this.DirectCurrencySettings) {
     const DirectCurrencySettings = (function() {
         const escapeHtml = function(s) {

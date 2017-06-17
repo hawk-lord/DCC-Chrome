@@ -5,9 +5,9 @@
  *
  */
 
+"use strict";
 
 const eventAggregator = (function() {
-    "use strict";
     const grep = function grep( elems, callback, inv ) {
         "use strict";
         let retVal,
@@ -26,7 +26,6 @@ const eventAggregator = (function() {
         return ret;
     };
     const Event = function(name) {
-        "use strict";
         this._handlers = [];
         this.name = name;
     };

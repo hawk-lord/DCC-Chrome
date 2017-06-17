@@ -9,9 +9,10 @@
  * Module pattern is used.
  */
 
+"use strict";
+
 if (!this.QuotesAdapter) {
     const QuotesAdapter = function() {
-        "use strict";
         chrome.runtime.sendMessage({greeting: "hello"}, (response) => {
             DirectCurrencyQuotes.onUpdateQuotes(response);
         });

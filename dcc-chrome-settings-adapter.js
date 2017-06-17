@@ -9,9 +9,10 @@
  * Module pattern is used.
  */
 
+"use strict";
+
 if (!this.SettingsAdapter) {
     const SettingsAdapter = function() {
-        "use strict";
         const options = null;
         chrome.runtime.sendMessage({command: "show"}, DirectCurrencySettings.showSettings);
         document.addEventListener("DOMContentLoaded", DirectCurrencySettings);
