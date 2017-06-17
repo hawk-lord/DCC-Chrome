@@ -210,12 +210,16 @@ Version: 2.5.0.1
 Date: 2017-03-19
 Bugfixes: settings and region initialisation did not work correctly.
 
-Version: 2.6.0.0
-Date: 2017-06-16
+Version: 2.6.1.0
+Date: 2017-06-17
 Added possibility to force conversion of all numbers on a page from one currency to another, even if there is no currency unit present.
-Uses currency format taken from the browser language settings (instead of setting it manually).
-Exchange quote adjustment can be set to any value, including decimals.
+Now using currency format taken from the browser language settings (instead of setting it manually).
+Exchange quote adjustment can now be set to any value, including decimals.
 Currency names updated from ISO 4217 Amendment Number 163.
-Fix: several matches in the same string were not converted.
+Fix: several prices in the same paragraph were sometimes not converted.
+Fix: toggle off conversion would sometimes not work without reloading the page.
+Fix: MGA conversion.
+
+
 
 

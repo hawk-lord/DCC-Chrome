@@ -914,6 +914,16 @@ if (!this.DirectCurrencyContent) {
                     textNode.nodeValue = isShowOriginal ? node.dataset.dccOriginalContent : node.dataset.dccConvertedContent;
                 }
             }
+
+            const nodeSiblingList = aNode.querySelectorAll(".dccConvertedSibling");
+            for (let i = 0; i < nodeSiblingList.length; ++i) {
+                const node = nodeSiblingList[i];
+                const textNode = node.nextSibling;
+                if (node.dataset && node.dataset.dccOriginalContentSibling && node.dataset.dccConvertedContentSibling) {
+                    textNode.nodeValue = isShowOriginal ? node.dataset.dccOriginalContentSibling : node.dataset.dccConvertedContentSibling;
+                }
+            }
+
         };
 
         const onSendEnabledStatus = (aStatus) => {
