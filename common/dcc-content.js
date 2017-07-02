@@ -603,7 +603,7 @@ if (!this.DccFunctions) {
             const regex = new RegExp("((?:\\d{1,3}(?:(?:,|\\.|\\s|')\\d{3})+|(?:\\d+))(?:(?:\\.|,|\\:)\\d{1,9})?)", "g")
             let match;
             while (match = regex.exec(aText)) {
-                prices.push(new Price(aCurrency, anOriginalCurrency, match, true));
+                prices.push(new Price(aCurrency, true, anOriginalCurrency, match, true));
             }
             return prices;
         };
