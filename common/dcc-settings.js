@@ -63,6 +63,9 @@ if (!this.DirectCurrencySettings) {
             jQuery("#alwaysConvertFromCurrency").change(function() {
                 alwaysConvertFromCurrency = jQuery(this).is(":checked");
             });
+            jQuery("#showAsSymbol").change(function() {
+                showAsSymbol = jQuery(this).is(":checked");
+            });
             jQuery("#save-button").click(function() {
                 const excludedTextAreaString = escapeHtml(jQuery("#excluded_domains").val());
                 let excludedLines = excludedTextAreaString.replace(/\r\n/g, "\n").split("\n");
@@ -100,6 +103,7 @@ if (!this.DirectCurrencySettings) {
                 contentScriptParams.tempConvertUnits = tempConvertUnits;
                 contentScriptParams.convertFromCurrency = convertFromCurrency;
                 contentScriptParams.alwaysConvertFromCurrency = alwaysConvertFromCurrency;
+                contentScriptParams.showAsSymbol = showAsSymbol;
                 SettingsAdapter.save(contentScriptParams);
             });
             jQuery("#reset-button").click(function() {
@@ -143,6 +147,7 @@ if (!this.DirectCurrencySettings) {
         let currencyNames = {};
         let convertFromCurrency = null;
         let alwaysConvertFromCurrency = null;
+        let showAsSymbol = null;
         const setUIFromPreferences = function() {
             jQuery("#convert_to_currency").val(convertToCurrency + "_" + convertToCountry);
             onCurrencyChange(convertToCurrency);
@@ -196,6 +201,7 @@ if (!this.DirectCurrencySettings) {
             jQuery('#convert_to_currency').val(selectedOption);
             jQuery("#convertFromCurrency").val(convertFromCurrency);
             jQuery("#alwaysConvertFromCurrency").prop("checked", alwaysConvertFromCurrency);
+            jQuery("#showAsSymbol").prop("checked", showAsSymbol);
         };
         const onCurrencyChange = function(val) {
             let currencyVal = escapeHtml(val);
@@ -219,6 +225,7 @@ if (!this.DirectCurrencySettings) {
             currencyNames = contentScriptParams.currencyNames;
             convertFromCurrency = contentScriptParams.convertFromCurrency;
             alwaysConvertFromCurrency = contentScriptParams.alwaysConvertFromCurrency;
+            showAsSymbol = contentScriptParams.showAsSymbol;
             setUIFromPreferences();
         };
         return {

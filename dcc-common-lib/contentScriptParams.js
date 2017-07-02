@@ -29,6 +29,7 @@ const ContentScriptParams = function(aTab, anInformationHolder) {
     this.currencyNames = anInformationHolder.getCurrencyNames();
     this.convertFromCurrency = anInformationHolder.convertFromCurrency;
     this.alwaysConvertFromCurrency = anInformationHolder.alwaysConvertFromCurrency;
+    this.showAsSymbol = anInformationHolder.showAsSymbol;
 };
 
 if (typeof exports === "object") {

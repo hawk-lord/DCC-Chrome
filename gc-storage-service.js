@@ -26,7 +26,8 @@ const GcStorageServiceProvider = function() {
                     tempConvertUnits: false,
                     convertFroms: aConvertFroms,
                     convertFromCurrency: "GBP",
-                    alwaysConvertFromCurrency: false
+                    alwaysConvertFromCurrency: false,
+                    showAsSymbol: false
                 };
             }
             else {
@@ -74,6 +75,9 @@ const GcStorageServiceProvider = function() {
                 }
                 if (storage.dccPrefs.alwaysConvertFromCurrency === null || storage.dccPrefs.alwaysConvertFromCurrency == null) {
                     storage.dccPrefs.alwaysConvertFromCurrency = false;
+                }
+                if (storage.dccPrefs.showAsSymbol === null || storage.dccPrefs.showAsSymbol == null) {
+                    storage.dccPrefs.showAsSymbol = false;
                 }
             }
             chrome.storage.local.set(storage);
@@ -193,6 +197,13 @@ const GcStorageServiceProvider = function() {
         },
         set alwaysConvertFromCurrency (anAlwaysConvertFromCurrency) {
             storage.dccPrefs.alwaysConvertFromCurrency = anAlwaysConvertFromCurrency;
+            chrome.storage.local.set(storage);
+        },
+        get showAsSymbol () {
+            return storage.dccPrefs.showAsSymbol;
+        },
+        set showAsSymbol (aShowAsSymbol) {
+            storage.dccPrefs.showAsSymbol = aShowAsSymbol;
             chrome.storage.local.set(storage);
         },
         setEnabledCurrency(aCurrency, anEnabled) {

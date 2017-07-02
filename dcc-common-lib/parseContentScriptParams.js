@@ -27,6 +27,7 @@ const ParseContentScriptParams = function(aContentScriptParams, anInformationHol
     anInformationHolder.tempConvertUnits = aContentScriptParams.tempConvertUnits;
     anInformationHolder.convertFromCurrency = aContentScriptParams.convertFromCurrency;
     anInformationHolder.alwaysConvertFromCurrency = aContentScriptParams.alwaysConvertFromCurrency;
+    anInformationHolder.showAsSymbol = aContentScriptParams.showAsSymbol;
 };
 
 if (typeof exports === "object") {

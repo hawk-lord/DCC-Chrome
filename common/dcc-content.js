@@ -319,12 +319,12 @@ if (!this.DccFunctions) {
 
         let numberFormat = new Intl.NumberFormat();
 
-        const makeCurrencyNumberFormat = (aRoundAmounts, aUnit) => {
+        const makeCurrencyNumberFormat = (aRoundAmounts, aUnit, aShowAsSymbol) => {
             const locales = navigator.language;
             let options = {
                 style: "currency",
                 currency: aUnit,
-                currencyDisplay: "code"
+                currencyDisplay: aShowAsSymbol ? "symbol" : "code"
             }
             try {
                 new Intl.NumberFormat(locales, options);
@@ -702,6 +702,7 @@ if (!this.DirectCurrencyContent) {
         let showTooltip = true;
         let convertFromCurrency = "GBP";
         let alwaysConvertFromCurrency = false;
+        let showAsSymbol = false;
         const skippedElements = ["audio", "button", "embed", "head", "img", "noscript", "object", "script", "select", "style", "textarea", "video"];
 
         /*
@@ -984,6 +985,7 @@ if (!this.DirectCurrencyContent) {
             quoteAdjustmentPercent = +contentScriptParams.quoteAdjustmentPercent;
             convertFromCurrency = contentScriptParams.convertFromCurrency;
             alwaysConvertFromCurrency = contentScriptParams.alwaysConvertFromCurrency;
+            showAsSymbol = contentScriptParams.showAsSymbol;
         };
 
         const readEnabledCurrencies = (contentScriptParams) => {
@@ -1022,7 +1024,7 @@ if (!this.DirectCurrencyContent) {
             substituteAll(document.body, showOriginal);
             resetDomTree(document.body);
             readParameters(contentScriptParams);
-            aDccFunctions.makeCurrencyNumberFormat(roundAmounts, currencyCode);
+            aDccFunctions.makeCurrencyNumberFormat(roundAmounts, currencyCode, showAsSymbol);
             aDccFunctions.makeNumberFormat(roundAmounts);
 
             const startConversion = () => {

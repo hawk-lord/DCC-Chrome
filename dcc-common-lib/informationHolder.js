@@ -205,6 +205,12 @@ const InformationHolder = function(aStorageService, aCurrencyData, aConvertFroms
         set alwaysConvertFromCurrency (anAlwaysConvertFromCurrency) {
             aStorageService.alwaysConvertFromCurrency = anAlwaysConvertFromCurrency;
         },
+        get showAsSymbol () {
+            return aStorageService.showAsSymbol;
+        },
+        set showAsSymbol (aShowAsSymbol) {
+            aStorageService.showAsSymbol = aShowAsSymbol;
+        },
         getCurrencyNames: getCurrencyNames,
         getConvertFroms: getConvertFroms,
         isAllCurrenciesRead: isAllCurrenciesRead,
