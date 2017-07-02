@@ -565,9 +565,10 @@ if (!this.DccFunctions) {
             if (!aRegex) {
                 return prices;
             }
+            const newUnit = anIso4217Currency ? aCurrency : useUnit(anOriginalCurrency);
             let match;
             while (match = aRegex.exec(aText)) {
-                prices.push(new Price(aCurrency, anIso4217Currency, anOriginalCurrency, match, aBeforeCurrencySymbol));
+                prices.push(new Price(newUnit, anIso4217Currency, anOriginalCurrency, match, aBeforeCurrencySymbol));
             }
             return prices;
         };
@@ -772,28 +773,6 @@ if (!this.DirectCurrencyContent) {
                 convertedContent = aDccFunctions.convertContent(price, conversionQuote, replacedUnit,
                     currencyCode, roundAmounts, showOriginalPrices, showOriginalCurrencies, convertedContent);
             }
-            for (let price of prices) {
-                // FIXME show all amounts
-                const decimals = aDccFunctions.checkMinorUnit(price, replacedUnit);
-                tempAmount = aDccFunctions.parseAmount(price.amount) * Math.pow(10, -decimals);
-            }
-            for (let price of prices) {
-                // FIXME show all amounts
-                const decimals = aDccFunctions.checkMinorUnit(price, replacedUnit);
-                const convertedAmount = conversionQuote * aDccFunctions.parseAmount(price.amount) * Math.pow(10, -decimals);
-                tempConvertedAmount = convertedAmount;
-            }
-            /* FIXME use this old title creation
-             let elementTitleText = "";
-             for (let price of prices) {
-             elementTitleText += " ~ " + price.full;
-             }
-             elementTitleText = elementTitleText.substring(3);
-             if (showOriginalPrices) {
-             elementTitleText = "";
-             }
-             */
-
             if (dataNode.dataset) {
                 if (isSibling) {
                     dataNode.dataset.dccConvertedContentSibling = convertedContent;
@@ -818,6 +797,35 @@ if (!this.DirectCurrencyContent) {
                 console.error("dataNode.dataset is undefined or null");
             }
 
+            let dccTitle = "";
+
+            for (let price of prices) {
+                const decimals = aDccFunctions.checkMinorUnit(price, replacedUnit);
+                tempAmount = aDccFunctions.parseAmount(price.amount) * Math.pow(10, -decimals);
+                tempConvertedAmount = conversionQuote * aDccFunctions.parseAmount(price.amount) * Math.pow(10, -decimals);
+
+                if (isEnabled && showTooltip) {
+                    dccTitle += "Converted value: ";
+                    dccTitle += price.iso4217Currency ?
+                        aDccFunctions.formatIso4217Price(tempConvertedAmount) :
+                        aDccFunctions.formatOtherPrice(tempConvertedAmount, price.currency);
+                    dccTitle += "\n";
+                    dccTitle += "Original value: ";
+                    dccTitle += price.iso4217Currency ?
+                        aDccFunctions.formatIso4217Price(tempAmount) :
+                        aDccFunctions.formatOtherPrice(tempAmount, price.originalCurrency);
+                    dccTitle += "\n";
+                    dccTitle += "Conversion quote " + price.originalCurrency + "/" + price.currency + " = " +
+                        aDccFunctions.formatOtherPrice(conversionQuote, "") + "\n";
+                    dccTitle += "Conversion quote " + price.currency + "/" + price.originalCurrency + " = " +
+                        aDccFunctions.formatOtherPrice(1/conversionQuote, "") + "\n";
+                }
+            }
+
+            if (isEnabled && showTooltip) {
+                const showOriginal = false;
+                substituteOne(aNode, showOriginal, dccTitle);
+            }
 
             if (aNode.baseURI.includes("pdf.js")) {
                 if (aNode.parentNode) {
@@ -827,27 +835,6 @@ if (!this.DirectCurrencyContent) {
                         aNode.parentNode.parentNode.style.opacity = "1";
                     }
                 }
-            }
-            if (isEnabled && showTooltip) {
-                let dccTitle = "Converted value: ";
-/*
-                dccTitle += aDccFunctions.formatPrice(roundAmounts, tempConvertedAmount, currencyCode) + "\n";
-                dccTitle += "Original value: ";
-                dccTitle += aDccFunctions.formatPrice(roundAmounts, tempAmount, replacedUnit) + "\n";
-                dccTitle += "Conversion quote " + replacedUnit + "/" + currencyCode + " = " +
-                    aDccFunctions.formatPrice(roundAmounts, conversionQuote, "") + "\n";
-                dccTitle += "Conversion quote " + currencyCode + "/" + replacedUnit + " = " +
-                    aDccFunctions.formatPrice(roundAmounts, 1/conversionQuote, "") + "\n";
-*/
-                dccTitle += aDccFunctions.formatIso4217Price(tempConvertedAmount, currencyCode) + "\n";
-                dccTitle += "Original value: ";
-                dccTitle += aDccFunctions.formatIso4217Price(tempAmount, replacedUnit) + "\n";
-                dccTitle += "Conversion quote " + replacedUnit + "/" + currencyCode + " = " +
-                    aDccFunctions.formatIso4217Price(conversionQuote, "") + "\n";
-                dccTitle += "Conversion quote " + currencyCode + "/" + replacedUnit + " = " +
-                    aDccFunctions.formatIso4217Price(1/conversionQuote, "") + "\n";
-                const showOriginal = false;
-                substituteOne(aNode, showOriginal, dccTitle);
             }
         };
 
