@@ -340,8 +340,8 @@ if (!this.PriceRegexes) {
                 aRegex2.UAH = makeRegex2("(UAH|[hH]rn\\.?|грн\\.?|[hH]ryvnia?|[hH]ryven|гривна|гривня|гривні|гривень|kopiyka|копійка)");
                 aRegex1.UGX = makeRegex1("(UGX|USH\\.?|USh\\.?|Ush\\.?|[sS]hillings)");
                 aRegex2.UGX = makeRegex2("(UGX|USh|(Ugandan? )?[sS]hillings?)");
-                aRegex1.USD = makeRegex1("(USD|USD\\s?\\$?|US\\s?\\$|Us\\s?\\$|\\$|\\$USD|U\\$S|доллар|доллара|долларов|доллар США|доллара США|долларов США|бакс|бакса|баксов)", "([mM]illions?|[mM]illiards?|[bB]illions?)?");
-                aRegex2.USD = makeRegex2("(USD|US\\s?\\$|Us\\s?\\$|\\$|[dD]ollars?|¢|￠|[cC]ents?)", "([mM]illions?|[mM]illiards?|[bB]illions?)?");
+                aRegex1.USD = makeRegex1("(USD|USD\\s?\\$?|US\\s?\\$|Us\\s?\\$|\\$|\\$USD|U\\$S|доллара?|долларов|доллара? США|долларов США|бакса?|баксов)", "([mM]illions?|[mM]illiards?|[bB]illions?)?");
+                aRegex2.USD = makeRegex2("(USD|US\\s?\\$|Us\\s?\\$|\\$|[dD]ollars?|доллара?|долларов|доллара? США|долларов США|бакса?|баксов|¢|￠|[cC]ents?)", "([mM]illions?|[mM]illiards?|[bB]illions?)?");
                 //console.log(aRegex2.USD.toString());
                 aRegex1.USN = makeRegex1("(USN)");
                 aRegex2.USN = makeRegex2("(USN)");

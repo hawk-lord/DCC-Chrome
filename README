@@ -2,8 +2,8 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.6.1.0
-Date: 2017-06-17
+Version: 2.6.2.0
+Date: 2017-07-02
 
 After installation, you'll have a new button in the toolbar. The button will open a popup with the following items:
 Toogle conversion on and off.
@@ -219,6 +219,14 @@ Currency names updated from ISO 4217 Amendment Number 163.
 Fix: several prices in the same paragraph were sometimes not converted.
 Fix: toggle off conversion would sometimes not work without reloading the page.
 Fix: MGA conversion.
+
+Version: 2.6.2.0
+Date: 2017-07-02
+Added new setting to select between currency symbol (€) and currency code (EUR).
+Improved conversion tooltip: bigger and showing all conversions in the selected paragraph.
+Added more cyrillic search patterns for USD.
+Added milliard for MGA.
+Improved performance (in the currency formatting code).
 
 
 
