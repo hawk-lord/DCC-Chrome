@@ -2,8 +2,8 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.6.2.0
-Date: 2017-07-02
+Version: 2.6.3.0
+Date: 2017-07-27
 
 After installation, you'll have a new button in the toolbar. The button will open a popup with the following items:
 Toogle conversion on and off.
@@ -39,7 +39,7 @@ Optionally, if selected in the settings tab, some traditional units of measureme
 Originally released for Firefox:
 https://addons.mozilla.org/addon/direct-currency-converter-2/
 
-Some features of the Firefox version could not be ported to the Chrome/Opera version:
+Some features of the old Firefox version could not be ported to the Chrome/Opera version:
 - PDF document conversion
 - Tab with test values
 
@@ -49,8 +49,6 @@ jQuery UI 1.12
 jQuery UI Touch Punch 0.2.3
 
 Icons provided by Iconfinder.
-
-Localisation data provided by Unicode Common Locale Data Repository (CLDR) Version 27.0.1.
 
 Author: Per Johansson, Johanssons Informationsteknik JOINT, Åland Islands, Finland.
 
@@ -228,6 +226,9 @@ Added more cyrillic search patterns for USD.
 Added milliard for MGA.
 Improved performance (in the currency formatting code).
 
+Version: 2.6.3.0
+Date: 2017-07-27
+Improved performance (especially on Gmail).
 
 
 

@@ -724,29 +724,11 @@ if (!this.DirectCurrencyContent) {
 
 
         const replaceCurrency = (aNode) => {
-            if (!aNode) {
-                return;
-            }
             if (!aNode.parentNode) {
-                return;
-            }
-            if (aNode.nodeType !== Node.TEXT_NODE) {
                 return;
             }
             const isSibling = aNode.previousSibling;
             const dataNode = isSibling ? aNode.previousSibling : aNode.parentNode;
-            if (skippedElements.indexOf(aNode.parentNode.tagName.toLowerCase()) !== -1) {
-                return;
-            }
-            if (/^\s*$/.test(aNode.nodeValue)) {
-                return;
-            }
-            if (/\{/.test(aNode.nodeValue)) {
-                return;
-            }
-            if (!/\d/.test(aNode.nodeValue)) {
-                return;
-            }
             // Can be [object SVGAnimatedString]
             // Extra check of "string" for Chrome
             if (dataNode
@@ -889,11 +871,26 @@ if (!this.DirectCurrencyContent) {
             if (!aNode) {
                 return
             }
-            replaceCurrency(aNode);
-            for (let i = 0; i < aNode.childNodes.length; ++i) {
-                const node = aNode.childNodes[i];
-                traverseDomTree(node);
+            let textNode;
+            const treeWalker = document.createTreeWalker(
+                aNode,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: function(node) {
+                        if (skippedElements.indexOf(node.parentNode.tagName.toLowerCase()) === -1
+                            && /\d/.test(node.nodeValue)) {
+                            return NodeFilter.FILTER_ACCEPT;
+                        }
+                        else {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                    }
+                },
+                false);
+            while(textNode = treeWalker.nextNode()) {
+                replaceCurrency(textNode);
             }
+
         };
 
         const substituteOne = (aNode, isShowOriginal, aDccTitle) => {
