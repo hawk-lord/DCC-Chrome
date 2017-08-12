@@ -2,8 +2,8 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.6.3.0
-Date: 2017-07-27
+Version: 2.6.4.0
+Date: 2017-08-12
 
 After installation, you'll have a new button in the toolbar. The button will open a popup with the following items:
 Toogle conversion on and off.
@@ -229,6 +229,10 @@ Improved performance (in the currency formatting code).
 Version: 2.6.3.0
 Date: 2017-07-27
 Improved performance (especially on Gmail).
+
+Version: 2.6.4.0
+Date: 2017-08-12
+Improved performance.
 
 
 

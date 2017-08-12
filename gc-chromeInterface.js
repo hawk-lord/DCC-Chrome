@@ -19,7 +19,7 @@ const GcChromeInterface = function(conversionEnabled) {
     const onBrowserAction = () => {
         buttonStatus = !buttonStatus;
         setButtonAppearance();
-        eventAggregator.publish("toggleConversion", buttonStatus);
+        eventAggregator.publish("toggleConversion", {conversionEnabled: buttonStatus, url: ""});
     };
     chrome.browserAction.onClicked.addListener(onBrowserAction);
 

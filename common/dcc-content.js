@@ -868,6 +868,7 @@ if (!this.DirectCurrencyContent) {
         };
 
         const traverseDomTree = (aNode) => {
+            //console.log("DCC traverseDomTree " + document.URL);
             if (!aNode) {
                 return
             }
@@ -888,6 +889,7 @@ if (!this.DirectCurrencyContent) {
                 },
                 false);
             while(textNode = treeWalker.nextNode()) {
+                //console.log("replaceCurrency " + textNode.nodeValue);
                 replaceCurrency(textNode);
             }
 
@@ -961,6 +963,7 @@ if (!this.DirectCurrencyContent) {
             }
             if (aStatus.isEnabled && !aStatus.hasConvertedElements) {
                 startObserve();
+                //console.log("DCC onSendEnabledStatus " + document.URL);
                 traverseDomTree(document.body);
             }
             const showOriginal = !aStatus.isEnabled;
@@ -1017,6 +1020,7 @@ if (!this.DirectCurrencyContent) {
          * @param contentScriptParams
          */
         const onUpdateSettings = (contentScriptParams) => {
+            //console.log("DCC onUpdateSettings " + document.URL);
             const showOriginal = true;
             substituteAll(document.body, showOriginal);
             resetDomTree(document.body);
@@ -1039,6 +1043,7 @@ if (!this.DirectCurrencyContent) {
                 if (contentScriptParams.isEnabled && process) {
                     startObserve();
                     if (document) {
+                        //console.log("DCC startConversion " + document.URL);
                         traverseDomTree(document.body);
                         const showOriginal = false;
                         substituteAll(document.body, showOriginal);

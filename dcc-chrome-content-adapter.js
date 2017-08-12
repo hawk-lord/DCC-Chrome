@@ -15,11 +15,16 @@ if (!this.ContentAdapter) {
     const ContentAdapter = function() {
         let thePort;
         const messageListener = (msg) => {
+            //console.log("DCC messageListener URL " + document.URL);
+            //console.log("DCC msq.url " + msg.url);
             if (msg.conversionQuotes) {
                 DirectCurrencyContent.onUpdateSettings(msg);
             }
             else {
-                DirectCurrencyContent.onSendEnabledStatus(msg);
+                if (msg.url === "" || msg.url === document.URL) {
+                    //console.log("DCC msg.url === " + document.URL);
+                    DirectCurrencyContent.onSendEnabledStatus(msg);
+                }
             }
         };
         const portListener = (aPort) => {
@@ -30,7 +35,7 @@ if (!this.ContentAdapter) {
         chrome.runtime.onConnect.addListener(portListener);
         return {
             finish: (hasConvertedElements) => {
-                thePort.postMessage(hasConvertedElements);
+                thePort.postMessage({hasConvertedElements: hasConvertedElements, url: document.URL});
             }
         };
 
