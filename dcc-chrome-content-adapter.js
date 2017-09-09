@@ -32,7 +32,7 @@ if (!this.ContentAdapter) {
             thePort = aPort;
             aPort.onMessage.addListener(messageListener);
         };
-        //chrome.runtime.onConnect.addListener(portListener);
+        chrome.runtime.onConnect.addListener(portListener);
         return {
             finish: (hasConvertedElements) => {
                 thePort.postMessage({hasConvertedElements: hasConvertedElements, url: document.URL});
