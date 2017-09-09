@@ -8,11 +8,9 @@
 "use strict";
 
 const GcContentInterface = function(anInformationHolder) {
-    let contentPort;
     const sendEnabledStatus = (tabId, status) => {
-        contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
         try {
-            contentPort.postMessage(status);
+            chrome.tabs.sendMessage(tabId, status)
         }
         catch (err) {
             console.error(err);
@@ -32,15 +30,13 @@ const GcContentInterface = function(anInformationHolder) {
         };
         const onScriptExecuted = () => {
             // console.log("onScriptExecuted tabId " + tabId);
-            contentPort = chrome.tabs.connect(tabId, {name: "dccContentPort"});
             try {
                 // TODO Don't send null
-                contentPort.postMessage(new ContentScriptParams(null, anInformationHolder));
+                chrome.tabs.sendMessage(tabId, new ContentScriptParams(null, anInformationHolder), finishedTabProcessingHandler)
             }
             catch (err) {
                 console.error(err);
             }
-            contentPort.onMessage.addListener(finishedTabProcessingHandler);
         };
         if (changeInfo.status === "complete" && tab && tab.url && tab.url.indexOf("http") === 0
             && tab.url.indexOf("https://chrome.google.com/webstore") === -1

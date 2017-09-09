@@ -13,8 +13,10 @@
 
 if (!this.ContentAdapter) {
     const ContentAdapter = function() {
-        let thePort;
-        const messageListener = (msg) => {
+        const finish = (hasConvertedElements) => {
+            return {hasConvertedElements: hasConvertedElements, url: document.URL};
+        };
+        const messageListener = (msg, sender, finish) => {
             //console.log("DCC messageListener URL " + document.URL);
             //console.log("DCC msq.url " + msg.url);
             if (msg.conversionQuotes) {
@@ -26,17 +28,12 @@ if (!this.ContentAdapter) {
                     DirectCurrencyContent.onSendEnabledStatus(msg);
                 }
             }
+            // async
+            return true;
         };
-        const portListener = (aPort) => {
-            console.assert(aPort.name == "dccContentPort");
-            thePort = aPort;
-            aPort.onMessage.addListener(messageListener);
-        };
-        chrome.runtime.onConnect.addListener(portListener);
+        chrome.runtime.onMessage.addListener(messageListener);
         return {
-            finish: (hasConvertedElements) => {
-                thePort.postMessage({hasConvertedElements: hasConvertedElements, url: document.URL});
-            }
+            finish: finish
         };
 
     }();
