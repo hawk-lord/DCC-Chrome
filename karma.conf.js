@@ -15,6 +15,7 @@ module.exports = function (config) {
         files: [
             // default was false
             {pattern: "common/jquery-2.2.4.min.js", included: true},
+            {pattern: "common/jquery-ui-1.12.0.min.js", included: true},
             {pattern: "common/dcc-regexes.js", included: true},
             {pattern: "common/dcc-content.js", included: true},
             {pattern: "common/dcc-settings.js", included: true},
@@ -37,10 +38,10 @@ module.exports = function (config) {
             {pattern: "test/karma/test-dcc-regexes.js", included: true},
             {pattern: "test/karma/test-dcc-settings.js", included: true},
             {pattern: "test/karma/test-eventAggregator.js", included: true},
-            {pattern: "test/karma/test-ff-chromeInterface.js", included: true},
-            {pattern: "test/karma/test-ff-contentInterface.js", included: true},
-            {pattern: "test/karma/test-ff-freegeoip-service.js", included: true},
-            {pattern: "test/karma/test-ff-storage-service.js", included: true},
+            {pattern: "test/karma/test-gc-chromeInterface.js", included: true},
+            {pattern: "test/karma/test-gc-contentInterface.js", included: true},
+            {pattern: "test/karma/test-gc-freegeoip-service.js", included: true},
+            {pattern: "test/karma/test-gc-storage-service.js", included: true},
             {pattern: "test/karma/test-freegeoip-service.js", included: true},
             {pattern: "test/karma/test-informationHolder.js", included: true},
             {pattern: "test/karma/test-parseContentScriptParams.js", included: true},

@@ -303,6 +303,7 @@ describe("DirectCurrencyContent", () => {
     });
 
     describe("#convertContent", () => {
+        /*
         it("should replace USD with EUR", () => {
             const expected = " EUR2,700.00  to EUR30,000.00";
             const currency = "EUR";
@@ -323,6 +324,7 @@ describe("DirectCurrencyContent", () => {
                 currencyCode, roundAmounts, showOriginalPrices, showOriginalCurrencies, convertedContent);
             assert.strictEqual(actual, expected, "is same");
         });
+        */
         it("should replace VND with EUR", () => {
             const expected = " EUR0.41 ";
             const currency = "EUR";

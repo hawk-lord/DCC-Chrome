@@ -9,6 +9,9 @@ const ContentAdapter = function() {
     return {
         finish: (hasConvertedElements) => {
             return hasConvertedElements;
+        },
+        loaded: () => {
+
         }
     }
 }();
