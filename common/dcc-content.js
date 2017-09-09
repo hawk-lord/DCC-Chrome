@@ -810,7 +810,7 @@ if (!this.DirectCurrencyContent) {
                 substituteOne(aNode, showOriginal, dccTitle);
             }
 
-            if (aNode.baseURI.includes("pdf.js")) {
+            if (aNode.baseURI && aNode.baseURI.includes("pdf.js")) {
                 if (aNode.parentNode) {
                     aNode.parentNode.style.color = "black";
                     aNode.parentNode.style.backgroundColor = "lightyellow";
