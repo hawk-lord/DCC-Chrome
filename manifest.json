@@ -1,53 +1,36 @@
 {
-  "manifest_version": 2,
-  "name": "Direct Currency Converter",
-  "version": "2.6.5.0",
-
-  "default_locale": "en",
-  "description": "Converts prices from any currency (€, $, £, ¥, ؋, ৳, ฿, ៛, ₡, etc.) to prices in a selectable currency automatically while browsing.",
-  "icons": {
-    "16": "images/1402781551_currency_exchange_1.png",
-    "48": "images/1415072079_currency_exchange_1-48.png",
-    "128": "images/1415072098_currency_exchange_1-128.png"
-  },
-
-  "browser_action": {
-    "default_icon": {
-      "19": "images/1415072771_currency_exchange_1-19.png",
-      "38": "images/1415072079_currency_exchange_1-38.png"
+    "manifest_version": 2,
+    "name": "Direct Currency Converter",
+    "version": "2.6.5.0",
+    "default_locale": "en",
+    "description": "Converts prices from any currency (€, $, £, ¥, ؋, ৳, ฿, ៛, ₡, etc.) to prices in a selectable currency automatically while browsing.",
+    "icons": {
+        "16": "images/1402781551_currency_exchange_1.png",
+        "48": "images/1415072079_currency_exchange_1-48.png",
+        "128": "images/1415072098_currency_exchange_1-128.png"
     },
-    "default_title": "__MSG_buttontitle__",
-    "default_popup": "panel.html"
-  },
-
-  "author": "Per Johansson",
-  "background": {
-    "scripts": [
-      "dcc-common-lib/eventAggregator.js",
-      "gc-freegeoip-service.js",
-      "gc-nekudo-service.js",
-      "dcc-common-lib/freegeoip-service.js",
-      "dcc-common-lib/nekudo-service.js",
-      "gc-yahoo-quotes-service.js",
-      "dcc-common-lib/yahoo-quotes.js",
-      "gc-storage-service.js",
-      "dcc-common-lib/informationHolder.js",
-      "dcc-common-lib/contentScriptParams.js",
-      "dcc-common-lib/parseContentScriptParams.js",
-      "gc-l10n.js",
-      "gc-contentInterface.js",
-      "gc-chromeInterface.js",
-      "gc-main.js"],
-    "persistent": false
-  },
-  "options_ui": {
-    "page": "settings.html",
-    "chrome_style": false
-  },
-  "permissions": [
-    "tabs",
-    "storage",
-    "<all_urls>"
-  ],
-  "short_name": "DC Converter"
+    "browser_action": {
+        "default_icon": {
+            "19": "images/1415072771_currency_exchange_1-19.png",
+            "38": "images/1415072079_currency_exchange_1-38.png"
+        },
+        "default_title": "__MSG_buttontitle__",
+        "default_popup": "panel.html"
+    },
+    "author": "Per Johansson",
+    "background": {
+        "page": "background.html",
+        "persistent": true
+    },
+    "options_page": "settings.html",
+    "permissions": [
+        "tabs",
+        "storage",
+        "<all_urls>"
+    ],
+    "short_name": "DC Converter",
+    "-ms-preload": {
+        "backgroundScript": "backgroundScriptsAPIBridge.js",
+        "contentScript": "contentScriptsAPIBridge.js"
+    }
 }
