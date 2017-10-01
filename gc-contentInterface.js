@@ -16,23 +16,27 @@ const GcContentInterface = function(anInformationHolder) {
             console.error(err);
         }
     };
-    const sendSettingsToPage = (tabId, changeInfo, tab) => {
-        // console.log("sendSettingsToPage " + tabId + " status " + changeInfo.status + " url " + changeInfo.url);
-        const finishedTabProcessingHandler = (aParameters) => {
+    const finishedTabProcessingHandler = (aParameters) => {
+        if (aParameters.command === "getEnabledState") {
             try {
-                //console.log("finishedTabProcessingHandler");
+                //console.log("finishedTabProcessingHandler " + aParameters.url);
                 eventAggregator.publish("toggleConversion",
-                    {conversionEnabled: anInformationHolder.conversionEnabled, url: aParameters.url});
+                    {"conversionEnabled": anInformationHolder.conversionEnabled, "url": aParameters.url});
             }
             catch (err) {
                 console.error("finishedTabProcessingHandler " + err);
             }
-        };
+        }
+    };
+    const sendSettingsToPage = (tabId, changeInfo, tab) => {
+        // console.log("sendSettingsToPage " + tabId + " status " + changeInfo.status + " url " + changeInfo.url);
         const onScriptExecuted = () => {
             // console.log("onScriptExecuted tabId " + tabId);
             try {
+                chrome.runtime.onMessage.removeListener(finishedTabProcessingHandler);
+                chrome.runtime.onMessage.addListener(finishedTabProcessingHandler);
                 // TODO Don't send null
-                chrome.tabs.sendMessage(tabId, new ContentScriptParams(null, anInformationHolder), finishedTabProcessingHandler)
+                chrome.tabs.sendMessage(tabId, new ContentScriptParams(null, anInformationHolder))
             }
             catch (err) {
                 console.error(err);
@@ -82,7 +86,7 @@ const GcContentInterface = function(anInformationHolder) {
     };
 
     const showQuotesTab = () => {
-        const quotesListener = (request, sender, sendResponse) => {
+        const quotesListener = (message, sender, sendResponse) => {
             sendResponse(new ContentScriptParams(null, anInformationHolder));
         };
         const quotesCallback = (aTab) => {
