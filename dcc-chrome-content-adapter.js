@@ -13,26 +13,48 @@
 
 if (!this.ContentAdapter) {
     const ContentAdapter = function() {
-        const finish = (hasConvertedElements) => {
-            return {hasConvertedElements: hasConvertedElements, url: document.URL};
+
+        const sendResponse = (hasConvertedElements) => {
+            return {"hasConvertedElements": hasConvertedElements, "url": document.URL};
         };
-        const messageListener = (msg, sender, finish) => {
+
+        const messageListener = (message, sender, sendResponse) => {
             //console.log("DCC messageListener URL " + document.URL);
             //console.log("DCC msq.url " + msg.url);
-            if (msg.conversionQuotes) {
-                DirectCurrencyContent.onUpdateSettings(msg);
+            if (message.conversionQuotes) {
+                DirectCurrencyContent.onUpdateSettings(message);
             }
             else {
-                if (msg.url === "" || msg.url === document.URL) {
+                if (message.url === "" || message.url === document.URL) {
                     //console.log("DCC msg.url === " + document.URL);
-                    DirectCurrencyContent.onSendEnabledStatus(msg);
+                    DirectCurrencyContent.onSendEnabledStatus(message);
                 }
             }
             // async
             return true;
         };
+
+        /**
+         * Messages from the main script
+         */
         chrome.runtime.onMessage.addListener(messageListener);
+
+        /**
+         * When DOM is loaded
+         */
+        const loaded = () => {
+
+        };
+
+        /**
+         * When conversion is done
+         */
+        const finish = (hasConvertedElements) => {
+            chrome.runtime.sendMessage({"command": "getEnabledState", "hasConvertedElements": hasConvertedElements, "url": document.URL});
+        };
+
         return {
+            loaded: loaded,
             finish: finish
         };
 

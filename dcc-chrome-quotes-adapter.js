@@ -13,7 +13,7 @@
 
 if (!this.QuotesAdapter) {
     const QuotesAdapter = function() {
-        chrome.runtime.sendMessage({greeting: "hello"}, (response) => {
+        chrome.runtime.sendMessage({"command": "getQuotes"}, (response) => {
             DirectCurrencyQuotes.onUpdateQuotes(response);
         });
     }();
