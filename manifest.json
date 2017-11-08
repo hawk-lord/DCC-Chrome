@@ -49,5 +49,11 @@
     "storage",
     "<all_urls>"
   ],
-  "short_name": "DC Converter"
+  "short_name": "DC Converter",
+
+    "applications": {
+        "gecko": {
+            "id": "dcc@joint.ax"
+        }
+    }
 }
