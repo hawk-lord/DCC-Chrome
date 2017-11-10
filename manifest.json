@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Direct Currency Converter",
-  "version": "2.6.5.0",
+  "version": "2.7.0.0",
 
   "default_locale": "en",
   "description": "Converts prices from any currency (€, $, £, ¥, ؋, ৳, ฿, ៛, ₡, etc.) to prices in a selectable currency automatically while browsing.",
@@ -28,8 +28,8 @@
       "gc-nekudo-service.js",
       "dcc-common-lib/freegeoip-service.js",
       "dcc-common-lib/nekudo-service.js",
-      "gc-yahoo-quotes-service.js",
-      "dcc-common-lib/yahoo-quotes.js",
+      "gc-yahoo-2-quotes-service.js",
+      "dcc-common-lib/yahoo-2-quotes.js",
       "gc-storage-service.js",
       "dcc-common-lib/informationHolder.js",
       "dcc-common-lib/contentScriptParams.js",
