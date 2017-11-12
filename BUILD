@@ -35,3 +35,11 @@ cd /Users/per/IdeaProjects
 // Go to
 https://addons.opera.com/developer/upload/
 
+
+cd /Users/per/IdeaProjects/DCC-Chrome
+web-ext run
+web-ext build --overwrite-dest --ignore-files test*
+// Go to
+https://addons.mozilla.org/sv-SE/developers/addon/direct-currency-converter-2/versions/submit/
+
+
