@@ -2,8 +2,8 @@ Direct Currency Converter
 
 No ads or spyware.
 
-Version: 2.6.5.0
-Date: 2017-10-08
+Version: 2.7.0.0
+Date: 2017-11-10
 
 After installation, you'll have a new button in the toolbar. The button will open a popup with the following items:
 Toogle conversion on and off.
@@ -58,4 +58,7 @@ Version: 2.6.5.0
 Date: 2017-10-08
 First release for Microsoft Edge.
 
+Version: 2.7.0.0
+Date: 2017-11-10
+Using another data source since the original one was closed.
 
