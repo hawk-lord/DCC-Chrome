@@ -13,10 +13,10 @@ const GcChromeInterface = function(conversionEnabled) {
         const colour = buttonStatus ? "#00FF00" : "#FF0000";
         const text = buttonStatus ? "On" : "Off";
         if (typeof chrome.browserAction.setBadgeBackgroundColor === "function") {
-        chrome.browserAction.setBadgeBackgroundColor({color: colour});
+            chrome.browserAction.setBadgeBackgroundColor({color: colour});
         }
         if (typeof chrome.browserAction.setBadgeText === "function") {
-        chrome.browserAction.setBadgeText({text: text});
+            chrome.browserAction.setBadgeText({text: text});
         }
 
 

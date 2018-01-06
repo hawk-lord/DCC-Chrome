@@ -67,7 +67,7 @@ const DirectCurrencyConverter = (function() {
             for (let resource of response.list.resources) {
                 informationHolder.setConversionQuote(resource.resource.fields.symbol.substring(0, 3), quote / resource.resource.fields.price);
             }
-                contentInterface.watchForPages();
+            contentInterface.watchForPages();
         });
         eventAggregator.subscribe("toggleConversion", (eventArgs) => {
             contentInterface.toggleConversion(eventArgs);

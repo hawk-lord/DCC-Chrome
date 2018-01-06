@@ -16,7 +16,7 @@ const GcContentInterface = function(anInformationHolder) {
             console.error(err);
         }
     };
-        const finishedTabProcessingHandler = (aParameters) => {
+    const finishedTabProcessingHandler = (aParameters) => {
         if (aParameters.command === "getEnabledState") {
             try {
                 //console.log("finishedTabProcessingHandler " + aParameters.url);
@@ -27,7 +27,7 @@ const GcContentInterface = function(anInformationHolder) {
                 console.error("finishedTabProcessingHandler " + err);
             }
         }
-        };
+    };
     const sendSettingsToPage = (tabId, changeInfo, tab) => {
         // console.log("sendSettingsToPage " + tabId + " status " + changeInfo.status + " url " + changeInfo.url);
         const onScriptExecuted = () => {

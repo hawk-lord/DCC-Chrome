@@ -12,6 +12,7 @@
 "use strict";
 
 if (!this.ContentAdapter) {
+
     const ContentAdapter = function() {
 
         const sendResponse = (hasConvertedElements) => {
@@ -59,5 +60,7 @@ if (!this.ContentAdapter) {
         };
 
     }();
+
     this.ContentAdapter = ContentAdapter;
+
 }
