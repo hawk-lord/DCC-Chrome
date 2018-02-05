@@ -93,10 +93,10 @@ describe("DirectCurrencyContent", () => {
     });
     describe("#getMultiplicator", () => {
         it("should throw an error due to a missing parameter", () => {
-            expect(DccFunctions.getMultiplicator).to.throw(Error, /aPrice is undefined/);
+            expect(DccFunctions.getMultiplicator).to.throw(Error, /Cannot read property \'originalCurrency\' of undefined/);
         });
         it("should throw an error due to a null parameter", () => {
-            expect(() => {DccFunctions.getMultiplicator(null)} ).to.throw(Error, /aPrice is null/);
+            expect(() => {DccFunctions.getMultiplicator(null)} ).to.throw(Error, /Cannot read property \'originalCurrency\' of null/);
         });
         it("should have exponent 0", () => {
             const aCurrency = "EUR";
