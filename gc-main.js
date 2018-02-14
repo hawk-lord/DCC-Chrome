@@ -25,22 +25,22 @@ const DirectCurrencyConverter = (function() {
     let geoServiceFreegeoip;
     let gcGeoServiceNekudo;
     let geoServiceNekudo;
-    let gcYahoo2QuotesService;
-    let yahoo2QuotesService;
+    let gcCurrencylayerQuotesService;
+    let currencylayerQuotesService;
 
     const onStorageServiceInitDone = (informationHolder) => {
         gcGeoServiceFreegeoip = new GcFreegeoipServiceProvider();
         geoServiceFreegeoip = new FreegeoipServiceProvider();
         gcGeoServiceNekudo = new GcNekudoServiceProvider();
         geoServiceNekudo = new NekudoServiceProvider();
-        gcYahoo2QuotesService = new GcYahoo2QuotesServiceProvider();
-        yahoo2QuotesService = new Yahoo2QuotesServiceProvider(eventAggregator);
+        gcCurrencylayerQuotesService = new GcCurrencylayerQuotesServiceProvider();
+        currencylayerQuotesService = new CurrencylayerQuotesServiceProvider(eventAggregator);
         const contentInterface = new GcContentInterface(informationHolder);
         const chromeInterface = new GcChromeInterface(informationHolder.conversionEnabled);
         eventAggregator.subscribe("countryReceivedFreegeoip", (countryCode) => {
             if (countryCode !== "") {
                 informationHolder.convertToCountry = countryCode;
-                yahoo2QuotesService.loadQuotes(gcYahoo2QuotesService);
+                currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService);
             }
             else {
                 geoServiceNekudo.loadUserCountry(gcGeoServiceNekudo);
@@ -53,31 +53,39 @@ const DirectCurrencyConverter = (function() {
             else {
                 informationHolder.convertToCountry = "CH";
             }
-            yahoo2QuotesService.loadQuotes(gcYahoo2QuotesService);
+            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService);
         });
         eventAggregator.subscribe("quotes", (eventArgs) => {
+            // Convert from Currencylayer response.
+            // TODO Move this to currencylayer code
             const response = JSON.parse(eventArgs);
             let quote = 1;
-            for (let resource of response.list.resources) {
-                if (informationHolder.convertToCurrency === resource.resource.fields.symbol.substring(0, 3)) {
-                    quote = resource.resource.fields.price;
+            // Currencylayer free subscription always converts from USD.
+            // Check quote between USD and target currency.
+            for (let resource in response.quotes) {
+                console.log(resource + " " + informationHolder.convertToCurrency);
+
+                if (informationHolder.convertToCurrency === resource.substring(3, 6)) {
+                    quote = response.quotes[resource];
                     break;
                 }
             }
-            for (let resource of response.list.resources) {
-                informationHolder.setConversionQuote(resource.resource.fields.symbol.substring(0, 3), quote / resource.resource.fields.price);
+            for (let resource in response.quotes) {
+                informationHolder.setConversionQuote(resource.substring(3, 6), quote / response.quotes[resource]);
             }
             contentInterface.watchForPages();
         });
         eventAggregator.subscribe("toggleConversion", (eventArgs) => {
             contentInterface.toggleConversion(eventArgs);
         });
+        /*
         eventAggregator.subscribe("showSettingsTab", () => {
             contentInterface.showSettingsTab();
         });
         eventAggregator.subscribe("showTestTab", () => {
             contentInterface.showTestTab();
         });
+        */
         eventAggregator.subscribe("showQuotesTab", () => {
             contentInterface.showQuotesTab();
         });
@@ -86,12 +94,12 @@ const DirectCurrencyConverter = (function() {
             informationHolder.resetReadCurrencies();
             new ParseContentScriptParams(eventArgs.contentScriptParams, informationHolder);
             if (toCurrencyChanged) {
-                yahoo2QuotesService.loadQuotes(gcYahoo2QuotesService);
+                currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService);
             }
         });
         eventAggregator.subscribe("resetQuotes", (eventArgs) => {
             informationHolder.resetReadCurrencies();
-            yahoo2QuotesService.loadQuotes(gcYahoo2QuotesService);
+            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService);
         });
         eventAggregator.subscribe("resetSettings", () => {
             informationHolder.resetSettings(iso4217Currencies);
@@ -125,7 +133,7 @@ const DirectCurrencyConverter = (function() {
             geoServiceFreegeoip.loadUserCountry(gcGeoServiceFreegeoip);
         }
         else {
-            yahoo2QuotesService.loadQuotes(gcYahoo2QuotesService);
+            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService);
         }
     };
     const onStorageServiceReInitDone = (informationHolder) => {

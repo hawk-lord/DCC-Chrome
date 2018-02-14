@@ -15,7 +15,7 @@ const chrome = function() {
 */
 
 "use strict"
-
+/*
 if (!this.chrome) {
     const chrome = function() {
     };
@@ -73,7 +73,7 @@ if (!this.chrome) {
 
     this.chrome = chrome;
 }
-
+*/
 /*
 tabs.on = function (what, fn) {};
 tabs.open = function () {};

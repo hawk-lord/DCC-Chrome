@@ -10,13 +10,15 @@
 const GcStorageServiceProvider = function() {
     let storage = {};
     const init = (aConvertFroms, anExcludedDomains) => {
-        chrome.storage.local.get(null, (aStorage) => {
+        chrome.storage.local.get((aStorage) => {
             storage = aStorage;
             if (!storage.excludedDomains) {
                 storage.excludedDomains = anExcludedDomains;
             }
             if (!storage.dccPrefs) {
                 storage.dccPrefs = {
+                    convertToCurrency: "CHF",
+                    convertToCountry: "CH",
                     enableOnStart: true,
                     quoteAdjustmentPercent: 0,
                     roundAmounts: false,
@@ -31,6 +33,12 @@ const GcStorageServiceProvider = function() {
                 };
             }
             else {
+                if (!storage.dccPrefs.convertToCurrency) {
+                    storage.dccPrefs.convertToCurrency = "CHF";
+                }
+                if (!storage.dccPrefs.convertToCountry) {
+                    storage.dccPrefs.convertToCountry = "CH";
+                }
                 if (storage.dccPrefs.enableOnStart === null || storage.dccPrefs.enableOnStart == null) {
                     storage.dccPrefs.enableOnStart = true;
                 }
@@ -86,6 +94,8 @@ const GcStorageServiceProvider = function() {
     };
     const resetSettings = (aDefaultEnabled) => {
         storage.dccPrefs = {
+            convertToCurrency: "CHF",
+            convertToCountry: "CH",
             enableOnStart: true,
             quoteAdjustmentPercent: 0,
             roundAmounts: false,
@@ -101,12 +111,7 @@ const GcStorageServiceProvider = function() {
     return {
         init: init,
         get convertToCurrency () {
-            if (storage.dccPrefs) {
-                return storage.dccPrefs.convertToCurrency;
-            }
-            else  {
-                return "EUR";
-            }
+            return storage.dccPrefs.convertToCurrency;
         },
         set convertToCurrency (aCurrency) {
             storage.dccPrefs.convertToCurrency = aCurrency;

@@ -9,7 +9,7 @@ module.exports = function (config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ["mocha","chai"],
+        frameworks: ["mocha", "sinon-chrome", "chai"],
 
         // list of files / patterns to load in the browser
         files: [
@@ -94,7 +94,7 @@ module.exports = function (config) {
         browsers: ["ChromeHeadless"],
         //browsers: ["PhantomJS2"],
 
-        plugins : ["karma-chrome-launcher", "karma-firefox-launcher", "karma-chai", "karma-mocha"],
+        //plugins : ["karma-chrome-launcher", "karma-firefox-launcher", "karma-chai", "karma-mocha"],
         //plugins : ["karma-chrome-launcher", "karma-firefox-launcher", "karma-chai", "karma-mocha", "karma-coverage"],
 
         // Continuous Integration mode
