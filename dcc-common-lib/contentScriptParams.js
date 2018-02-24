@@ -21,6 +21,7 @@ const ContentScriptParams = function(aTab, anInformationHolder) {
     this.showTooltip = anInformationHolder.showTooltip;
     this.tempConvertUnits = anInformationHolder.tempConvertUnits;
     this.apiKey = anInformationHolder.apiKey;
+    this.quotesProvider = anInformationHolder.quotesProvider;
     if (aTab && typeof aTab.isEnabled != "undefined")  {
         this.isEnabled = aTab.isEnabled;
     }

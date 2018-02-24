@@ -7,18 +7,23 @@
 
 "use strict";
 
-const GcYahoo2QuotesServiceProvider = function() {
+const GcQuotesServiceProvider = function(anEventAggregator) {
+
+    // Perhaps better with separate classes.
+    let source;
+
     const onComplete = (aResponse) => {
         try {
             // console.log("onComplete aResponse " + aResponse);
-            eventAggregator.publish("quotesReceived", aResponse);
+            anEventAggregator.publish("quotesReceived" + source, aResponse);
         }
         catch(err) {
             console.error("err " + err);
         }
     };
-    const fetchQuotes = (aUrlString) => {
+    const fetchQuotes = (aUrlString, aSource) => {
         // console.log("fetchQuotes ");
+        source = aSource;
         const urlString = aUrlString;
         const request = new XMLHttpRequest();
         request.open("GET", aUrlString, true);
@@ -35,5 +40,5 @@ const GcYahoo2QuotesServiceProvider = function() {
 };
 
 if (typeof exports === "object") {
-    exports.GcYahooQuotesServiceProvider = GcYahooQuotesServiceProvider;
+    exports.GcQuotesServiceProvider = GcQuotesServiceProvider;
 }

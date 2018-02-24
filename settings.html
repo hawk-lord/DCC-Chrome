@@ -362,12 +362,20 @@
                 <label for="adjustment_percentage" data-l10n-id="Percent exchange quote adjustment">% exchange quote adjustment</label>
             </li>
             <li>
-                <input type="checkbox" id="temp_convert_units" />
-                <label for="temp_convert_units" data-l10n-id="Convert other units">Convert other units such as inches and miles to SI (experimental)</label>
+                <select id="quotesProvider">
+                    <option value="ECB">ECB</option>
+                    <option value="Currencylayer">Currencylayer</option>
+                    <option value="Yahoo">Yahoo!</option>
+                </select>
+                <label for="quotesProvider" data-l10n-id="Quotes provider">Quotes provider</label>
             </li>
             <li>
                 <input type="text" id="api_key" size="40" />
                 <label for="api_key" data-l10n-id="API key">API key</label>
+            </li>
+            <li>
+                <input type="checkbox" id="temp_convert_units" />
+                <label for="temp_convert_units" data-l10n-id="Convert other units">Convert other units such as inches and miles to SI (experimental)</label>
             </li>
         </ul>
     </fieldset>

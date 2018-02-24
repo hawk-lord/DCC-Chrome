@@ -195,7 +195,7 @@ li {
 }
 
 #reset-button {
-    height:45px !important;
+    /** height:45px !important; */
 }
 
 #save-button, #reset-button, #reset-quotes-button, #select-all-button, #select-none-button, #toggleCurrencies {

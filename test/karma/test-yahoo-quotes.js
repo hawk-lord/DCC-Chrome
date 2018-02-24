@@ -18,7 +18,7 @@ const onQuoteReceived = function(eventArgs) {
 eventAggregator.subscribe("quoteReceived", onQuoteReceived);
 
 describe("YahooQuotesServiceProvider", function() {
-    const yahooQuotesServiceProvider = new YahooQuotesServiceProvider(eventAggregator);
+    const yahooQuotesServiceProvider = new GcQuotesServiceProvider(eventAggregator);
     describe("#quotesHandlers()", function() {
         yahooQuotesServiceProvider.loadQuotes(mockQuotesService, convertFromCurrencies, convertToCurrency);
         yahooQuotesServiceProvider.quotesHandlerFromTo(response1);

@@ -26,6 +26,7 @@ const ParseContentScriptParams = function(aContentScriptParams, anInformationHol
     anInformationHolder.showTooltip = aContentScriptParams.showTooltip;
     anInformationHolder.tempConvertUnits = aContentScriptParams.tempConvertUnits;
     anInformationHolder.apiKey = aContentScriptParams.apiKey;
+    anInformationHolder.quotesProvider = aContentScriptParams.quotesProvider;
     anInformationHolder.convertFromCurrency = aContentScriptParams.convertFromCurrency;
     anInformationHolder.alwaysConvertFromCurrency = aContentScriptParams.alwaysConvertFromCurrency;
     anInformationHolder.showAsSymbol = aContentScriptParams.showAsSymbol;

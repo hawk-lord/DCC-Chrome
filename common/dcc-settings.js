@@ -60,6 +60,9 @@ if (!this.DirectCurrencySettings) {
             jQuery("#api_key").change(function() {
                 apiKey = jQuery(this).val();
             });
+            jQuery("#quotesProvider").change(function() {
+                quotesProvider = jQuery(this).val();
+            });
             jQuery("#convertFromCurrency").change(function() {
                 convertFromCurrency = jQuery(this).val();
             });
@@ -105,6 +108,7 @@ if (!this.DirectCurrencySettings) {
                 contentScriptParams.showTooltip = showTooltip;
                 contentScriptParams.tempConvertUnits = tempConvertUnits;
                 contentScriptParams.apiKey = apiKey;
+                contentScriptParams.quotesProvider = quotesProvider;
                 contentScriptParams.convertFromCurrency = convertFromCurrency;
                 contentScriptParams.alwaysConvertFromCurrency = alwaysConvertFromCurrency;
                 contentScriptParams.showAsSymbol = showAsSymbol;
@@ -151,6 +155,7 @@ if (!this.DirectCurrencySettings) {
         let currencyNames = {};
         let convertFromCurrency = null;
         let apiKey = null;
+        let quotesProvider = null;
         let alwaysConvertFromCurrency = null;
         let showAsSymbol = null;
         const setUIFromPreferences = function() {
@@ -188,6 +193,7 @@ if (!this.DirectCurrencySettings) {
             jQuery("#showTooltip").prop("checked", showTooltip);
             jQuery("#temp_convert_units").prop("checked", tempConvertUnits);
             jQuery("#api_key").val(apiKey);
+            jQuery("#quotesProvider").val(quotesProvider);
             const selectedOption = jQuery('#convert_to_currency').val();
             const selectList = jQuery("#convert_to_currency").find("option");
             selectList.sort(function(a,b){
@@ -231,6 +237,7 @@ if (!this.DirectCurrencySettings) {
             currencyNames = contentScriptParams.currencyNames;
             convertFromCurrency = contentScriptParams.convertFromCurrency;
             apiKey = contentScriptParams.apiKey;
+            quotesProvider = contentScriptParams.quotesProvider;
             alwaysConvertFromCurrency = contentScriptParams.alwaysConvertFromCurrency;
             showAsSymbol = contentScriptParams.showAsSymbol;
             setUIFromPreferences();

@@ -187,6 +187,12 @@ const InformationHolder = function(aStorageService, aCurrencyData, aConvertFroms
         set apiKey (anApiKey) {
             aStorageService.apiKey = anApiKey;
         },
+        get quotesProvider () {
+            return aStorageService.quotesProvider;
+        },
+        set quotesProvider (aQuotesProvider) {
+            aStorageService.quotesProvider = aQuotesProvider;
+        },
         get showDccToolsButton () {
             return aStorageService.showDccToolsButton;
         },

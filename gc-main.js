@@ -25,22 +25,30 @@ const DirectCurrencyConverter = (function() {
     let geoServiceFreegeoip;
     let gcGeoServiceNekudo;
     let geoServiceNekudo;
-    let gcCurrencylayerQuotesService;
-    let currencylayerQuotesService;
+    let gcQuotesService;
+    let quotesService;
 
     const onStorageServiceInitDone = (informationHolder) => {
         gcGeoServiceFreegeoip = new GcFreegeoipServiceProvider();
         geoServiceFreegeoip = new FreegeoipServiceProvider();
         gcGeoServiceNekudo = new GcNekudoServiceProvider();
         geoServiceNekudo = new NekudoServiceProvider();
-        gcCurrencylayerQuotesService = new GcCurrencylayerQuotesServiceProvider();
-        currencylayerQuotesService = new CurrencylayerQuotesServiceProvider(eventAggregator, informationHolder);
+        gcQuotesService = new GcQuotesServiceProvider(eventAggregator);
+        if (informationHolder.quotesProvider === "ECB") {
+            console.log("ECB is not implemented");
+        }
+        else if (informationHolder.quotesProvider === "Currencylayer") {
+            quotesService = new CurrencylayerQuotesServiceProvider(eventAggregator, informationHolder);
+        }
+        else if (informationHolder.quotesProvider === "Yahoo") {
+            quotesService = new Yahoo2QuotesServiceProvider(eventAggregator, informationHolder);
+        }
         const contentInterface = new GcContentInterface(informationHolder);
         const chromeInterface = new GcChromeInterface(informationHolder.conversionEnabled);
         eventAggregator.subscribe("countryReceivedFreegeoip", (countryCode) => {
             if (countryCode !== "") {
                 informationHolder.convertToCountry = countryCode;
-                currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
+                quotesService.loadQuotes(gcQuotesService, informationHolder.apiKey);
             }
             else {
                 geoServiceNekudo.loadUserCountry(gcGeoServiceNekudo);
@@ -53,7 +61,7 @@ const DirectCurrencyConverter = (function() {
             else {
                 informationHolder.convertToCountry = "CH";
             }
-            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
+            quotesService.loadQuotes(gcQuotesService, informationHolder.apiKey);
         });
         eventAggregator.subscribe("quotesParsed", () => {
             contentInterface.watchForPages();
@@ -61,28 +69,32 @@ const DirectCurrencyConverter = (function() {
         eventAggregator.subscribe("toggleConversion", (eventArgs) => {
             contentInterface.toggleConversion(eventArgs);
         });
-        /*
-        eventAggregator.subscribe("showSettingsTab", () => {
-            contentInterface.showSettingsTab();
-        });
-        eventAggregator.subscribe("showTestTab", () => {
-            contentInterface.showTestTab();
-        });
-        */
         eventAggregator.subscribe("showQuotesTab", () => {
             contentInterface.showQuotesTab();
         });
         eventAggregator.subscribe("saveSettings", (eventArgs) => {
-            const toCurrencyChanged = informationHolder.convertToCurrency != eventArgs.contentScriptParams.convertToCurrency;
+            const toCurrencyChanged = informationHolder.convertToCurrency !== eventArgs.contentScriptParams.convertToCurrency;
+            const quotesProviderChanged = informationHolder.quotesProvider !== eventArgs.contentScriptParams.quotesProvider;
+            if (quotesProviderChanged) {
+                if (eventArgs.contentScriptParams.quotesProvider === "ECB") {
+                    console.log("ECB is not implemented");
+                }
+                else if (eventArgs.contentScriptParams.quotesProvider === "Currencylayer") {
+                    quotesService = new CurrencylayerQuotesServiceProvider(eventAggregator, informationHolder);
+                }
+                else if (eventArgs.contentScriptParams.quotesProvider === "Yahoo") {
+                    quotesService = new Yahoo2QuotesServiceProvider(eventAggregator, informationHolder);
+                }
+            }
             informationHolder.resetReadCurrencies();
             new ParseContentScriptParams(eventArgs.contentScriptParams, informationHolder);
             if (toCurrencyChanged) {
-                currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
+                quotesService.loadQuotes(gcQuotesService, informationHolder.apiKey);
             }
         });
         eventAggregator.subscribe("resetQuotes", (eventArgs) => {
             informationHolder.resetReadCurrencies();
-            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
+            quotesService.loadQuotes(gcQuotesService, informationHolder.apiKey);
         });
         eventAggregator.subscribe("resetSettings", () => {
             informationHolder.resetSettings(iso4217Currencies);
@@ -116,7 +128,7 @@ const DirectCurrencyConverter = (function() {
             geoServiceFreegeoip.loadUserCountry(gcGeoServiceFreegeoip);
         }
         else {
-            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
+            quotesService.loadQuotes(gcQuotesService, informationHolder.apiKey);
         }
     };
     const onStorageServiceReInitDone = (informationHolder) => {

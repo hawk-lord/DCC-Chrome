@@ -10,7 +10,7 @@
 const CurrencylayerQuotesServiceProvider = function(anEventAggregator, anInformationHolder) {
     const eventAggregator = anEventAggregator;
 
-    eventAggregator.subscribe("quotesReceived", (eventArgs) => {
+    eventAggregator.subscribe("quotesReceivedCurrencylayer", (eventArgs) => {
         // Convert from Currencylayer response.
         const response = JSON.parse(eventArgs);
         let quote = 1;
@@ -30,9 +30,9 @@ const CurrencylayerQuotesServiceProvider = function(anEventAggregator, anInforma
         eventAggregator.publish("quotesParsed");
     });
 
-    const loadQuotes = (aYahooQuotesService, apiKey) => {
+    const loadQuotes = (aQuotesService, apiKey) => {
         const urlString = "http://apilayer.net/api/live?access_key=" + apiKey + "&source=USD";
-        aYahooQuotesService.fetchQuotes(urlString);
+        aQuotesService.fetchQuotes(urlString, "Currencylayer");
     };
     return {
         loadQuotes: loadQuotes

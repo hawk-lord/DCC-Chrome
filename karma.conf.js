@@ -23,12 +23,13 @@ module.exports = function (config) {
             {pattern: "gc-chromeInterface.js", included: true},
             {pattern: "gc-contentInterface.js", included: true},
             {pattern: "gc-freegeoip-service.js", included: true},
+            {pattern: "gc-quotes-service.js", included: true},
             {pattern: "gc-storage-service.js", included: true},
             {pattern: "dcc-common-lib/contentScriptParams.js", included: true},
             {pattern: "dcc-common-lib/freegeoip-service.js", included: true},
             {pattern: "dcc-common-lib/informationHolder.js", included: true},
             {pattern: "dcc-common-lib/parseContentScriptParams.js", included: true},
-            {pattern: "dcc-common-lib/yahoo-quotes.js", included: true},
+            {pattern: "dcc-common-lib/yahoo-2-quotes.js", included: true},
             {pattern: "test/karma/dcc-mock-content-adapter.js", included: true},
             {pattern: "test/karma/dcc-mock-contentscriptparams.js", included: true},
             {pattern: "test/karma/dcc-mock-informationholder.js", included: true},
@@ -45,7 +46,6 @@ module.exports = function (config) {
             {pattern: "test/karma/test-freegeoip-service.js", included: true},
             {pattern: "test/karma/test-informationHolder.js", included: true},
             {pattern: "test/karma/test-parseContentScriptParams.js", included: true},
-            {pattern: "test/karma/test-yahoo-quotes.js", included: true}
         ],
 
 
