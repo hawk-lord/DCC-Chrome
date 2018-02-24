@@ -20,6 +20,7 @@ const ContentScriptParams = function(aTab, anInformationHolder) {
     this.showOriginalCurrencies = anInformationHolder.showOriginalCurrencies;
     this.showTooltip = anInformationHolder.showTooltip;
     this.tempConvertUnits = anInformationHolder.tempConvertUnits;
+    this.apiKey = anInformationHolder.apiKey;
     if (aTab && typeof aTab.isEnabled != "undefined")  {
         this.isEnabled = aTab.isEnabled;
     }

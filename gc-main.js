@@ -40,7 +40,7 @@ const DirectCurrencyConverter = (function() {
         eventAggregator.subscribe("countryReceivedFreegeoip", (countryCode) => {
             if (countryCode !== "") {
                 informationHolder.convertToCountry = countryCode;
-                currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService);
+                currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
             }
             else {
                 geoServiceNekudo.loadUserCountry(gcGeoServiceNekudo);
@@ -53,7 +53,7 @@ const DirectCurrencyConverter = (function() {
             else {
                 informationHolder.convertToCountry = "CH";
             }
-            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService);
+            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
         });
         eventAggregator.subscribe("quotes", (eventArgs) => {
             // Convert from Currencylayer response.
@@ -94,12 +94,12 @@ const DirectCurrencyConverter = (function() {
             informationHolder.resetReadCurrencies();
             new ParseContentScriptParams(eventArgs.contentScriptParams, informationHolder);
             if (toCurrencyChanged) {
-                currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService);
+                currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
             }
         });
         eventAggregator.subscribe("resetQuotes", (eventArgs) => {
             informationHolder.resetReadCurrencies();
-            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService);
+            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
         });
         eventAggregator.subscribe("resetSettings", () => {
             informationHolder.resetSettings(iso4217Currencies);
@@ -133,7 +133,7 @@ const DirectCurrencyConverter = (function() {
             geoServiceFreegeoip.loadUserCountry(gcGeoServiceFreegeoip);
         }
         else {
-            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService);
+            currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
         }
     };
     const onStorageServiceReInitDone = (informationHolder) => {

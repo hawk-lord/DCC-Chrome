@@ -9,8 +9,8 @@
 
 const CurrencylayerQuotesServiceProvider = function(anEventAggregator) {
     const eventAggregator = anEventAggregator;
-    const loadQuotes = (aYahooQuotesService) => {
-        const urlString = "http://apilayer.net/api/live?access_key=f1ab3c2017f7014d83863df20d41bef4&source=USD";
+    const loadQuotes = (aYahooQuotesService, apiKey) => {
+        const urlString = "http://apilayer.net/api/live?access_key=" + apiKey + "&source=USD";
         aYahooQuotesService.fetchQuotes(urlString);
     };
     return {

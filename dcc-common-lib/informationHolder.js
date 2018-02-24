@@ -181,6 +181,12 @@ const InformationHolder = function(aStorageService, aCurrencyData, aConvertFroms
         set tempConvertUnits (aTempConvertUnits) {
             aStorageService.tempConvertUnits = aTempConvertUnits;
         },
+        get apiKey () {
+            return aStorageService.apiKey;
+        },
+        set apiKey (anApiKey) {
+            aStorageService.apiKey = anApiKey;
+        },
         get showDccToolsButton () {
             return aStorageService.showDccToolsButton;
         },

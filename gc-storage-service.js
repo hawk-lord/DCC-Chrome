@@ -26,6 +26,7 @@ const GcStorageServiceProvider = function() {
                     showOriginalCurrencies: false,
                     showTooltip: true,
                     tempConvertUnits: false,
+                    apiKey: "",
                     convertFroms: aConvertFroms,
                     convertFromCurrency: "GBP",
                     alwaysConvertFromCurrency: false,
@@ -59,6 +60,9 @@ const GcStorageServiceProvider = function() {
                 }
                 if (storage.dccPrefs.tempConvertUnits === null || storage.dccPrefs.tempConvertUnits == null) {
                     storage.dccPrefs.tempConvertUnits = false;
+                }
+                if (!storage.dccPrefs.apiKey) {
+                    storage.dccPrefs.apiKey = "";
                 }
                 if (!storage.dccPrefs.convertFroms) {
                     storage.dccPrefs.convertFroms = aConvertFroms;
@@ -188,6 +192,13 @@ const GcStorageServiceProvider = function() {
         },
         set tempConvertUnits (aTempConvertUnits) {
             storage.dccPrefs.tempConvertUnits = aTempConvertUnits;
+            chrome.storage.local.set(storage);
+        },
+        get apiKey () {
+            return storage.dccPrefs.apiKey;
+        },
+        set apiKey (anApiKey) {
+            storage.dccPrefs.apiKey = anApiKey;
             chrome.storage.local.set(storage);
         },
         get convertFromCurrency () {
