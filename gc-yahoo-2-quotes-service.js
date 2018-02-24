@@ -11,7 +11,7 @@ const GcYahoo2QuotesServiceProvider = function() {
     const onComplete = (aResponse) => {
         try {
             // console.log("onComplete aResponse " + aResponse);
-            eventAggregator.publish("quotes", aResponse);
+            eventAggregator.publish("quotesReceived", aResponse);
         }
         catch(err) {
             console.error("err " + err);

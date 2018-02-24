@@ -7,8 +7,29 @@
 
 "use strict";
 
-const CurrencylayerQuotesServiceProvider = function(anEventAggregator) {
+const CurrencylayerQuotesServiceProvider = function(anEventAggregator, anInformationHolder) {
     const eventAggregator = anEventAggregator;
+
+    eventAggregator.subscribe("quotesReceived", (eventArgs) => {
+        // Convert from Currencylayer response.
+        const response = JSON.parse(eventArgs);
+        let quote = 1;
+        // Currencylayer free subscription always converts from USD.
+        // Check quote between USD and target currency.
+        for (let resource in response.quotes) {
+            console.log(resource + " " + anInformationHolder.convertToCurrency);
+
+            if (anInformationHolder.convertToCurrency === resource.substring(3, 6)) {
+                quote = response.quotes[resource];
+                break;
+            }
+        }
+        for (let resource in response.quotes) {
+            anInformationHolder.setConversionQuote(resource.substring(3, 6), quote / response.quotes[resource]);
+        }
+        eventAggregator.publish("quotesParsed");
+    });
+
     const loadQuotes = (aYahooQuotesService, apiKey) => {
         const urlString = "http://apilayer.net/api/live?access_key=" + apiKey + "&source=USD";
         aYahooQuotesService.fetchQuotes(urlString);

@@ -34,7 +34,7 @@ const DirectCurrencyConverter = (function() {
         gcGeoServiceNekudo = new GcNekudoServiceProvider();
         geoServiceNekudo = new NekudoServiceProvider();
         gcCurrencylayerQuotesService = new GcCurrencylayerQuotesServiceProvider();
-        currencylayerQuotesService = new CurrencylayerQuotesServiceProvider(eventAggregator);
+        currencylayerQuotesService = new CurrencylayerQuotesServiceProvider(eventAggregator, informationHolder);
         const contentInterface = new GcContentInterface(informationHolder);
         const chromeInterface = new GcChromeInterface(informationHolder.conversionEnabled);
         eventAggregator.subscribe("countryReceivedFreegeoip", (countryCode) => {
@@ -55,24 +55,7 @@ const DirectCurrencyConverter = (function() {
             }
             currencylayerQuotesService.loadQuotes(gcCurrencylayerQuotesService, informationHolder.apiKey);
         });
-        eventAggregator.subscribe("quotes", (eventArgs) => {
-            // Convert from Currencylayer response.
-            // TODO Move this to currencylayer code
-            const response = JSON.parse(eventArgs);
-            let quote = 1;
-            // Currencylayer free subscription always converts from USD.
-            // Check quote between USD and target currency.
-            for (let resource in response.quotes) {
-                console.log(resource + " " + informationHolder.convertToCurrency);
-
-                if (informationHolder.convertToCurrency === resource.substring(3, 6)) {
-                    quote = response.quotes[resource];
-                    break;
-                }
-            }
-            for (let resource in response.quotes) {
-                informationHolder.setConversionQuote(resource.substring(3, 6), quote / response.quotes[resource]);
-            }
+        eventAggregator.subscribe("quotesParsed", () => {
             contentInterface.watchForPages();
         });
         eventAggregator.subscribe("toggleConversion", (eventArgs) => {
