@@ -35,7 +35,7 @@ const DirectCurrencyConverter = (function() {
         geoServiceNekudo = new NekudoServiceProvider();
         gcQuotesService = new GcQuotesServiceProvider(eventAggregator);
         if (informationHolder.quotesProvider === "ECB") {
-            console.log("ECB is not implemented");
+            quotesService = new EcbQuotesServiceProvider(eventAggregator, informationHolder);
         }
         else if (informationHolder.quotesProvider === "Currencylayer") {
             quotesService = new CurrencylayerQuotesServiceProvider(eventAggregator, informationHolder);
@@ -77,7 +77,7 @@ const DirectCurrencyConverter = (function() {
             const quotesProviderChanged = informationHolder.quotesProvider !== eventArgs.contentScriptParams.quotesProvider;
             if (quotesProviderChanged) {
                 if (eventArgs.contentScriptParams.quotesProvider === "ECB") {
-                    console.log("ECB is not implemented");
+                    quotesService = new EcbQuotesServiceProvider(eventAggregator, informationHolder);
                 }
                 else if (eventArgs.contentScriptParams.quotesProvider === "Currencylayer") {
                     quotesService = new CurrencylayerQuotesServiceProvider(eventAggregator, informationHolder);

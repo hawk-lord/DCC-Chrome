@@ -11,7 +11,7 @@ const Yahoo2QuotesServiceProvider = function(anEventAggregator, anInformationHol
     const eventAggregator = anEventAggregator;
 
     eventAggregator.subscribe("quotesReceivedYahoo", (eventArgs) => {
-        const response = JSON.parse(eventArgs);
+        const response = JSON.parse(eventArgs.response);
         let quote = 1;
         for (let resource of response.list.resources) {
             if (anInformationHolder.convertToCurrency === resource.resource.fields.symbol.substring(0, 3)) {
@@ -27,6 +27,7 @@ const Yahoo2QuotesServiceProvider = function(anEventAggregator, anInformationHol
 
 
     const loadQuotes = (aYahooQuotesService) => {
+        console.log("loadQuotes Yahoo");
         const urlString = "https://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json";
         aYahooQuotesService.fetchQuotes(urlString, "Yahoo");
     };

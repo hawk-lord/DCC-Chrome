@@ -30,6 +30,7 @@
       "dcc-common-lib/nekudo-service.js",
       "gc-quotes-service.js",
       "dcc-common-lib/currencylayer-quotes.js",
+      "dcc-common-lib/ecb-quotes.js",
       "dcc-common-lib/yahoo-2-quotes.js",
       "gc-storage-service.js",
       "dcc-common-lib/informationHolder.js",

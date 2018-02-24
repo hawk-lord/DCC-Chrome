@@ -29,7 +29,7 @@ const GcQuotesServiceProvider = function(anEventAggregator) {
         request.open("GET", aUrlString, true);
         request.onreadystatechange = () => {
             if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
-                onComplete(request.responseText);
+                onComplete({response: request.response, responseXml: request.responseXML});
             }
         };
         request.send(null);
