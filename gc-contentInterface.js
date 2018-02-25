@@ -95,10 +95,15 @@ const GcContentInterface = function(anInformationHolder) {
         chrome.tabs.create({"url": chrome.extension.getURL("common/quotes.html")}, quotesCallback);
     };
 
+    const showTestTab = () => {
+        chrome.tabs.create({"url": "http://home.aland.net/ma37296-p1/extensions/prices.html"});
+    };
+
     return {
         watchForPages: watchForPages,
         toggleConversion: toggleConversion,
-        showQuotesTab: showQuotesTab
+        showQuotesTab: showQuotesTab,
+        showTestTab: showTestTab
     }
 };
 

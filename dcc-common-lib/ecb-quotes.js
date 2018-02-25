@@ -42,7 +42,6 @@ const EcbQuotesServiceProvider = function(anEventAggregator, anInformationHolder
     });
 
     const loadQuotes = (aQuotesService) => {
-        console.log("loadQuotes ECB");
         const urlString = "http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
         aQuotesService.fetchQuotes(urlString, "Ecb");
     };

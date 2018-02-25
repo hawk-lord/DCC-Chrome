@@ -36,6 +36,9 @@ const GcChromeInterface = function(conversionEnabled) {
         else if (message.command === "showQuotesTab") {
             eventAggregator.publish("showQuotesTab");
         }
+        else if (message.command === "showTestTab") {
+            eventAggregator.publish("showTestTab");
+        }
     };
     chrome.runtime.onMessage.addListener(onMessageFromPanel);
 };

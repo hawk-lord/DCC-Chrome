@@ -15,8 +15,15 @@ const openQuotesPage = () => {
     chrome.runtime.sendMessage({command: "showQuotesTab"});
 };
 
-const openTest = document.getElementById("toggleConversion");
-openTest.addEventListener("click", toggleConversion);
+const openTestPage = () => {
+    chrome.runtime.sendMessage({command: "showTestTab"});
+};
+
+const toggle = document.getElementById("toggleConversion");
+toggle.addEventListener("click", toggleConversion);
 
 const openQuotes = document.getElementById("openQuotes");
 openQuotes.addEventListener("click", openQuotesPage);
+
+const openTest = document.getElementById("openTest");
+openTest.addEventListener("click", openTestPage);

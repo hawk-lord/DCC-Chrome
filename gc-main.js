@@ -72,6 +72,9 @@ const DirectCurrencyConverter = (function() {
         eventAggregator.subscribe("showQuotesTab", () => {
             contentInterface.showQuotesTab();
         });
+        eventAggregator.subscribe("showTestTab", () => {
+            contentInterface.showTestTab();
+        });
         eventAggregator.subscribe("saveSettings", (eventArgs) => {
             const toCurrencyChanged = informationHolder.convertToCurrency !== eventArgs.contentScriptParams.convertToCurrency;
             const quotesProviderChanged = informationHolder.quotesProvider !== eventArgs.contentScriptParams.quotesProvider;

@@ -1,26 +1,33 @@
-Direct Currency Converter
+Direct Currency Converter - DCC
 
 No ads or spyware.
 
 Version: 2.8.0.0
-Date: 2018-02-24
+Date: 2018-02-25
 
 After installation, you'll have a new button in the toolbar. The button will open a popup with the following items:
 Toogle conversion on and off.
 Open a quotes page that can be sorted by value and currency.
+Open a test page for currencies.
 
 The settings tab is opened with the "Options" menu item.
 Changed settings are saved with the "Save" button in the settings tab.
 Settings can be reset to default with the "Reset" button.
 
-Currency quotes are taken from Yahoo Finance and updated when you start the program, reset the quotes. or when you switch currency.
+DCC can get its currency quotes from three different sources:
+ECB (33 currencies, default)
+Currencylayer (168 currencies, requires a free or paid API key)
+Yahoo! (188 currencies, not always reliable)
+The data source is selected in the DCC options. The easiest way is to use ECB. If you need more currencies,
+Currencylayer is recommended. You need an API key that is available from their site. Store the key in the DCC settings, and you are ready to go.
+
+Currency quotes are updated when you start the program, reset the quotes. or when you switch currency or data source.
 
 Your location is used to set your default region and currency (for example Finland - euro). It is guessed using the freegeoip.net or geoip.nekudo.com service.
 
-If conversion does not work, it probably means that there was no reply from Yahoo. Try to reload the browser (F5 button) and check the internet connection. Also, force a reload by switching "to currency" from settings tab, save, and reload the web pages.
+If conversion does not work, it probably means that there was no reply from the data source. Try to reload the browser (F5 button) and check the internet connection.
 
-You can convert to and from any existing currency code as defined by ISO 4217, including precious metals, if Yahoo provides a conversion quote for the currency.
-There are currently 16 codes with no conversion quotes: BOV, CHE, CHW, COU, CUC, SSP, USN, UYI, XBA, XBB, XBC, XBD, XSU, XTS, XUA, XXX.
+You can convert to and from most existing currency codes as defined by ISO 4217, including precious metals.
 
 A few currencies (CHF, DKK, EUR, GBP, ISK, JPY, NOK, RUB, SEK and USD) are pre-selected for conversion. You can select all currencies, but having too many currencies selected may clutter the pages and result in slow performance.
 
@@ -31,7 +38,8 @@ in the currency list in the settings tab.
 A tooltip containing original price, converted price and conversion quote is optionally shown in the upper left corner of the browser area.
 The "from currency" code is optionally shown in brackets after the original value like this: 6,67 € (60 kr [SEK]).
 
-Amounts without units are not converted.
+Amounts without units are not converted, but you can force all numbers to be converted from a currency by selecting "Always convert from the same currency:".
+
 Also, if amount and unit are in different HTML elements (for example when they have different colours or sizes) conversion cannot be done.
 
 Optionally, if selected in the settings tab, some traditional units of measurement (such as miles and calories) are converted to SI units (such as kilometres and kilojoules).
@@ -41,12 +49,12 @@ https://addons.mozilla.org/addon/direct-currency-converter-2/
 
 Some features of the old Firefox version could not be ported to the Chrome/Opera version:
 - PDF document conversion
-- Tab with test values
 
 External libraries used:
-jQuery 2.2.4
-jQuery UI 1.12
+jQuery 3.3.1
+jQuery UI 1.12.1
 jQuery UI Touch Punch 0.2.3
+DOMPurify 1.0.2
 
 Icons provided by Iconfinder.
 
@@ -238,4 +246,11 @@ Version: 2.7.0.0
 Date: 2017-11-10
 Using another data source since the original one was closed.
 
+Version: 2.8.0.0
+Date: 2018-02-25
+Three different currency data sources to choose from, instead of only one.
+Link to currencies test page.
+Updates from ISO 4217 amendments: São Tomé and Príncipe STN, Mauritania MRU, and new name for Philippine piso.
+Recognises A$ as AUD.
+Internal change: updated jQuery, jQuery UI, and introduced DOMPurify for checking input data.
 

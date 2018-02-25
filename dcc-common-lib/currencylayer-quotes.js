@@ -39,7 +39,6 @@ const CurrencylayerQuotesServiceProvider = function(anEventAggregator, anInforma
     });
 
     const loadQuotes = (aQuotesService, apiKey) => {
-        console.log("loadQuotes Currencylayer");
         const urlString = "http://apilayer.net/api/live?access_key=" + apiKey + "&source=USD";
         aQuotesService.fetchQuotes(urlString, "Currencylayer");
     };

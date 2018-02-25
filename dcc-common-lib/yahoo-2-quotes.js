@@ -56,7 +56,6 @@ const Yahoo2QuotesServiceProvider = function(anEventAggregator, anInformationHol
 
 
     const loadQuotes = (aYahooQuotesService) => {
-        console.log("loadQuotes Yahoo");
         const urlString = "https://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json";
         aYahooQuotesService.fetchQuotes(urlString, "Yahoo");
     };
