@@ -27,7 +27,7 @@ const GcStorageServiceProvider = function() {
                     showTooltip: true,
                     tempConvertUnits: false,
                     apiKey: "",
-                    quotesProvider: "",
+                    quotesProvider: "ECB",
                     convertFroms: aConvertFroms,
                     convertFromCurrency: "GBP",
                     alwaysConvertFromCurrency: false,
@@ -101,6 +101,7 @@ const GcStorageServiceProvider = function() {
         });
     };
     const resetSettings = (aDefaultEnabled) => {
+        const currentApiKey = storage.dccPrefs.apiKey;
         storage.dccPrefs = {
             convertToCurrency: "CHF",
             convertToCountry: "CH",
@@ -111,7 +112,12 @@ const GcStorageServiceProvider = function() {
             showOriginalCurrencies: false,
             showTooltip: true,
             tempConvertUnits: false,
-            convertFroms: aDefaultEnabled
+            apiKey: currentApiKey,
+            quotesProvider: "ECB",
+            convertFroms: aDefaultEnabled,
+            convertFromCurrency: "GBP",
+            alwaysConvertFromCurrency: false,
+            showAsSymbol: false
         };
         chrome.storage.local.set(storage);
         eventAggregator.publish("storageReInitDone");

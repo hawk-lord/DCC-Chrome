@@ -58,8 +58,8 @@ if (!this.PriceRegexes) {
                 aRegex2.AOA = makeRegex2("(AOA|Kz|kwanzas?|cêntimos?|centimos?)");
                 aRegex1.ARS = makeRegex1("(ARS|AR\\$|\\$)");
                 aRegex2.ARS = makeRegex2("(ARS|AR\\$|\\$|pesos?|centavos?)");
-                aRegex1.AUD = makeRegex1("(AUD|AUD\\s?\\$|AU\\$|\\$)");
-                aRegex2.AUD = makeRegex2("(AUD|AUD\\$|AU\\$|\\$|dollars?|[cC]ents?)");
+                aRegex1.AUD = makeRegex1("(AUD|AUD\\s?\\$|AU?\\$|\\$)");
+                aRegex2.AUD = makeRegex2("(AUD|AUD\\$|AU?\\$|\\$|dollars?|[cC]ents?)");
                 aRegex1.AWG = makeRegex1("(AWG|AWG\\.?Afl\\.?)");
                 aRegex2.AWG = makeRegex2("(AWG|[aA]fl\\.?|\\sflorin|[cC]ents?)");
                 aRegex1.AZN = makeRegex1("(AZN|₼)");

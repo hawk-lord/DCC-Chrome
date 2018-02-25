@@ -8,6 +8,7 @@
 "use strict";
 
 const EcbQuotesServiceProvider = function(anEventAggregator, anInformationHolder) {
+
     const eventAggregator = anEventAggregator;
 
     eventAggregator.subscribe("quotesReceivedEcb", (eventArgs) => {
@@ -23,6 +24,7 @@ const EcbQuotesServiceProvider = function(anEventAggregator, anInformationHolder
                     if (childCube.nodeType === Node.ELEMENT_NODE) {
                         if (anInformationHolder.convertToCurrency === childCube.getAttribute("currency")) {
                             quote = childCube.getAttribute("rate");
+                            anInformationHolder.setConversionQuote("EUR", quote);
                             break;
                         }
                     }

@@ -131,7 +131,7 @@ const DirectCurrencyConverter = (function() {
             quotesService.loadQuotes(gcQuotesService, informationHolder.apiKey);
         }
     };
-    const onStorageServiceReInitDone = (informationHolder) => {
+    const onStorageServiceReInitDone = () => {
         geoServiceFreegeoip.loadUserCountry(gcGeoServiceFreegeoip);
     };
     const onJsonsDone = () => {
@@ -142,7 +142,7 @@ const DirectCurrencyConverter = (function() {
             onStorageServiceInitDone(informationHolder);
         });
         eventAggregator.subscribe("storageReInitDone", () => {
-            onStorageServiceReInitDone(informationHolder);
+            onStorageServiceReInitDone();
         });
         const gcStorageServiceProvider = new GcStorageServiceProvider();
         gcStorageServiceProvider.init(iso4217Currencies, defaultExcludedDomains);

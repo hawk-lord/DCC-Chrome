@@ -9,7 +9,6 @@
 
 const eventAggregator = (function() {
     const grep = function grep( elems, callback, inv ) {
-        "use strict";
         let retVal,
             ret = [],
             i = 0,

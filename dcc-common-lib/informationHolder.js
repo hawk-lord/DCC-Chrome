@@ -115,9 +115,9 @@ const InformationHolder = function(aStorageService, aCurrencyData, aConvertFroms
         },
         set convertToCountry (aCountry) {
             aStorageService.convertToCountry = aCountry;
-                if (!aStorageService.convertToCurrency) {
+                //if (!aStorageService.convertToCurrency) {
                     aStorageService.convertToCurrency = findCurrency(aCountry);
-                }
+                //}
         },
         get convertToCurrency () {
             return aStorageService.convertToCurrency;

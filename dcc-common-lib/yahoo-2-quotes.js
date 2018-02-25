@@ -16,6 +16,7 @@ const Yahoo2QuotesServiceProvider = function(anEventAggregator, anInformationHol
         for (let resource of response.list.resources) {
             if (anInformationHolder.convertToCurrency === resource.resource.fields.symbol.substring(0, 3)) {
                 quote = resource.resource.fields.price;
+                anInformationHolder.setConversionQuote("USD", quote);
                 break;
             }
         }

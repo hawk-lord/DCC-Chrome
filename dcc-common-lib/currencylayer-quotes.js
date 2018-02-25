@@ -20,6 +20,7 @@ const CurrencylayerQuotesServiceProvider = function(anEventAggregator, anInforma
 
             if (anInformationHolder.convertToCurrency === resource.substring(3, 6)) {
                 quote = response.quotes[resource];
+                anInformationHolder.setConversionQuote("USD", quote);
                 break;
             }
         }
