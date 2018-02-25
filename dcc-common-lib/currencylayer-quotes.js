@@ -26,6 +26,14 @@ const CurrencylayerQuotesServiceProvider = function(anEventAggregator, anInforma
         for (let resource in response.quotes) {
             anInformationHolder.setConversionQuote(resource.substring(3, 6), quote / response.quotes[resource]);
         }
+        // Workaround for missing MRU and STN
+        if (!response.quotes["USDMRU"]) {
+            anInformationHolder.setConversionQuote("MRU", quote / response.quotes["USDMRO"] * 10);
+        }
+        if (!response.quotes["USDSTN"]) {
+            anInformationHolder.setConversionQuote("STN", quote / response.quotes["USDSTD"] * 1000);
+        }
+
         eventAggregator.publish("quotesParsed");
     });
 

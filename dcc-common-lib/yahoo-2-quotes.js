@@ -19,9 +19,37 @@ const Yahoo2QuotesServiceProvider = function(anEventAggregator, anInformationHol
                 break;
             }
         }
+        let mruFound = false;
+        let stnFound = false;
+        let mroQuote = 0;
+        let stdQuote = 0;
         for (let resource of response.list.resources) {
-            anInformationHolder.setConversionQuote(resource.resource.fields.symbol.substring(0, 3), quote / resource.resource.fields.price);
+            const symbol = resource.resource.fields.symbol.substring(0, 3);
+            if (symbol === "MRU") {
+                mruFound = true;
+            }
+            if (symbol === "STN") {
+                stnFound = true;
+            }
+            const price = resource.resource.fields.price;
+            anInformationHolder.setConversionQuote(symbol, quote / price);
+            if (symbol === "MRO") {
+                mroQuote = quote / price;
+            }
+            else if (symbol === "STD") {
+                stdQuote = quote / price;
+            }
+
         }
+
+        // Workaround for missing MRU and STN
+        if (!mruFound) {
+            anInformationHolder.setConversionQuote("MRU", mroQuote * 10);
+        }
+        if (!stnFound) {
+            anInformationHolder.setConversionQuote("STN", stdQuote * 1000);
+        }
+
         eventAggregator.publish("quotesParsed");
     });
 
