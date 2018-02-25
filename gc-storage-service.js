@@ -17,8 +17,8 @@ const GcStorageServiceProvider = function() {
             }
             if (!storage.dccPrefs) {
                 storage.dccPrefs = {
-                    convertToCurrency: "CHF",
-                    convertToCountry: "CH",
+                    //convertToCurrency: "CHF",
+                    //convertToCountry: "CH",
                     enableOnStart: true,
                     quoteAdjustmentPercent: 0,
                     roundAmounts: false,

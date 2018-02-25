@@ -17,14 +17,14 @@ const GcNekudoServiceProvider = function() {
                     countryCode = response.country.code;
                 }
                 else {
-                    countryCode = "";
+                    countryCode = "CH";
                 }
                 eventAggregator.publish("countryReceivedNekudo", countryCode);
             }
         }
         catch(err) {
             console.error("err " + err);
-            eventAggregator.publish("countryReceivedNekudo", "");
+            eventAggregator.publish("countryReceivedNekudo", "CH");
         }
     };
     const findCountry = function (aUrlString, aConvertToCountry) {

@@ -88,7 +88,7 @@ const DirectCurrencyConverter = (function() {
             }
             informationHolder.resetReadCurrencies();
             new ParseContentScriptParams(eventArgs.contentScriptParams, informationHolder);
-            if (toCurrencyChanged) {
+            if (toCurrencyChanged || quotesProviderChanged) {
                 quotesService.loadQuotes(gcQuotesService, informationHolder.apiKey);
             }
         });
@@ -146,20 +146,6 @@ const DirectCurrencyConverter = (function() {
         });
         const gcStorageServiceProvider = new GcStorageServiceProvider();
         gcStorageServiceProvider.init(iso4217Currencies, defaultExcludedDomains);
-/*
-        for (var currency of iso4217Currencies) {
-            var found = false;
-            for (var storedCurrency of gcStorageServiceProvider.convertFroms) {
-                if (currency.isoName === storedCurrency.isoName) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found){
-                gcStorageServiceProvider.convertFroms.push(currency);
-            }
-        }
-*/
     };
     const onCurrencyData = (result) => {
         const currencyDataJson = result;
@@ -194,16 +180,10 @@ const DirectCurrencyConverter = (function() {
     };
     iso4217CurrenciesRequest.send(null);
 
-
-    /*
-        var convertToCountry = "SE";
-        var convertToCountry = null;
-        if (convertToCountry === null || convertToCountry == null) {
-            geoService.loadUserCountry(gcGeoService, convertToCountry);
-            eventAggregator.subscribe("countryReceived", function(countryCode) {
-                console.log("countryCode " + countryCode);
-            });
+    chrome.runtime.onInstalled.addListener((details) => {
+        if (details.reason === "install" || details.reason === "update") {
+            chrome.tabs.create({ url:chrome.extension.getURL("common/help.html")} );
         }
-        quotesService.loadQuotes();
-        */
+    });
+
 })();

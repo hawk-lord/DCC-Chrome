@@ -17,14 +17,14 @@ const GcFreegeoipServiceProvider = function() {
                     countryCode = response.country_code;
                 }
                 else {
-                    countryCode = "";
+                    countryCode = "CH";
                 }
                 eventAggregator.publish("countryReceivedFreegeoip", countryCode);
             }
         }
         catch(err) {
             console.error("err " + err);
-            eventAggregator.publish("countryReceivedFreegeoip", "");
+            eventAggregator.publish("countryReceivedFreegeoip", "CH");
         }
     };
     const findCountry = function (aUrlString, aConvertToCountry) {
