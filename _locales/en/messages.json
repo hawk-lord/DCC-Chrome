@@ -383,8 +383,8 @@
     "message": "Pataca (MOP)",
     "description": ""
   },
-  "MRO": {
-    "message": "Ouguiya (MRO)",
+  "MRU": {
+    "message": "Ouguiya (MRU)",
     "description": ""
   },
   "MUR": {
@@ -456,7 +456,7 @@
     "description": ""
   },
   "PHP": {
-    "message": "Philippine Peso (PHP)",
+    "message": "Philippine Piso (PHP)",
     "description": ""
   },
   "PKR": {
@@ -535,8 +535,8 @@
     "message": "South Sudanese Pound (SSP)",
     "description": ""
   },
-  "STD": {
-    "message": "Dobra (STD)",
+  "STN": {
+    "message": "Dobra (STN)",
     "description": ""
   },
   "SVC": {

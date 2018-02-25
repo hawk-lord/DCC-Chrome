@@ -386,8 +386,8 @@
           "symbol": "MOPEUR=X"
         },
         {
-          "rate": "0.0029",
-          "symbol": "MROEUR=X"
+          "rate": "0.029",
+          "symbol": "MRUEUR=X"
         },
         {
           "rate": "0.0260",
@@ -538,8 +538,8 @@
           "symbol": "SSPEUR=X"
         },
         {
-          "rate": "0.0000",
-          "symbol": "STDEUR=X"
+          "rate": "0.0408",
+          "symbol": "STNEUR=X"
         },
         {
           "rate": "0.1041",

@@ -116,7 +116,7 @@ if (!this.DccFunctions) {
         minorUnits.push(new MinorUnit("MMK", 2, ["pya"]));
         minorUnits.push(new MinorUnit("MNT", 2, ["möngö", "мөнгө"]));
         minorUnits.push(new MinorUnit("MOP", 2, ["sin", "仙"]));
-        minorUnits.push(new MinorUnit("MRO", 2, []));
+        minorUnits.push(new MinorUnit("MRU", 2, []));
         minorUnits.push(new MinorUnit("MUR", 2, ["cent"]));
         minorUnits.push(new MinorUnit("MVR", 2, ["laari"]));
         minorUnits.push(new MinorUnit("MWK", 2, ["tambala"]));
@@ -154,7 +154,7 @@ if (!this.DccFunctions) {
         minorUnits.push(new MinorUnit("SOS", 2, ["senti"]));
         minorUnits.push(new MinorUnit("SRD", 2, ["cent"]));
         minorUnits.push(new MinorUnit("SSP", 2, ["piaster"]));
-        minorUnits.push(new MinorUnit("STD", 2, ["cêntimo", "centimo"]));
+        minorUnits.push(new MinorUnit("STN", 2, ["cêntimo", "centimo"]));
         minorUnits.push(new MinorUnit("SVC", 2, ["centavo"]));
         minorUnits.push(new MinorUnit("SYP", 2, ["piastre"]));
         minorUnits.push(new MinorUnit("SZL", 2, ["cent"]));

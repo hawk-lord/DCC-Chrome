@@ -234,8 +234,8 @@ if (!this.PriceRegexes) {
                 aRegex2.MNT = makeRegex2("(MNT|₮|ᠲᠥᠭᠦᠷᠢᠭ|төгрөг|tögrögs?|tugrik|möngö|мөнгө)");
                 aRegex1.MOP = makeRegex1("(MOP|MOP\\s?\\$|\\$)");
                 aRegex2.MOP = makeRegex2("(MOP|MOP\\$|澳門圓|澳门圆|[pP]atacas?|sin|仙)");
-                aRegex1.MRO = makeRegex1("(MRO|أوقية)");
-                aRegex2.MRO = makeRegex2("(MRO|أوقية|ouguiya|um|UM)");
+                aRegex1.MRU = makeRegex1("(MRU|أوقية)");
+                aRegex2.MRU = makeRegex2("(MRU|أوقية|ouguiya|um|UM)");
                 aRegex1.MUR = makeRegex1("(MUR|₨\\.?|[rR]s)");
                 aRegex2.MUR = makeRegex2("(MUR|[rR]upees?|[rR]oupies?|[rR]s|[cC]ents?)");
                 aRegex1.MVR = makeRegex1("(MVR|MRF\\.?|MRf\\.?|Mrf\\.?|Rf\\.?|RF\\.?|Rufiyaa)");
@@ -271,7 +271,7 @@ if (!this.PriceRegexes) {
                 aRegex1.PGK = makeRegex1("(PGK|K)");
                 aRegex2.PGK = makeRegex2("(PGK|[kK]ina|toea)");
                 aRegex1.PHP = makeRegex1("(PHP|₱|PhP|Php|P)");
-                aRegex2.PHP = makeRegex2("(PHP|[pP]esos?|sentimos?|centavos?)");
+                aRegex2.PHP = makeRegex2("(PHP|[pP]isos?|[pP]esos?|sentimos?|centavos?)");
                 aRegex1.PKR = makeRegex1("(PKR|₨\\.?|Rs\\.?|روپیہ)");
                 aRegex2.PKR = makeRegex2("(PKR|[rR]upees?|روپیہ|paisa)");
                 aRegex1.PLN = makeRegex1("(PLN|zł)");
@@ -310,8 +310,8 @@ if (!this.PriceRegexes) {
                 aRegex2.SRD = makeRegex2("(SRD|[dD]ollars?|[cC]ents?)");
                 aRegex1.SSP = makeRegex1("(SSP)");
                 aRegex2.SSP = makeRegex2("(SSP|pounds?|piasters?)");
-                aRegex1.STD = makeRegex1("(STD|Dbs?\\.?)");
-                aRegex2.STD = makeRegex2("(STD|dbs|[dD]obra|cêntimos?|centimos?)");
+                aRegex1.STN = makeRegex1("(STN|Dbs?\\.?)");
+                aRegex2.STN = makeRegex2("(STN|dbs|[dD]obra|cêntimos?|centimos?)");
                 aRegex1.SVC = makeRegex1("(SVC|₡|¢)");
                 aRegex2.SVC = makeRegex2("(SVC|svc|[cC]ol[oó]n(es)?|centavos?)");
                 aRegex1.SYP = makeRegex1("(SYP|S\\.?P\\.?|ليرة)");
