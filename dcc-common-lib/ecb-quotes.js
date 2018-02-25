@@ -16,7 +16,8 @@ const EcbQuotesServiceProvider = function(anEventAggregator, anInformationHolder
         const cubes = response.getElementsByTagName("Cube");
         let quote = 1;
         for (let cube of cubes) {
-            console.log(cube.getAttribute("time"));
+            // ECB always converts from EUR.
+            // Check quote between ECB and target currency.
             if (cube.getAttribute("time")) {
                 for (let childCube of cube.childNodes) {
                     if (childCube.nodeType === Node.ELEMENT_NODE) {
@@ -35,14 +36,6 @@ const EcbQuotesServiceProvider = function(anEventAggregator, anInformationHolder
             }
         }
 
-        // ECB always converts from EUR.
-        // Check quote between ECB and target currency.
-        for (let resource in response.quotes) {
-
-        }
-        for (let resource in response.quotes) {
-//            anInformationHolder.setConversionQuote(resource.substring(3, 6), quote / response.quotes[resource]);
-        }
         eventAggregator.publish("quotesParsed");
     });
 

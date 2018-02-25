@@ -13,6 +13,7 @@ const ContentScriptParams = function(aTab, anInformationHolder) {
     this.convertToCountry = anInformationHolder.convertToCountry;
     this.enableOnStart = anInformationHolder.enableOnStart;
     this.excludedDomains = anInformationHolder.excludedDomains;
+    // To <li id ="SEK" ... />
     this.convertFroms = anInformationHolder.convertFroms;
     this.quoteAdjustmentPercent = anInformationHolder.quoteAdjustmentPercent;
     this.roundAmounts = anInformationHolder.roundPrices;
@@ -28,10 +29,20 @@ const ContentScriptParams = function(aTab, anInformationHolder) {
     else {
         this.isEnabled = anInformationHolder.conversionEnabled;
     }
+    // To <li><label>Swedish krona</label></li>
     this.currencyNames = anInformationHolder.getCurrencyNames();
     this.convertFromCurrency = anInformationHolder.convertFromCurrency;
     this.alwaysConvertFromCurrency = anInformationHolder.alwaysConvertFromCurrency;
     this.showAsSymbol = anInformationHolder.showAsSymbol;
+
+    /*
+    // Values for testing script injection
+    this.convertFroms[0].isoName = "<script>alert(1)</script>";
+    this.quoteAdjustmentPercent = "<script>alert(2)</script>";;
+    this.apiKey = "<script>alert(4)</script>";
+    this.currencyNames.AED = "<script>alert(3)</script>";
+    */
+
 };
 
 if (typeof exports === "object") {

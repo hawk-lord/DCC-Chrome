@@ -13,11 +13,8 @@
 
 if (!this.DirectCurrencySettings) {
     const DirectCurrencySettings = (function() {
-        const escapeHtml = function(s) {
-            if (s === null || s == null) {
-                return "";
-            }
-            return String(s).replace(/&(?!\w+;)/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        const escapeHtml = function(aString) {
+            return DOMPurify.sanitize(aString);
         };
         jQuery(document).ready(function() {
             jQuery( "#toggleCurrencies" ).click(function() {
@@ -227,7 +224,7 @@ if (!this.DirectCurrencySettings) {
             excludedDomains = contentScriptParams.excludedDomains;
             excludedDomains.map(escapeHtml);
             convertFroms = contentScriptParams.convertFroms;
-            //Object.keys(convertFroms).forEach(escapeHtml);
+            convertFroms.map( (item) => { item.isoName = escapeHtml(item.isoName) });
             quoteAdjustmentPercent = escapeHtml(contentScriptParams.quoteAdjustmentPercent);
             roundAmounts = contentScriptParams.roundAmounts;
             showOriginalPrices = contentScriptParams.showOriginalPrices;
@@ -235,8 +232,9 @@ if (!this.DirectCurrencySettings) {
             showTooltip = contentScriptParams.showTooltip;
             tempConvertUnits = contentScriptParams.tempConvertUnits;
             currencyNames = contentScriptParams.currencyNames;
+            Object.keys(currencyNames).forEach( (key) => { currencyNames[key] = escapeHtml(currencyNames[key]) });
             convertFromCurrency = contentScriptParams.convertFromCurrency;
-            apiKey = contentScriptParams.apiKey;
+            apiKey = escapeHtml(contentScriptParams.apiKey);
             quotesProvider = contentScriptParams.quotesProvider;
             alwaysConvertFromCurrency = contentScriptParams.alwaysConvertFromCurrency;
             showAsSymbol = contentScriptParams.showAsSymbol;
