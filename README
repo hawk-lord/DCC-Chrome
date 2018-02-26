@@ -251,6 +251,7 @@ Date: 2018-02-25
 Three different currency data sources to choose from, instead of only one.
 Link to currencies test page.
 Updates from ISO 4217 amendments: São Tomé and Príncipe STN, Mauritania MRU, and new name for Philippine piso.
-Recognises A$ as AUD.
+Pounds are not converted any more.
+A$ is converted as AUD.
 Internal change: updated jQuery, jQuery UI, and introduced DOMPurify for checking input data.
 

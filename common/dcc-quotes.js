@@ -14,16 +14,11 @@ if (!this.DirectCurrencyQuotes) {
     const DirectCurrencyQuotes = (function() {
         let conversionQuotes = [];
         let currencyCode = "";
-        let excludedDomains = [];
         let isEnabled = true;
         let quoteAdjustmentPercent = 0;
         const regex1 = {};
         const regex2 = {};
         const enabledCurrenciesWithRegexes = [];
-        let roundAmounts = false;
-        let showOriginalPrices = false;
-        let showOriginalCurrencies = false;
-        let showTooltip = true;
 
         const numberFormat = new Intl.NumberFormat(window.navigator.language, { minimumFractionDigits: 6 });
         var ascending = false;
@@ -34,13 +29,7 @@ if (!this.DirectCurrencyQuotes) {
          */
         const readParameters = (contentScriptParams) => {
             conversionQuotes = contentScriptParams.conversionQuotes;
-            excludedDomains = contentScriptParams.excludedDomains;
-            currencyCode = contentScriptParams.convertToCurrency;
-            roundAmounts = contentScriptParams.roundAmounts;
-            showOriginalPrices = contentScriptParams.showOriginalPrices;
-            showOriginalCurrencies = contentScriptParams.showOriginalCurrencies;
-            showTooltip = contentScriptParams.showTooltip;
-            quoteAdjustmentPercent = +contentScriptParams.quoteAdjustmentPercent;
+            currencyCode = DOMPurify.sanitize(contentScriptParams.convertToCurrency);
         };
 
         const populateTable = (aSortByValue) => {
@@ -63,7 +52,7 @@ if (!this.DirectCurrencyQuotes) {
                 if (!conversionQuote.match(/[A-Z][A-Z][A-Z]/)) {
                     continue;
                 }
-                conversionQuotesArray.push({name: conversionQuote, value: conversionQuotes[conversionQuote]});
+                conversionQuotesArray.push({name: DOMPurify.sanitize(conversionQuote), value: DOMPurify.sanitize(conversionQuotes[conversionQuote])});
             }
             const sortByValue = (anA, aB) => {
                 const a = ascending ? aB : anA;
